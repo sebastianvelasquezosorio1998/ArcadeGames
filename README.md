@@ -36,5 +36,5 @@ El sistema se compone de las siguientes entidades principales:
 5. Verifica la creación del archivo `errores_software_fj.log` en la misma carpeta para observar el registro de las excepciones capturadas.
 
 ## Autores
-Este proyecto fue desarrollado mediante trabajo colaborativo por el siguiente equipo de estudiantes:
+Este proyecto fue desarrollado por el estudiante:
 * Sebastian Velasquez Osorio*
