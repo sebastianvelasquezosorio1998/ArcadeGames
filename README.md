@@ -25,7 +25,7 @@ El sistema se compone de las siguientes entidades principales:
 ## Instrucciones de Ejecución
 1. Clona este repositorio en tu equipo local:
    ```bash
-   git clone [URL_DE_TU_REPOSITORIO]
+   git clone https://github.com/sebastianvelasquezosorio1998/Fase4_Componente-Practico/tree/main
    ```
 2. Navega hasta el directorio del proyecto.
 3. Ejecuta el archivo principal desde la terminal:
