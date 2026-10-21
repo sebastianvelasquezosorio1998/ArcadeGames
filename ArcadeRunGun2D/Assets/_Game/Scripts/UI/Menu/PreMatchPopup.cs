@@ -80,6 +80,9 @@ namespace HyperArcade
 
         protected override void OnHide() => Wallet.Changed -= OnWalletChanged;
 
+        // Al cambiar de escena la ventana se destruye sin pasar por OnHide: cancelar la suscripción aquí también.
+        private void OnDisable() => Wallet.Changed -= OnWalletChanged;
+
         private void OnWalletChanged(CurrencyType type, int value, int delta) => RefreshSlots();
 
         private void BuildSlots()

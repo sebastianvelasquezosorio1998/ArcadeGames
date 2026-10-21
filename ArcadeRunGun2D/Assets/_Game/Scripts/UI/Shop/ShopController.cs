@@ -58,6 +58,13 @@ namespace HyperArcade
             PlayerProgress.Changed -= RefreshAll;
         }
 
+        // Al cambiar de escena la tienda se destruye sin pasar por OnHide: cancelar suscripciones aquí también.
+        private void OnDisable()
+        {
+            Wallet.Changed -= OnWalletChanged;
+            PlayerProgress.Changed -= RefreshAll;
+        }
+
         private void OnWalletChanged(CurrencyType type, int value, int delta) => RefreshAll();
 
         private void SelectTab(Tab tab, bool sound = true)
