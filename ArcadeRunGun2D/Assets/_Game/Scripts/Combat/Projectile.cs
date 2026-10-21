@@ -28,7 +28,7 @@ namespace HyperArcade
         private ProjectileSpec _spec;
         private float _despawnAt;
         private int _pierceLeft;
-        private readonly HashSet<int> _alreadyHit = new HashSet<int>();
+        private readonly HashSet<IDamageable> _alreadyHit = new HashSet<IDamageable>();
 
         /// <summary>Dispara un proyectil desde el pool usando el prefab de GameConfig.</summary>
         public static Projectile Fire(Vector2 position, Vector2 direction, ProjectileSpec spec)
@@ -81,8 +81,8 @@ namespace HyperArcade
             var target = other.GetComponentInParent<IDamageable>();
             if (target == null || target.Team == _spec.team || !target.IsAlive) return;
 
-            int id = ((Component)target).GetInstanceID();
-            if (!_alreadyHit.Add(id)) return;
+            // Se guarda la referencia (no el ID de instancia, eliminado en Unity 6.3+).
+            if (!_alreadyHit.Add(target)) return;
 
             target.TakeDamage(new DamageInfo(_spec.damage, _spec.team, transform.position, _rb.GetVelocity().normalized));
 
