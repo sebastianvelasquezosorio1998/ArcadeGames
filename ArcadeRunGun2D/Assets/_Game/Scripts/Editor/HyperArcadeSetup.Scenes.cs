@@ -97,6 +97,13 @@ namespace HyperArcade.EditorTools
             return display;
         }
 
+        /// <summary>Controles táctiles al 40 % de opacidad (PlayerInputHub.ControlsOpacity).</summary>
+        private static void Translucent(Component control)
+        {
+            var group = control.gameObject.AddComponent<CanvasGroup>();
+            group.alpha = PlayerInputHub.ControlsOpacity;
+        }
+
         private static RectTransform ScreenRoot(Transform parent, string name) => UB.Rect(name, parent).Full();
 
         // ================================================================ Prefabs de UI
@@ -499,6 +506,7 @@ namespace HyperArcade.EditorTools
             var joyBase = Icon(zone.transform, "Base", UiSlot.JoystickBase, Center, new Vector2(-180, -110), new Vector2(300, 300));
             var knob = Icon(joyBase.transform, "Knob", UiSlot.JoystickKnob, Center, Vector2.zero, new Vector2(140, 140));
             var joystick = zone.gameObject.AddComponent<VirtualJoystick>();
+            Translucent(zone);
             UB.Set(joystick, "joystickBase", joyBase.rectTransform);
             UB.Set(joystick, "knob", knob.rectTransform);
 
@@ -507,6 +515,7 @@ namespace HyperArcade.EditorTools
             {
                 var img = Icon(hudRt, n, slot, BottomRight, pos, new Vector2(size, size));
                 img.raycastTarget = true;
+                Translucent(img);
                 return img.gameObject.AddComponent<TouchActionButton>();
             }
             var attack = Action("AttackButton", UiSlot.AttackButton, new Vector2(-60, 60), 250);
@@ -530,6 +539,7 @@ namespace HyperArcade.EditorTools
                 var fill = UB.Image(img.transform, "Duration", null, new Color(0, 0, 0, 0.5f));
                 fill.rectTransform.Full(6f);
                 fill.type = Image.Type.Filled; fill.fillMethod = Image.FillMethod.Radial360; fill.fillAmount = 0f;
+                Translucent(img);
                 var pu = img.gameObject.AddComponent<PowerUpButtonUI>();
                 UB.SetValue(pu, "type", (int)type);
                 UB.Set(pu, "icon", img);
