@@ -10,13 +10,18 @@ namespace HyperArcade
 {
     public class AdMobProvider : AdsProviderBase
     {
+        // Se usa uno u otro según AdsConfig.admobRewardedFormat ("Bonificado" o "Intersticial bonificado").
         private RewardedAd _ad;
+        private RewardedInterstitialAd _interstitialRewardAd;
         private bool _loading;
         private bool _earned;
         private Action<AdShowResult> _onShowFinished;
 
         public override string Name => "AdMob";
-        public override bool IsRewardedReady => _ad != null && _ad.CanShowAd();
+        public override bool IsRewardedReady =>
+            (_ad != null && _ad.CanShowAd()) || (_interstitialRewardAd != null && _interstitialRewardAd.CanShowAd());
+
+        private bool UseRewardedInterstitial => Config.admobRewardedFormat == AdMobRewardedFormat.RewardedInterstitial;
 
         public override void Initialize(AdsConfig config, MonoBehaviour host, Action<bool> onInitialized)
         {
@@ -90,6 +95,26 @@ namespace HyperArcade
             _loading = true;
 
             if (_ad != null) { _ad.Destroy(); _ad = null; }
+            if (_interstitialRewardAd != null) { _interstitialRewardAd.Destroy(); _interstitialRewardAd = null; }
+
+            if (UseRewardedInterstitial)
+            {
+                RewardedInterstitialAd.Load(Config.AdMobRewardedId, new AdRequest(), (RewardedInterstitialAd ad, LoadAdError error) =>
+                {
+                    _loading = false;
+                    if (error != null || ad == null)
+                    {
+                        Debug.LogWarning("[AdMob] Carga de intersticial bonificado falló: " + error);
+                        ScheduleRetry();
+                        return;
+                    }
+                    ResetRetry();
+                    _interstitialRewardAd = ad;
+                    _interstitialRewardAd.OnAdFullScreenContentClosed += OnClosed;
+                    _interstitialRewardAd.OnAdFullScreenContentFailed += OnFailed;
+                });
+                return;
+            }
 
             RewardedAd.Load(Config.AdMobRewardedId, new AdRequest(), (RewardedAd ad, LoadAdError error) =>
             {
@@ -112,7 +137,10 @@ namespace HyperArcade
             if (!IsRewardedReady) { onFinished?.Invoke(AdShowResult.NotReady); return; }
             _earned = false;
             _onShowFinished = onFinished;
-            _ad.Show(_ => _earned = true);
+            if (_interstitialRewardAd != null && _interstitialRewardAd.CanShowAd())
+                _interstitialRewardAd.Show(_ => _earned = true);
+            else
+                _ad.Show(_ => _earned = true);
         }
 
         private void OnClosed()

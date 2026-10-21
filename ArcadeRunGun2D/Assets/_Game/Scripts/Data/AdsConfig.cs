@@ -4,6 +4,9 @@ namespace HyperArcade
 {
     public enum AdsProviderType { Mock, UnityAds, AdMob }
 
+    /// <summary>Formato del bloque "recompensado" creado en AdMob (debe coincidir con el de la consola).</summary>
+    public enum AdMobRewardedFormat { Rewarded, RewardedInterstitial }
+
     /// <summary>
     /// IDs de anuncios por build/cliente. Los valores por defecto son IDs de PRUEBA oficiales:
     /// reemplázalos por los reales de cada cliente antes de publicar.
@@ -26,6 +29,8 @@ namespace HyperArcade
         public string unityInterstitialIOS = "Interstitial_iOS";
 
         [Header("AdMob (requiere símbolo HA_ADMOB). El App ID va en Assets > Google Mobile Ads > Settings")]
+        [Tooltip("Rewarded = bloque 'Bonificado'. RewardedInterstitial = bloque 'Intersticial bonificado'.")]
+        public AdMobRewardedFormat admobRewardedFormat = AdMobRewardedFormat.Rewarded;
         public string admobRewardedAndroid = "ca-app-pub-3940256099942544/5224354917"; // ID de prueba de Google
         public string admobRewardedIOS = "ca-app-pub-3940256099942544/1712485313";     // ID de prueba de Google
         public string admobInterstitialAndroid = "ca-app-pub-3940256099942544/1033173712"; // ID de prueba de Google
