@@ -21,13 +21,47 @@ namespace HyperArcade
         [Tooltip("Disparo automático mientras haya enemigos cerca (muy recomendado en hipercasual).")]
         [SerializeField] private bool autoFire = false;
 
+        [Header("Transparencia de los controles táctiles")]
+        [Tooltip("Opacidad en reposo del joystick y los botones (0 = invisibles, 1 = opacos).")]
+        [Range(0.05f, 1f)] [SerializeField] private float controlsOpacity = 0.4f;
+        [Tooltip("Opacidad mientras se tocan (feedback visual).")]
+        [Range(0.05f, 1f)] [SerializeField] private float pressedOpacity = 0.85f;
+
         public bool Enabled { get; set; } = true;
         public bool AutoFire { get => autoFire; set => autoFire = value; }
         public TouchActionButton SpecialButton => specialButton;
 
         private bool _keyJumpPressed, _keySpecialPressed;
+        private CanvasGroup _joystickGroup, _jumpGroup, _attackGroup, _specialGroup;
+        private CanvasGroup[] _powerUpGroups = new CanvasGroup[0];
 
-        private void Awake() => Instance = this;
+        private void Awake()
+        {
+            Instance = this;
+            _joystickGroup = Translucent(joystick);
+            _jumpGroup = Translucent(jumpButton);
+            _attackGroup = Translucent(attackButton);
+            _specialGroup = Translucent(specialButton);
+
+            var powerUps = GetComponentsInChildren<PowerUpButtonUI>(true);
+            _powerUpGroups = new CanvasGroup[powerUps.Length];
+            for (int i = 0; i < powerUps.Length; i++) _powerUpGroups[i] = Translucent(powerUps[i]);
+        }
+
+        /// <summary>Un CanvasGroup baja la opacidad de todo el control (no afecta a los toques).</summary>
+        private CanvasGroup Translucent(Component control)
+        {
+            if (control == null) return null;
+            var group = control.GetComponent<CanvasGroup>();
+            if (group == null) group = control.gameObject.AddComponent<CanvasGroup>();
+            group.alpha = controlsOpacity;
+            return group;
+        }
+
+        private void SetOpacity(CanvasGroup group, bool pressed)
+        {
+            if (group != null) group.alpha = pressed ? pressedOpacity : controlsOpacity;
+        }
 
         private void OnDestroy()
         {
@@ -66,6 +100,12 @@ namespace HyperArcade
 
         private void Update()
         {
+            SetOpacity(_joystickGroup, joystick != null && joystick.IsPressed);
+            SetOpacity(_jumpGroup, jumpButton != null && jumpButton.IsHeld);
+            SetOpacity(_attackGroup, attackButton != null && attackButton.IsHeld);
+            SetOpacity(_specialGroup, specialButton != null && specialButton.IsHeld);
+            foreach (var g in _powerUpGroups) SetOpacity(g, false);
+
             if (KeyDown(KeyId.Jump)) _keyJumpPressed = true;
             if (KeyDown(KeyId.Special)) _keySpecialPressed = true;
         }

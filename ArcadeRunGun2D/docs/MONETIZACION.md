@@ -30,7 +30,7 @@ Además de los anuncios recompensados, cada **2 niveles ganados** se proyecta un
 - Si el anuncio aún no está cargado, el juego **no espera**: continúa y lo intenta en la siguiente transición.
 - Frecuencia configurable en `EconomyConfig.interstitialEveryLevels` (2 por defecto; 0 = desactivado).
 - IDs: `AdsConfig.admobInterstitialAndroid/IOS` (vienen los de prueba de Google) o `unityInterstitialAndroid/IOS` (`Interstitial_Android` / `Interstitial_iOS`).
-- En el editor se simula con el mensaje "[Video publicitario de prueba]".
+- En el editor se simula en silencio: el juego se pausa unos segundos, sin textos en pantalla.
 
 Los videos recompensados siguen funcionando igual y a elección del jugador: revivir, x2 monedas, +10 diamantes y +100 monedas.
 

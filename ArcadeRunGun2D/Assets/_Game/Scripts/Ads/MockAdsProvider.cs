@@ -6,7 +6,7 @@ namespace HyperArcade
 {
     /// <summary>
     /// Proveedor simulado para el editor y pruebas: no requiere SDK.
-    /// Simula la duración del anuncio y (opcionalmente) fallos aleatorios.
+    /// Simula la duración del anuncio (en silencio, sin textos en pantalla) y opcionalmente fallos aleatorios.
     /// </summary>
     public class MockAdsProvider : AdsProviderBase
     {
@@ -37,7 +37,6 @@ namespace HyperArcade
         private IEnumerator SimulateInterstitial(Action onClosed)
         {
             float duration = Config != null ? Config.mockAdDurationSeconds + 1f : 2.5f;
-            Toast.Show("[Video publicitario de prueba]", duration);
             yield return new WaitForSecondsRealtime(duration);
             onClosed?.Invoke();
             LoadInterstitial();
@@ -52,7 +51,6 @@ namespace HyperArcade
 
         private IEnumerator Simulate(Action<AdShowResult> onFinished)
         {
-            Toast.Show("[Anuncio de prueba]", Config != null ? Config.mockAdDurationSeconds : 1f);
             yield return new WaitForSecondsRealtime(Config != null ? Config.mockAdDurationSeconds : 1f);
             bool fail = Config != null && UnityEngine.Random.value < Config.mockFailChance;
             onFinished?.Invoke(fail ? AdShowResult.Failed : AdShowResult.Rewarded);
