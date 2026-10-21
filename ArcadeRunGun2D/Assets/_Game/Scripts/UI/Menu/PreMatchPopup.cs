@@ -85,6 +85,11 @@ namespace HyperArcade
         private void BuildSlots()
         {
             var consumables = GameConfig.Instance.consumables;
+            if (consumableSlotPrefab == null || consumablesContainer == null)
+            {
+                Debug.LogError("[Pre-partida] Falta 'consumableSlotPrefab' o el contenedor en PreMatchPopup. Vuelve a ejecutar Tools > HyperArcade > 1.");
+                return;
+            }
             while (_slots.Count < consumables.Count) _slots.Add(Instantiate(consumableSlotPrefab, consumablesContainer));
             for (int i = 0; i < _slots.Count; i++)
             {

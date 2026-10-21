@@ -24,25 +24,5 @@ namespace HyperArcade
             rb.velocity = velocity;
 #endif
         }
-
-        public static T FindFirst<T>() where T : Object
-        {
-#if UNITY_2023_1_OR_NEWER
-            return Object.FindAnyObjectByType<T>();
-#else
-            return Object.FindObjectOfType<T>();
-#endif
-        }
-
-        public static T[] FindAll<T>() where T : Object
-        {
-#if UNITY_6000_3_OR_NEWER
-            return Object.FindObjectsByType<T>();
-#elif UNITY_2023_1_OR_NEWER
-            return Object.FindObjectsByType<T>(FindObjectsSortMode.None);
-#else
-            return Object.FindObjectsOfType<T>();
-#endif
-        }
     }
 }

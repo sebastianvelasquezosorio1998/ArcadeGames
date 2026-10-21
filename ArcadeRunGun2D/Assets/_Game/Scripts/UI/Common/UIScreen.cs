@@ -47,7 +47,9 @@ namespace HyperArcade
             Group.interactable = true;
             Group.blocksRaycasts = true;
             transform.SetAsLastSibling();
-            OnShow();
+            // Un error en OnShow no debe dejar una pantalla invisible bloqueando los toques.
+            try { OnShow(); }
+            catch (System.Exception e) { Debug.LogException(e, this); }
             Animate(true);
         }
 

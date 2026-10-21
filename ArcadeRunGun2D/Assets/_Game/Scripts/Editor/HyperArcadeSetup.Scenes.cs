@@ -10,11 +10,19 @@ namespace HyperArcade.EditorTools
 {
     public static partial class HyperArcadeSetup
     {
-        private class UIPrefabs
+        private const string LevelNodePath = PrefabDir + "/UI/LevelNode.prefab";
+        private const string ShopItemPath = PrefabDir + "/UI/ShopItem.prefab";
+        private const string ConsumableSlotPath = PrefabDir + "/UI/ConsumableSlot.prefab";
+
+        private static GameConfig LoadGameConfig() => AssetDatabase.LoadAssetAtPath<GameConfig>(ResourcesDir + "/GameConfig.asset");
+
+        /// <summary>Carga un prefab desde disco (nunca reutilizar referencias de antes de un cambio de escena).</summary>
+        private static T LoadPrefab<T>(string path) where T : Component
         {
-            public LevelNodeUI levelNode;
-            public ShopItemUI shopItem;
-            public ConsumableSlotUI consumableSlot;
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            var component = go != null ? go.GetComponent<T>() : null;
+            if (component == null) Debug.LogError($"[HyperArcade] No se pudo cargar {typeof(T).Name} desde {path}");
+            return component;
         }
 
         private static SkinProfile _skin;
@@ -93,10 +101,9 @@ namespace HyperArcade.EditorTools
 
         // ================================================================ Prefabs de UI
 
-        private static UIPrefabs CreateUIPrefabs(SkinProfile skin)
+        private static void CreateUIPrefabs(SkinProfile skin)
         {
             PrepareBuilder(skin);
-            var ui = new UIPrefabs();
 
             // --- Nodo de nivel
             {
@@ -121,7 +128,7 @@ namespace HyperArcade.EditorTools
                 UB.Set(node, "stars", stars);
                 UB.Set(node, "lockedOverlay", locked.gameObject);
                 UB.Set(node, "currentMarker", marker.gameObject);
-                ui.levelNode = SavePrefab(root.gameObject, PrefabDir + "/UI/LevelNode.prefab").GetComponent<LevelNodeUI>();
+                SavePrefab(root.gameObject, LevelNodePath);
             }
 
             // --- Tarjeta de tienda
@@ -158,7 +165,7 @@ namespace HyperArcade.EditorTools
                 UB.Set(item, "infoText", info);
                 UB.Set(item, "badgeText", badge);
                 UB.Set(item, "selectedHighlight", highlight.gameObject);
-                ui.shopItem = SavePrefab(root.gameObject, PrefabDir + "/UI/ShopItem.prefab").GetComponent<ShopItemUI>();
+                SavePrefab(root.gameObject, ShopItemPath);
             }
 
             // --- Fila de consumible (pre-partida)
@@ -190,17 +197,20 @@ namespace HyperArcade.EditorTools
                 UB.Set(slot, "buyButton", buy);
                 UB.Set(slot, "priceText", price);
                 UB.Set(slot, "priceCurrencyIcon", cur);
-                ui.consumableSlot = SavePrefab(root.gameObject, PrefabDir + "/UI/ConsumableSlot.prefab").GetComponent<ConsumableSlotUI>();
+                SavePrefab(root.gameObject, ConsumableSlotPath);
             }
-            return ui;
         }
 
         // ================================================================ Escena: Menú
 
-        private static string BuildMenuScene(GameConfig config, UIPrefabs ui)
+        private static string BuildMenuScene()
         {
-            PrepareBuilder(config.activeSkin);
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            var config = LoadGameConfig();
+            PrepareBuilder(config.activeSkin);
+            var levelNodePrefab = LoadPrefab<LevelNodeUI>(LevelNodePath);
+            var shopItemPrefab = LoadPrefab<ShopItemUI>(ShopItemPath);
+            var consumableSlotPrefab = LoadPrefab<ConsumableSlotUI>(ConsumableSlotPath);
 
             var cam = new GameObject("Main Camera").AddComponent<Camera>();
             cam.tag = "MainCamera";
@@ -258,7 +268,7 @@ namespace HyperArcade.EditorTools
             var nodes = UB.VerticalScroll(mapRt, "LevelsScroll", 40, out var mapScroll, true, new Vector2(220, 220), 5);
             ((RectTransform)mapScroll.transform).Stretch(new Vector2(0.12f, 0.04f), new Vector2(0.88f, 0.8f));
             UB.Set(map, "nodesContainer", nodes);
-            UB.Set(map, "nodePrefab", ui.levelNode);
+            UB.Set(map, "nodePrefab", levelNodePrefab);
             UB.Set(map, "scroll", mapScroll);
             UB.Set(map, "totalStarsText", mapStars);
             UB.Set(map, "backButton", mapBack);
@@ -296,7 +306,7 @@ namespace HyperArcade.EditorTools
             UB.Set(shopCtrl, "charactersContainer", cChars);
             UB.Set(shopCtrl, "weaponsContainer", cWeapons);
             UB.Set(shopCtrl, "consumablesContainer", cCons);
-            UB.Set(shopCtrl, "itemPrefab", ui.shopItem);
+            UB.Set(shopCtrl, "itemPrefab", shopItemPrefab);
             UB.Set(shopCtrl, "backButton", shopBack);
             UB.Set(shopCtrl, "adButtonHighlight", shopAdCoins.transform);
             UB.SetValue(shopCtrl, "screenId", ScreenIds.Shop);
@@ -323,7 +333,7 @@ namespace HyperArcade.EditorTools
             UB.Set(pre, "characterIcon", preIcon);
             UB.Set(pre, "loadoutText", preLoadout);
             UB.Set(pre, "consumablesContainer", consContainer);
-            UB.Set(pre, "consumableSlotPrefab", ui.consumableSlot);
+            UB.Set(pre, "consumableSlotPrefab", consumableSlotPrefab);
             UB.Set(pre, "playButton", prePlay);
             UB.Set(pre, "shopButton", preShop);
             UB.Set(pre, "closeButton", preClose);
@@ -376,10 +386,11 @@ namespace HyperArcade.EditorTools
 
         // ================================================================ Escena: Juego
 
-        private static string BuildGameScene(GameConfig config)
+        private static string BuildGameScene()
         {
-            PrepareBuilder(config.activeSkin);
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            var config = LoadGameConfig();
+            PrepareBuilder(config.activeSkin);
             var env = config.activeSkin != null ? config.activeSkin.FindEnvironment("env_city") : null;
 
             // --- Cámara

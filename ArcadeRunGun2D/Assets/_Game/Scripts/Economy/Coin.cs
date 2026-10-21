@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HyperArcade
@@ -16,6 +17,8 @@ namespace HyperArcade
         [SerializeField] private float collectDistance = 0.6f;
         [SerializeField] private float maxLifetime = 12f;
 
+        private static readonly List<Coin> Active = new List<Coin>();
+
         private Rigidbody2D _rb;
         private int _value;
         private float _spawnTime;
@@ -28,6 +31,18 @@ namespace HyperArcade
             _rb.freezeRotation = true;
             if (visual == null) visual = GetComponentInChildren<SkinnedVisual>();
         }
+
+        /// <summary>Recoge al instante todas las monedas en pantalla (fin de partida).</summary>
+        public static void CollectAll()
+        {
+            foreach (var coin in Active.ToArray()) if (coin != null) coin.Collect();
+        }
+
+        private void OnEnable() => Active.Add(this);
+        private void OnDisable() => Active.Remove(this);
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => Active.Clear();
 
         public void Init(int value, Vector2 popVelocity)
         {

@@ -66,9 +66,14 @@ namespace HyperArcade.EditorTools
                 var config = CreateGameConfig(skin, content, prefabs);
 
                 Progress("Escenas", 0.8f);
-                var ui = CreateUIPrefabs(skin);
-                string game = BuildGameScene(config);
-                string menu = BuildMenuScene(config, ui);
+                CreateUIPrefabs(skin);
+
+                // Guardar ANTES de abrir escenas nuevas: al cambiar de escena Unity descarga los assets
+                // que nadie usa (p. ej. los prefabs de UI recién creados) y las referencias en memoria
+                // quedarían vacías. Cada escena vuelve a cargar lo que necesita desde disco.
+                AssetDatabase.SaveAssets();
+                string game = BuildGameScene();
+                string menu = BuildMenuScene();
 
                 EditorBuildSettings.scenes = new[]
                 {

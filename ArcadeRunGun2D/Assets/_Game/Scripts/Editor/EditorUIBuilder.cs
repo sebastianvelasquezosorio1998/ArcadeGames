@@ -223,6 +223,8 @@ namespace HyperArcade.EditorTools
             if (p == null) { Debug.LogError($"[Setup] Campo '{field}' no encontrado en {target.GetType().Name}"); return; }
             p.objectReferenceValue = value;
             so.ApplyModifiedPropertiesWithoutUndo();
+            if (!ReferenceEquals(value, null) && p.objectReferenceValue == null)
+                Debug.LogError($"[Setup] '{target.GetType().Name}.{field}' quedó vacío: el asset se descargó de memoria.");
         }
 
         public static void SetArray(Object target, string field, Object[] values)

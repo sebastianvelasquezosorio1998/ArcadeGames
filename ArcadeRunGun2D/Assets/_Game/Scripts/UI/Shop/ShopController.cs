@@ -89,6 +89,11 @@ namespace HyperArcade
         {
             if (!_items.TryGetValue(key, out var item) || item == null)
             {
+                if (itemPrefab == null || container == null)
+                {
+                    Debug.LogError("[Tienda] Falta 'itemPrefab' o el contenedor en ShopController. Vuelve a ejecutar Tools > HyperArcade > 1.");
+                    return null;
+                }
                 item = Instantiate(itemPrefab, container);
                 _items[key] = item;
             }
@@ -100,6 +105,7 @@ namespace HyperArcade
         private void RefreshCharacter(CharacterData c)
         {
             var item = GetItem(c, charactersContainer);
+            if (item == null) return;
             bool unlocked = PlayerProgress.IsCharacterUnlocked(c.id);
             bool selected = PlayerProgress.SelectedCharacter == c;
             string stats = string.Format(Texts.CharacterStatsFormat, c.maxHealth, c.moveSpeed, c.damageMultiplier.ToString("0.0#"));
@@ -125,6 +131,7 @@ namespace HyperArcade
         private void RefreshWeapon(WeaponData w)
         {
             var item = GetItem(w, weaponsContainer);
+            if (item == null) return;
             var progress = PlayerProgress.GetWeapon(w.id);
             bool selected = PlayerProgress.SelectedWeapon == w;
 
@@ -167,6 +174,7 @@ namespace HyperArcade
         private void RefreshConsumable(ConsumableData c)
         {
             var item = GetItem(c, consumablesContainer);
+            if (item == null) return;
             int owned = PlayerProgress.GetConsumableCount(c.type);
             item.SetInfo(SkinManager.GetUiSprite(c.icon), c.displayName, c.description, string.Format(Texts.OwnedFormat, owned), false);
             item.SetAction(0, c.price.amount.ToString(), true,

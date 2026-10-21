@@ -35,6 +35,11 @@ namespace HyperArcade
         private void Build()
         {
             var levels = GameConfig.Instance.levels;
+            if (nodePrefab == null || nodesContainer == null)
+            {
+                Debug.LogError("[Mapa] Falta 'nodePrefab' o 'nodesContainer' en LevelMapScreen. Vuelve a ejecutar Tools > HyperArcade > 1.");
+                return;
+            }
             while (_nodes.Count < levels.Count) _nodes.Add(Instantiate(nodePrefab, nodesContainer));
             for (int i = 0; i < _nodes.Count; i++) _nodes[i].gameObject.SetActive(i < levels.Count);
 

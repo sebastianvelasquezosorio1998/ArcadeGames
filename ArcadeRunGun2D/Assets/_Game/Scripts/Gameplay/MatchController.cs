@@ -79,6 +79,7 @@ namespace HyperArcade
             _config = GameConfig.Instance;
             GameSession.EnsureLevelForTesting(_config);
             Level = IsEndless ? null : GameSession.CurrentLevel;
+            if (!ValidateSetup()) { enabled = false; return; }
 
             ConfigurePhysicsLayers();
             SpawnPlayer();
@@ -95,6 +96,21 @@ namespace HyperArcade
             PlayerProgress.RegisterMatchPlayed();
 
             StartCoroutine(BeginAfterDelay());
+        }
+
+        private bool ValidateSetup()
+        {
+            string problem = null;
+            if (_config == null) problem = "falta Resources/GameConfig.asset";
+            else if (_config.playerPrefab == null) problem = "GameConfig no tiene 'playerPrefab'";
+            else if (PlayerProgress.SelectedCharacter == null) problem = "GameConfig no tiene personajes";
+            else if (PlayerProgress.SelectedWeapon == null) problem = "GameConfig no tiene armas";
+            else if (!IsEndless && Level == null) problem = "GameConfig no tiene niveles";
+            else if (IsEndless && _config.endless == null) problem = "GameConfig no tiene EndlessConfig";
+            else if (spawner == null) problem = "MatchController no tiene 'spawner' asignado";
+            if (problem == null) return true;
+            Debug.LogError($"[Partida] No se puede iniciar: {problem}. Ejecuta Tools > HyperArcade > 1. Crear contenido por defecto.");
+            return false;
         }
 
         private void SpawnPlayer()
@@ -284,10 +300,10 @@ namespace HyperArcade
             controller.Stop();
 
             // Recoge al instante las monedas que aún vuelan y retira enemigos.
-            foreach (var coin in Compat.FindAll<Coin>()) if (coin.isActiveAndEnabled) coin.Collect();
+            Coin.CollectAll();
             if (victory) foreach (var e in EnemyRegistry.Snapshot()) if (e != null) e.ConvertToCoins();
             yield return null;
-            foreach (var coin in Compat.FindAll<Coin>()) if (coin.isActiveAndEnabled) coin.Collect();
+            Coin.CollectAll();
 
             var result = new MatchResult { victory = victory, endless = IsEndless, level = Level, reason = reason };
 
