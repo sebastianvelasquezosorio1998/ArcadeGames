@@ -3,153 +3,313 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#120f0a">
+<meta name="theme-color" content="#06141c">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Imperio Idle</title>
+<title>Perlas del Abismo</title>
 <style>
-:root{--bg:#120f0a;--bg2:#1b160f;--card:#251e14;--card2:#30271a;--line:#4a3b22;--gold:#f6c945;--gold2:#c8951c;--txt:#f4ebd6;--mut:#a8987a;--ok:#62c370;--red:#e0564f}
+:root{--bg:#06141c;--bg2:#0a1f2b;--card:#0e2a3a;--card2:#123548;--line:#1e4a5f;
+--gold:#f6c945;--gold2:#c8951c;--pearl:#f3ead2;--cyan:#4fe3e0;--cyan2:#1fa9b8;
+--txt:#e6f3f7;--mut:#8db1c0;--ok:#62c370;--red:#e0564f;
+--rC:#b8c7cf;--rP:#62c370;--rR:#4fa3ff;--rE:#b77bff;--rL:#f6c945}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font:15px/1.3 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-action:manipulation}
-#app{display:flex;flex-direction:column;height:100%;height:100dvh;max-width:560px;margin:0 auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:radial-gradient(ellipse at 50% 22%,#2c2213 0%,var(--bg) 70%)}
-header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px 4px}
-.gold{display:flex;align-items:center;gap:6px;font-size:28px;font-weight:900;color:var(--gold);text-shadow:0 2px 0 #6b4a08}
-#pps{font-size:13px;color:var(--mut);font-weight:600}
-.side{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:3px 10px;font-size:14px;font-weight:800}
-#hero{position:relative;flex:0 0 auto;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.chip{position:absolute;top:4px;min-height:38px;padding:8px 12px;background:var(--card);border:1px solid var(--line);border-radius:20px;font-size:13px;font-weight:800}
-.chip.l{left:12px}.chip.r{right:12px}
-.chip.act{border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px #f6c94555}
-.dot{position:absolute;top:-3px;right:-3px;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid var(--bg);display:none}
-.new .dot{display:block}
-#chest{position:relative;width:150px;height:124px;margin-top:22px;touch-action:none;cursor:pointer;filter:drop-shadow(0 10px 16px #000b)}
-#chest::before{content:"";position:absolute;inset:-28px;z-index:-1;border-radius:50%;background:radial-gradient(circle,#f6c94548 0%,transparent 65%);animation:glow 2.4s ease-in-out infinite}
-.lid{position:absolute;left:4px;right:4px;top:0;height:52px;border-radius:70px 70px 6px 6px;background:linear-gradient(180deg,#a0672f,#6e3f1a);border:4px solid var(--gold2);transform-origin:50% 100%}
-.base{position:absolute;left:0;right:0;bottom:0;height:76px;border-radius:6px 6px 14px 14px;background:linear-gradient(180deg,#85511f,#5a3112);border:4px solid var(--gold2)}
-.lid::after,.base::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:16px;margin-left:-8px;background:linear-gradient(90deg,var(--gold2),var(--gold),var(--gold2))}
-.lock{position:absolute;left:50%;top:40px;z-index:2;width:30px;height:34px;margin-left:-15px;border-radius:6px;background:linear-gradient(180deg,#ffe07a,#d19a1e);border:2px solid #7a5208;box-shadow:0 2px 4px #0008}
-.lock::after{content:"";position:absolute;left:50%;top:9px;width:6px;height:12px;margin-left:-3px;border-radius:3px;background:#5a3a06}
-#chest.hit{animation:pop .15s ease-out}
-#chest.hit .lid{animation:lid .2s ease-out}
-@keyframes pop{50%{transform:scale(.9)}}
-@keyframes lid{40%{transform:translateY(-8px) rotate(-7deg)}}
-@keyframes glow{50%{opacity:.5;transform:scale(.92)}}
-#tapInfo{margin-top:8px;font-size:13px;font-weight:700;color:var(--mut)}
-#panel{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 10px 10px}
+.hidden{display:none!important}
+.pl{display:inline-block;width:.9em;height:.9em;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#fbf3dc 30%,#e8cf8a 65%,#a8862e);vertical-align:-.1em}
+.gtxt{color:var(--gold)}.mut{color:var(--mut)}.cy{color:var(--cyan)}.ok{color:var(--ok)}.no{color:var(--red)}
+#app{position:relative;display:flex;flex-direction:column;height:100%;height:100dvh;max-width:560px;margin:0 auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:radial-gradient(ellipse at 50% 18%,#0f3a4d 0%,var(--bg) 70%)}
+header{flex:0 0 56px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 12px}
+.hl{min-width:0}
+.gold{font-size:28px;font-weight:900;line-height:1.05;color:var(--gold);white-space:nowrap;text-shadow:0 2px 0 #5a4206}
+#pps{display:block;padding:1px 0;font-size:13px;font-weight:700;color:var(--mut);white-space:nowrap}
+#pps small{font-size:11px;opacity:.8}
+.pills{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:54%}
+.pill{padding:2px 9px;font-size:13px;font-weight:800;white-space:nowrap;background:var(--card);border:1px solid var(--line);border-radius:20px}
+#hero{position:relative;flex:0 0 210px;height:210px;overflow:hidden;border-radius:0 0 18px 18px;transition:box-shadow .3s}
+#hero.z1{background:linear-gradient(180deg,#1f8fa8 0%,#0d5e78 55%,#06141c 100%)}
+#hero.z2{background:linear-gradient(180deg,#1d6e5a 0%,#0b3b3a 55%,#06141c 100%)}
+#hero.z3{background:linear-gradient(180deg,#1450a0 0%,#0a2c5c 55%,#06141c 100%)}
+#hero.z4{background:linear-gradient(180deg,#23206b 0%,#110f3a 55%,#06141c 100%)}
+#hero.z5{background:linear-gradient(180deg,#0b0b1e 0%,#05060f 60%,#06141c 100%)}
+#hero.z6{background:radial-gradient(ellipse at 50% 110%,#5a1308 0%,transparent 55%),linear-gradient(180deg,#1a0707 0%,#070303 60%,#06141c 100%)}
+#hero.marea{box-shadow:inset 0 0 40px #f6c94566}
+#sea{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#hero .flash{position:absolute;inset:0;z-index:7;background:#fff;opacity:0;pointer-events:none}
+.chip{position:absolute;left:10px;top:8px;z-index:5;min-height:40px;padding:7px 11px;font-size:12.5px;font-weight:800;white-space:nowrap;background:#0a1f2bcc;border:1px solid var(--line);border-radius:20px}
+.chip.act{color:var(--gold);border-color:var(--gold);box-shadow:0 0 10px #f6c94555}
+#evPill{position:absolute;left:50%;top:10px;z-index:5;max-width:38%;padding:5px 10px;overflow:hidden;font-size:11.5px;font-weight:800;color:var(--cyan);text-overflow:ellipsis;white-space:nowrap;background:#06141ccc;border:1px solid var(--cyan2);border-radius:14px;transform:translateX(-50%)}
+.hbtns{position:absolute;right:10px;top:8px;z-index:5;display:flex;flex-direction:column;gap:6px}
+.rb{position:relative;width:40px;height:40px;font-size:19px;line-height:1;background:#0a1f2bcc;border:1px solid var(--line);border-radius:50%}
+.dot{position:absolute;top:-3px;right:-3px;display:none;width:12px;height:12px;background:var(--red);border:2px solid var(--bg);border-radius:50%}
+.new>.dot{display:block}
+#depth{position:absolute;left:12px;top:56px;z-index:4;width:96px;height:104px;text-align:left}
+#depth .trk{position:absolute;display:block;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,#1f8fa8,#1d6e5a,#1450a0,#23206b,#0b0b1e,#5a1308);border-radius:3px;box-shadow:0 0 0 1px #ffffff26}
+#depth .tk{position:absolute;display:block;left:-1px;width:8px;height:8px;margin-top:-4px;background:#06141c;border:1.5px solid #8db1c0aa;border-radius:50%}
+#depth .mk{position:absolute;left:-4px;top:-7px;display:flex;align-items:center;gap:4px;will-change:transform}
+#depth .mk i{display:block;flex:0 0 14px;height:14px;background:var(--gold);border:2px solid #fff6;border-radius:50%;box-shadow:0 0 8px var(--gold)}
+#depth .mk span{padding:1px 6px;font-size:11px;font-weight:800;color:var(--pearl);white-space:nowrap;background:#0009;border-radius:8px}
+#hint{position:absolute;left:50%;top:4px;z-index:6;padding:3px 12px;font-size:13px;font-weight:900;color:#2a1c00;background:var(--gold);border-radius:12px;transform:translateX(-50%);animation:bob 1.2s ease-in-out infinite;pointer-events:none}
+@keyframes bob{50%{transform:translate(-50%,4px)}}
+#oyster{position:absolute;left:50%;top:26px;z-index:3;width:150px;height:118px;margin-left:-75px;cursor:pointer;touch-action:none;filter:drop-shadow(0 10px 12px #000a)}
+#oyster::before{content:"";position:absolute;inset:-26px;z-index:-1;background:radial-gradient(circle,#4fe3e033 0%,transparent 65%);border-radius:50%;animation:breath 3s ease-in-out infinite}
+.oy-top{position:absolute;left:4px;right:4px;top:0;height:58px;background:repeating-linear-gradient(100deg,#0000 0 10px,#0002 10px 13px),linear-gradient(180deg,#bfae8f,#8a785c);border:3px solid #5b4c37;border-radius:50% 50% 40% 40%/70% 70% 30% 30%;transform-origin:50% 100%;transform:rotate(-8deg) translateY(-6px)}
+.oy-bot{position:absolute;left:0;right:0;bottom:0;height:62px;background:linear-gradient(180deg,#cdbfa3,#7d6c52);border:3px solid #5b4c37;border-radius:50% 50% 46% 46%/30% 30% 70% 70%;box-shadow:inset 0 6px 0 #e9dcc2}
+.oy-in{position:absolute;left:12px;right:12px;bottom:26px;height:34px;background:radial-gradient(ellipse at 50% 40%,#fdf7ff,#d9c7f2 45%,#9fd3e0 80%);border-radius:50%}
+.oy-pearl{position:absolute;left:50%;bottom:34px;width:46px;height:46px;margin-left:-23px;background:radial-gradient(circle at 35% 30%,#fff,#fbf3dc 30%,#e8cf8a 65%,#a8862e);border-radius:50%;box-shadow:0 0 18px #f6c94588;animation:pulse 2.2s ease-in-out infinite}
+#oyster.hit .oy-top{animation:snap .16s ease-out}
+#oyster.hit .oy-pearl{animation:pp .16s ease-out}
+@keyframes snap{50%{transform:rotate(0) translateY(4px)}}
+@keyframes pp{50%{transform:scale(.92)}}
+@keyframes pulse{50%{transform:scale(1.06)}}
+@keyframes breath{50%{opacity:.55;transform:scale(.92)}}
+#hud{position:absolute;left:0;right:0;bottom:6px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:3px;pointer-events:none}
+.mtr{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--pearl);text-shadow:0 1px 2px #000}
+.mbar{display:block;width:120px;height:8px;overflow:hidden;background:#0009;border-radius:4px;box-shadow:0 0 0 1px #ffffff1f}
+.mbar i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--cyan2),var(--cyan));box-shadow:0 0 6px var(--cyan)}
+.marea .mbar i{background:linear-gradient(90deg,var(--gold2),var(--gold));box-shadow:0 0 6px var(--gold)}
+.marea .mtr{color:var(--gold)}
+#tapInfo{font-size:12px;font-weight:700;color:var(--mut);text-shadow:0 1px 2px #000}
+#goldfish{position:absolute;left:0;top:0;z-index:6;width:56px;height:56px;font-size:40px;line-height:56px;filter:drop-shadow(0 0 8px #f6c945);will-change:transform}
+#goal{flex:0 0 46px;display:flex;align-items:center;gap:10px;height:46px;margin:5px 10px 3px;padding:0 12px;text-align:left;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:12px}
+#goal .gi{flex:0 0 auto;font-size:22px}
+#goal .gm{flex:1;min-width:0}
+#goal .gt{display:block;overflow:hidden;font-size:13px;font-weight:800;white-space:nowrap;text-overflow:ellipsis}
+#goal .gb{display:block;height:4px;margin-top:4px;overflow:hidden;background:#0008;border-radius:2px}
+#goal .gb i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--cyan2),var(--cyan))}
+#goal .gr{flex:0 0 auto;max-width:30%;overflow:hidden;font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap;text-overflow:ellipsis}
+#panel{flex:1 1 auto;min-height:0;padding:0 10px 10px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .tab{display:none}.tab.on{display:block}
-.thead{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:8px 2px;background:var(--bg)}
+.sp{display:none}.sp.on{display:block}
+.thead{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 2px;background:var(--bg)}
+.thead .tools{display:flex;gap:6px;margin-left:auto}
 .seg{display:flex;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:12px}
-.seg button{min-width:62px;min-height:42px;font-weight:900;color:var(--mut)}
-.seg button.on{background:var(--gold);color:#2a1c00}
-.sec{margin:14px 4px 8px;color:var(--gold);font-size:13px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.seg button{position:relative;min-width:58px;min-height:42px;padding:0 8px;font-weight:900;color:var(--mut)}
+.seg button.on{color:#2a1c00;background:var(--gold)}
+.seg button.lk{opacity:.45}
+.seg.wide{flex:1}.seg.wide button{flex:1;min-width:0;padding:0 4px;font-size:13px}
+.sec{margin:14px 4px 8px;font-size:13px;font-weight:900;color:var(--gold);letter-spacing:.5px;text-transform:uppercase}
+.zh{margin:12px 2px 6px;font-size:13px;font-weight:900;color:var(--cyan);letter-spacing:.3px}
+.zh.lk{color:var(--mut)}
+.req{margin:3px 0 0 6px;font-size:12px;font-weight:600;color:var(--mut);letter-spacing:0}
 .row{display:flex;align-items:center;gap:10px;width:100%;min-height:72px;margin-bottom:8px;padding:10px;text-align:left;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:14px;transition:transform .06s}
 .row:active{transform:scale(.98)}
 .row.off{opacity:.55}
 .row.done{opacity:.5}
-.ic{flex:0 0 48px;width:48px;height:48px;display:grid;place-items:center;font-size:30px;background:#0006;border-radius:12px}
+.row.sm{min-height:48px;padding:8px 10px}
+.ic{flex:0 0 48px;display:grid;place-items:center;width:48px;height:48px;font-size:30px;background:#0006;border-radius:12px}
 .info{flex:1;min-width:0}
 .nm{font-size:16px;font-weight:900}
-.cnt{float:right;color:var(--gold)}
-.sub{margin-top:2px;font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cnt{float:right;margin-left:8px;color:var(--gold)}
+.sub{margin-top:2px;overflow:hidden;font-size:12.5px;color:var(--mut);white-space:nowrap;text-overflow:ellipsis}
+.sub.w{white-space:normal;overflow:visible}
+.trait{margin-top:2px;font-size:11.5px;line-height:1.25;color:var(--cyan)}
 .ms{margin-top:3px;font-size:11px;color:var(--mut)}
 .bar{height:6px;margin-top:6px;overflow:hidden;background:#0008;border-radius:4px}
 .bar i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));transition:width .2s}
-.buy{flex:0 0 auto;min-width:88px;padding:8px 6px;text-align:center;font-weight:900;color:#2a1c00;background:linear-gradient(180deg,#ffd862,#d9a21f);border-radius:10px}
+.buy{flex:0 0 auto;min-width:88px;padding:8px 6px;font-weight:900;text-align:center;color:#2a1c00;background:linear-gradient(180deg,#ffd862,#d9a21f);border-radius:10px}
 .buy small{display:block;font-size:11px;opacity:.75}
-.row.off .buy{background:#4d3f27;color:#cbb994}
-.row.done .buy{background:none;color:var(--ok)}
-#tabs{position:relative;flex:0 0 auto;display:flex;background:var(--bg2);border-top:1px solid var(--line)}
-#tabs button{position:relative;flex:1;min-height:58px;padding:7px 0 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:22px;color:var(--mut)}
-#tabs button span{font-size:11.5px;font-weight:800}
+.row.off .buy{color:#a9c3cf;background:#1b4459}
+.row.done .buy{color:var(--ok);background:none}
+.buy.danger{color:#fff;background:#8e2b26}
+.row.sil .ic{filter:brightness(0) opacity(.5)}
+.row.sil .cnt,.row.sil .trait,.row.sil .bar,.row.sil .ms,.row.sil .buy{display:none}
+.row.sil{opacity:.7}
+#tabs{flex:0 0 58px;display:flex;background:var(--bg2);border-top:1px solid var(--line)}
+#tabs button{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:58px;padding:7px 0 6px;font-size:22px;line-height:1;color:var(--mut)}
+#tabs button span{font-size:11px;font-weight:800}
 #tabs button.on{color:var(--gold);background:#f6c94512;box-shadow:inset 0 3px 0 var(--gold)}
-#tabs .dot{top:6px;right:calc(50% - 20px)}
-#banner{flex:0 0 50px;height:50px;display:flex;align-items:center;justify-content:center;background:#0a0806;border-top:1px dashed #3a3020;color:#6d6250;font-size:12px;letter-spacing:.5px}
+#tabs button.lk{opacity:.45}
+#tabs button .lki{position:absolute;top:4px;left:calc(50% + 8px);font-size:11px}
+#tabs .dot{top:5px;right:calc(50% - 20px)}
+#banner{flex:0 0 50px;display:flex;align-items:center;justify-content:center;height:50px;font-size:12px;color:#5f8090;letter-spacing:.5px;background:#040d12;border-top:1px dashed #1e4a5f}
 #banner.hide{display:none}
 .btn{display:block;width:100%;min-height:54px;padding:10px;font-size:17px;font-weight:900;background:var(--card2);border:1px solid var(--line);border-radius:14px}
-.btn.g{background:linear-gradient(180deg,#ffd862,#d9a21f);color:#2a1c00;border-color:#a87810}
+.btn.g{color:#2a1c00;background:linear-gradient(180deg,#ffd862,#d9a21f);border-color:#a87810}
+.btn.r{color:#fff;background:#8e2b26;border-color:#c0443d}
+.btn.s{min-height:44px;font-size:15px}
 .btn:active{transform:scale(.98)}
 .btn:disabled{opacity:.4}
-.gtxt{color:var(--gold)}
-.mut{color:var(--mut)}
-.asc{padding:14px 4px;text-align:center}
-.crown{font-size:64px;filter:drop-shadow(0 0 14px #f6c94588)}
-.ah{margin-top:4px;font-size:22px;font-weight:900}
+.asc{padding:6px 4px 14px;text-align:center}
+.bigic{font-size:60px;filter:drop-shadow(0 0 14px #4fe3e066)}
+.ah{margin-top:2px;font-size:22px;font-weight:900}
 .card{margin:12px 0;padding:14px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px}
-.card b{display:block;margin-top:4px;font-size:24px}
-.card small{display:block;margin-top:6px}
-.note{margin-top:12px;font-size:12.5px}
+.card b.v{display:block;margin-top:4px;font-size:24px}
+.card small{display:block;margin-top:6px;font-size:12.5px}
+.badge{display:inline-block;margin-left:6px;padding:2px 8px;font-size:12px;font-weight:900;color:#2a1c00;vertical-align:3px;background:var(--gold);border-radius:10px}
+.note{margin-top:12px;font-size:12.5px;line-height:1.4}
 .ov{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;background:#000b}
 .ov.hidden{display:none}
-.mbox{width:100%;max-width:380px;padding:20px;text-align:center;background:linear-gradient(180deg,#2d2416,#1d170e);border:2px solid var(--gold2);border-radius:20px;box-shadow:0 20px 50px #000}
-.mbox h2{margin-bottom:10px;font-size:22px;color:var(--gold)}
-.mbody{margin-bottom:16px}
+.mbox{width:100%;max-width:380px;max-height:90%;padding:20px;overflow-y:auto;text-align:center;background:linear-gradient(180deg,#123548,#0a1f2b);border:2px solid var(--gold2);border-radius:20px;box-shadow:0 20px 50px #000}
+.mbox h2{margin-bottom:10px;font-size:21px;color:var(--gold)}
+.mbody{margin-bottom:16px;line-height:1.4}
 .mbody p{margin:6px 0}
 .big{margin:10px 0;font-size:30px;font-weight:900;color:var(--gold)}
 .mbtns{display:flex;flex-direction:column;gap:10px}
 .days{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
-.day{padding:6px 2px;font-size:11px;background:#0006;border:1px solid var(--line);border-radius:10px}
+.day{padding:6px 2px;font-size:11px;line-height:1.25;background:#0006;border:1px solid var(--line);border-radius:10px}
 .day b{display:block;font-size:20px}
 .day.d7{grid-column:span 2}
 .day.done{opacity:.45}
 .day.cur{background:#f6c94518;border-color:var(--gold);box-shadow:0 0 10px #f6c94566}
+.dl{display:flex;justify-content:space-between;gap:10px;padding:5px 2px;font-size:13.5px;text-align:left;border-bottom:1px solid #ffffff12}
+.dl b{white-space:nowrap}
+.dl.dim{opacity:.4}
+.dl.tot{font-weight:900;color:var(--gold);border-bottom-color:var(--gold2)}
+#sheet{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:var(--bg)}
+.shd{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 4px}
+.shd h2{font-size:20px;color:var(--gold)}
+.sbody{flex:1;min-height:0;padding:0 10px 16px;overflow-y:auto}
 #adov{z-index:200;background:#000e}
 .adbox{width:100%;max-width:340px;padding:28px 20px;text-align:center;background:#1b1b1b;border:1px solid #444;border-radius:16px}
-.adtag{display:inline-block;margin-bottom:14px;padding:3px 8px;font-size:11px;font-weight:900;letter-spacing:1px;color:#000;background:#ffcc00;border-radius:4px}
+.adtag{display:inline-block;margin-bottom:14px;padding:3px 8px;font-size:11px;font-weight:900;color:#000;letter-spacing:1px;background:#ffcc00;border-radius:4px}
 .adbar{height:6px;margin-top:18px;overflow:hidden;background:#333;border-radius:3px}
 .adbar i{display:block;width:0;height:100%;background:var(--gold)}
 #adov.run .adbar i{animation:fill var(--d,2s) linear forwards}
 @keyframes fill{to{width:100%}}
 #fx{position:fixed;inset:0;z-index:50;overflow:hidden;pointer-events:none}
-.ft{position:absolute;font-size:22px;font-weight:900;color:var(--gold);white-space:nowrap;text-shadow:0 2px 0 #000,0 0 8px #000;transform:translate(-50%,-50%);animation:up .9s ease-out forwards}
-@keyframes up{to{opacity:0;transform:translate(-50%,-150%) scale(1.15)}}
-#toasts{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top) + 64px);z-index:150;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
-.toast{max-width:90%;padding:8px 14px;font-size:14px;font-weight:800;color:var(--gold);text-align:center;background:#000d;border:1px solid var(--gold2);border-radius:20px;animation:tin 2.2s forwards}
+.ft{position:absolute;left:0;top:0;font-size:22px;font-weight:900;color:var(--gold);white-space:nowrap;text-shadow:0 2px 0 #000,0 0 8px #000;opacity:0;will-change:transform,opacity}
+#toasts{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top) + 60px);z-index:150;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.toast{max-width:90%;padding:8px 14px;font-size:14px;font-weight:800;text-align:center;color:var(--gold);background:#000d;border:1px solid var(--gold2);border-radius:20px;animation:tin 2.2s forwards}
 @keyframes tin{0%{opacity:0;transform:translateY(-8px)}10%,80%{opacity:1;transform:none}100%{opacity:0}}
-@media (max-height:640px){#hero{height:168px}#chest{margin-top:14px}}
+.tgl{min-height:42px;padding:0 10px;font-size:13px;font-weight:900;color:var(--mut);white-space:nowrap;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.tgl.on{color:var(--cyan);border-color:var(--cyan2);box-shadow:0 0 8px #4fe3e044}
+#drone{position:absolute;inset:-24px;z-index:4;pointer-events:none;animation:spin 6s linear infinite}
+#drone i{position:absolute;left:50%;top:0;width:22px;margin-left:-11px;font-size:18px;font-style:normal;line-height:1;text-align:center;animation:spin 6s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ct{font-size:15px;font-weight:900;line-height:1.3}
+.card.gl{border-color:var(--gold2);box-shadow:inset 0 0 0 1px #f6c94533}
+.card .btn{margin-top:10px}
+.card p{margin-top:6px;font-size:13.5px;line-height:1.35}
+.card .et{font-size:15px;font-weight:800;color:var(--txt)}
+.lbl{margin:10px 0 2px;font-size:12px;font-weight:800;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chips button{min-width:46px;min-height:42px;padding:0 10px;font-size:14px;font-weight:900;color:var(--mut);background:var(--card2);border:1px solid var(--line);border-radius:12px}
+.chips button.on{color:#2a1c00;background:var(--gold);border-color:var(--gold)}
+.durs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:6px 0}
+.durs button{min-width:0;min-height:50px;padding:4px 2px;font-size:14px;font-weight:900;background:var(--card2);border:1px solid var(--line);border-radius:12px}
+.durs button small{display:block;font-size:10.5px;font-weight:700;color:var(--mut)}
+.durs button.on{color:#2a1c00;background:var(--gold);border-color:var(--gold)}
+.durs button.on small{color:#5a4206}
+.durs button:disabled,.chips button:disabled{opacity:.35}
+.pv{font-size:13px;font-weight:800;color:var(--pearl)}
+.card p.small,.small{font-size:12px}
+.bay .bh{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:900}
+.bay .tm{flex:0 0 auto;color:var(--cyan);font-variant-numeric:tabular-nums}
+.bay.rdy{border-color:var(--gold2)}
+.bay.rdy .tm{color:var(--gold)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-bottom:8px}
+.spc{min-width:0;min-height:112px;padding:8px 4px;text-align:center;background:linear-gradient(180deg,var(--card2),var(--card));border:2px solid var(--line);border-radius:12px}
+.spc .si{font-size:34px;line-height:1.15}
+.spc .sn{margin-top:2px;font-size:12px;font-weight:800;line-height:1.2;overflow-wrap:anywhere}
+.spc .ss{margin-top:3px;font-size:11px;line-height:1.2;color:var(--gold)}
+.spc.unk{border-style:dashed;opacity:.72}
+.spc.unk .ss{color:var(--mut)}
+.spr{display:flex;align-items:center;gap:10px;margin:5px 0;padding:6px 8px;text-align:left;background:#0005;border-left:4px solid;border-radius:8px}
+.spr .si{font-size:26px}
+.spr .sn{flex:1;min-width:0;font-size:13.5px}
+.spr .sn small{display:block;font-size:11.5px;font-weight:800}
+.spr .tag{font-size:12.5px;color:var(--gold);white-space:nowrap}
+.spbig{font-size:64px;line-height:1.1}
+.pips{display:flex;gap:4px;margin-top:5px}
+.pips i{width:10px;height:10px;background:#0008;border:1px solid var(--line);border-radius:50%}
+.pips i.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 4px var(--gold)}
+.ebtns{display:flex;gap:8px;margin-top:10px}
+.ebtns .btn{flex:1;min-height:44px;margin:0;font-size:14px}
+.dl small{font-weight:600}
+.row.sel{border-color:var(--gold2);box-shadow:inset 0 0 0 1px #f6c94533}
+.row.sel .buy{color:var(--ok);background:none}
+.sw{display:block;width:34px;height:30px;background:linear-gradient(180deg,#bfae8f,#8a785c);border:3px solid #5b4c37;border-radius:50% 50% 46% 46%/60% 60% 40% 40%}
+.sw.oy-rosa{background:linear-gradient(180deg,#f2c4cf,#b9798a)}
+.sw.oy-negra{background:radial-gradient(circle at 50% 55%,#333 0 30%,transparent 32%),linear-gradient(180deg,#6d6a7a,#2f2c38);box-shadow:0 0 0 2px #4fe3e077}
+.sw.oy-coral{background:linear-gradient(180deg,#ff8a65,#b23c17)}
+.sw.oy-bio{background:linear-gradient(180deg,#1fa9b8,#0b3b4a);box-shadow:0 0 8px #4fe3e0}
+.sw.oy-oro{background:linear-gradient(180deg,#ffe08a,#c8951c)}
+#oyster.oy-rosa .oy-top{background:repeating-linear-gradient(100deg,#0000 0 10px,#0002 10px 13px),linear-gradient(180deg,#f2c4cf,#b9798a)}
+#oyster.oy-rosa .oy-bot{background:linear-gradient(180deg,#f7d6de,#b9798a)}
+#oyster.oy-rosa .oy-pearl{background:radial-gradient(circle at 35% 30%,#fff,#ffe3ec 30%,#f3a9c0 65%,#b9566f)}
+#oyster.oy-negra .oy-top{background:repeating-linear-gradient(100deg,#0000 0 10px,#0003 10px 13px),linear-gradient(180deg,#6d6a7a,#2f2c38)}
+#oyster.oy-negra .oy-bot{background:linear-gradient(180deg,#7d7a8a,#34313d)}
+#oyster.oy-negra .oy-pearl{background:radial-gradient(circle at 35% 30%,#9a9a9a,#555 35%,#262626 70%,#111);box-shadow:0 0 0 2px #4fe3e0aa,0 0 18px #4fe3e088}
+#oyster.oy-coral .oy-top{background:repeating-linear-gradient(100deg,#0000 0 10px,#0002 10px 13px),linear-gradient(180deg,#ff8a65,#b23c17)}
+#oyster.oy-coral .oy-bot{background:linear-gradient(180deg,#ffa384,#b23c17)}
+#oyster.oy-bio .oy-top{background:repeating-linear-gradient(100deg,#0000 0 10px,#0002 10px 13px),linear-gradient(180deg,#1fa9b8,#0b3b4a)}
+#oyster.oy-bio .oy-bot{background:linear-gradient(180deg,#27c3cf,#0b3b4a)}
+#oyster.oy-bio .oy-in{background:radial-gradient(ellipse at 50% 40%,#e9ffff,#7ff3f0 45%,#1fa9b8 80%)}
+#oyster.oy-bio{filter:drop-shadow(0 0 12px #4fe3e0aa) drop-shadow(0 10px 12px #000a)}
+#oyster.oy-oro .oy-top{background:repeating-linear-gradient(100deg,#0000 0 10px,#0002 10px 13px),linear-gradient(180deg,#ffe08a,#c8951c)}
+#oyster.oy-oro .oy-bot{background:linear-gradient(180deg,#fff0b8,#c8951c)}
+@media (prefers-reduced-motion:reduce){#drone,#drone i{animation:none}}
+@media (max-height:640px){#hero{flex-basis:168px;height:168px}#oyster{top:12px;transform:scale(.8)}#depth{top:54px;height:68px}#hud{bottom:4px}}
+@media (prefers-reduced-motion:reduce){.oy-pearl,#oyster::before,#hint{animation:none}}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
-    <div>
-      <div class="gold">💰 <span id="gold">0</span></div>
-      <div id="pps">0 /s</div>
+    <div class="hl">
+      <div class="gold"><i class="pl"></i> <span id="pearls">0</span></div>
+      <button id="pps" type="button"><span id="ppsT">0 /s</span> <small>📊</small></button>
     </div>
-    <div class="side">
-      <div class="pill">💎 <span id="gems">0</span></div>
-      <div class="pill">👑 <span id="crowns">0</span></div>
+    <div class="pills">
+      <div class="pill" id="pGem">💎 <b>0</b></div>
+      <div class="pill hidden" id="pCoral"><span class="icc"></span> <b>0</b></div>
+      <div class="pill hidden" id="pMu">🧪 <b>0</b></div>
+      <div class="pill hidden" id="pBruj">🧭 <b>0</b></div>
     </div>
   </header>
-  <section id="hero">
-    <button id="boostBtn" class="chip l"></button>
-    <button id="dailyBtn" class="chip r">📅 Diario<i class="dot"></i></button>
-    <div id="chest"><div class="lid"></div><div class="base"></div><div class="lock"></div></div>
-    <div id="tapInfo"></div>
+  <section id="hero" class="z1">
+    <canvas id="sea"></canvas>
+    <div class="flash"></div>
+    <button id="depth" type="button"><span class="trk"></span><span class="mk"><i></i><span id="depthT"></span></span></button>
+    <button id="boostBtn" class="chip hidden" type="button"></button>
+    <div id="evPill" class="hidden"></div>
+    <div class="hbtns">
+      <button id="dailyBtn" class="rb" type="button">📅<i class="dot"></i></button>
+      <button id="logBtn" class="rb hidden" type="button">📋<i class="dot"></i></button>
+      <button id="muteBtn" class="rb" type="button">🔊</button>
+    </div>
+    <div id="hint">¡Tócala!</div>
+    <div id="oyster"><div class="oy-top"></div><div class="oy-bot"></div><div class="oy-in"></div><div class="oy-pearl"></div></div>
+    <div id="hud"><div class="mtr"><span class="mbar"><i id="meterBar"></i></span><span id="meterTxt"></span></div><div id="tapInfo"></div></div>
+    <button id="goldfish" class="hidden" type="button">🐡</button>
   </section>
+  <button id="goal" type="button"><span class="gi" id="goalI"></span><span class="gm"><span class="gt" id="goalT"></span><span class="gb"><i id="goalB"></i></span></span><span class="gr" id="goalR">›</span></button>
   <main id="panel">
-    <div class="tab on" id="t-b"></div>
-    <div class="tab" id="t-u"></div>
-    <div class="tab" id="t-s"></div>
-    <div class="tab" id="t-a"><div class="asc">
-      <div class="crown">👑</div>
-      <div class="ah">Coronas: <span id="aCr" class="gtxt">0</span></div>
-      <div class="mut" id="aBonus"></div>
-      <div class="card"><span class="mut">Oro ganado en esta partida</span><b id="aRun">0</b><div class="bar"><i id="aBar"></i></div><small id="aNeed" class="mut"></small></div>
-      <div class="card"><span class="mut">Coronas al ascender</span><b id="aPend" class="gtxt">+0</b></div>
-      <button class="btn g" id="aBtn">👑 Ascender</button>
-      <p class="mut note">Ascender reinicia el oro, los edificios y las mejoras. Conservas coronas, gemas y compras. Cada corona da +10 % de producción para siempre.</p>
-    </div></div>
+    <div class="tab on" id="t-gen">
+      <div class="thead"><span class="mut">Comprar</span><span class="tools" id="genTools"></span><div class="seg" id="buySeg"><button data-m="1" type="button">x1</button><button data-m="10" type="button">x10</button><button data-m="max" type="button">MAX</button></div></div>
+      <div id="genList"></div>
+    </div>
+    <div class="tab" id="t-up">
+      <div class="thead"><span class="mut">Mejoras de esta expedición</span><span class="tools" id="upTools"></span></div>
+      <div id="upList"></div>
+    </div>
+    <div class="tab" id="t-exp">
+      <div class="thead"><div class="seg wide" id="seg-exp"></div></div>
+      <div class="sp" id="m-dives"></div>
+      <div class="sp" id="m-catalog"></div>
+      <div class="sp" id="m-lab"></div>
+    </div>
+    <div class="tab" id="t-reef">
+      <div class="thead"><div class="seg wide" id="seg-reef"></div></div>
+      <div class="sp" id="m-exped"></div>
+      <div class="sp" id="m-travesia"></div>
+    </div>
+    <div class="tab" id="t-shop"><div id="shopList"></div></div>
   </main>
-  <nav id="tabs">
-    <button data-tab="b" class="on">🏘️<span>Edificios</span></button>
-    <button data-tab="u">📜<span>Mejoras</span></button>
-    <button data-tab="s">💎<span>Tienda</span></button>
-    <button data-tab="a" id="tabA">👑<span>Ascender</span><i class="dot"></i></button>
-  </nav>
+  <nav id="tabs"></nav>
   <div id="banner"></div>
+</div>
+<div id="sheet" class="hidden">
+  <div class="shd"><h2>📋 Bitácora</h2><button class="rb" id="sheetX" type="button">✕</button></div>
+  <div class="thead" style="padding:6px 10px"><div class="seg wide" id="seg-sheet"></div></div>
+  <div class="sbody">
+    <div class="sp" id="m-enc"></div>
+    <div class="sp" id="m-ach"></div>
+    <div class="sp" id="m-events"></div>
+    <div class="sp" id="m-odds"></div>
+  </div>
 </div>
 <div id="modal" class="ov hidden"><div class="mbox" id="mbox"></div></div>
 <div id="adov" class="ov hidden"><div class="adbox"><div class="adtag" id="adtag">ANUNCIO</div><div id="adtxt"></div><div class="adbar"><i></i></div></div></div>
@@ -158,42 +318,201 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px;pad
 <script>
 'use strict';
 // ===== CONFIG =====
-const CONFIG = [
-  {name: 'Granja',     icon: '🌾', cost: 15,    prod: 0.2},
-  {name: 'Aserradero', icon: '🪓', cost: 100,   prod: 1.5},
-  {name: 'Mina',       icon: '⛏️', cost: 1100,  prod: 10},
-  {name: 'Herrería',   icon: '⚒️', cost: 12000, prod: 60},
-  {name: 'Mercado',    icon: '🧺', cost: 1.3e5, prod: 350},
-  {name: 'Castillo',   icon: '🏰', cost: 1.4e6, prod: 2000},
-  {name: 'Catedral',   icon: '⛪', cost: 2e7,   prod: 1.2e4},
-  {name: 'Palacio',    icon: '🏛️', cost: 3.3e8, prod: 7e4},
-];
-const UPGRADES = [
-  {id: 't1', type: 't', icon: '🧤', name: 'Guantes de cuero',   cost: 100,   mult: 2},
-  {id: 't2', type: 't', icon: '🔨', name: 'Martillo de hierro', cost: 2000,  mult: 2},
-  {id: 't3', type: 't', icon: '✨', name: 'Toque de Midas',     cost: 3e4,   pct: 0.01},
-  {id: 't4', type: 't', icon: '🗡️', name: 'Espada de acero',    cost: 5e5,   mult: 3},
-  {id: 't5', type: 't', icon: '🪄', name: 'Cetro de oro',       cost: 1e7,   pct: 0.02},
-  {id: 't6', type: 't', icon: '💍', name: 'Anillo del rey',     cost: 3e8,   mult: 5},
-  {id: 't7', type: 't', icon: '🐉', name: 'Aliento de dragón',  cost: 1e10,  pct: 0.03},
-  {id: 't8', type: 't', icon: '🙌', name: 'Mano divina',        cost: 1e12,  mult: 10},
-  {id: 'g1', type: 'g', icon: '🛤️', name: 'Caminos empedrados', cost: 2500,  mult: 1.5},
-  {id: 'g2', type: 'g', icon: '🤝', name: 'Gremios',            cost: 6e4,   mult: 1.5},
-  {id: 'g3', type: 'g', icon: '📜', name: 'Impuestos reales',   cost: 1.5e6, mult: 2},
-  {id: 'g4', type: 'g', icon: '⛵', name: 'Rutas comerciales',  cost: 4e7,   mult: 2},
-  {id: 'g5', type: 'g', icon: '🎓', name: 'Universidad real',   cost: 1e9,   mult: 2},
-  {id: 'g6', type: 'g', icon: '🗺️', name: 'Conquistas',         cost: 3e10,  mult: 3},
-  {id: 'g7', type: 'g', icon: '⚔️', name: 'Gran ejército',      cost: 1e12,  mult: 3},
-  {id: 'g8', type: 'g', icon: '🌍', name: 'Imperio eterno',     cost: 1e14,  mult: 5},
-];
-const COST_MULT = 1.15, MILESTONES = [10, 25, 50, 100];
-const CROWN_BONUS = 0.1, ASCEND_MIN = 4e8, CROWN_K = 10; // ~45 min hasta el primer ascenso (10 coronas)
+const SAVE_KEY = 'perlasAbismo_v1', SAVE_VERSION = 1;
+const COST_MULT = 1.15, MS_BASE = [10, 25, 50, 100], MS_B6 = [150, 200], MS_B7 = [300, 400, 500], MS_PERK = [600, 700, 800, 900, 1000];
+const HAB = {req: 25, costMult: 300, mult: 2};
+const CORAL = {K: 10, PMIN: 5e11, EXP: 1 / 4, RATE: 0.10, RATE2: 0.11};
+const BRUJ = {DIV: 33, EXP: 1 / 3, CORAL_BONUS: 0.05};
+const DEEP = {COST_BASE: 3, BRUJ_BONUS: 0.25};
 const OFFLINE_MAX = 8 * 3600, OFFLINE_MIN = 60;
-const BOOST_MS = 5 * 60e3, AD_GEMS = 10, AD_GEMS_DAY = 5;
+const BOOST_MS = 5 * 60e3, AD_GEMS = 10, AD_GEMS_DAY = 5, AD_LOOT_DAY = 3, AD_LAB_DAY = 3, AD_LAB_CUT = 30 * 60e3;
 const JUMPS = [{h: 1, gems: 20}, {h: 8, gems: 120}];
-const DAILY = [{min: 15}, {gems: 5}, {min: 30}, {gems: 10}, {min: 60}, {gems: 15}, {gems: 50}];
-const SAVE_KEY = 'imperioIdle_v1';
+const METER_NEED = 150, METER_NEED_C3 = 120, MAREA_S = 10, MAREA_S_C3 = 15;
+const FISH_MIN = 90, FISH_MAX = 180, FISH_VISIBLE = 12, FISH_FIRST = 60;
+const ENC_REROLL_MS = 30 * 60e3, ENC_REROLL_GEMS = 5;
+const DAILY = [{min: 15}, {gems: 5}, {mu: 10}, {min: 60}, {gems: 15}, {mu: 30}, {gems: 50, roll: 1}];
+const FIRST_DAILY_S = 120, D7_FALLBACK_GEMS = 10, EVENT_DELAY_MS = 2 * 864e5;
 
+const GEN = [ // id,name,icon,zone,cost,prod
+  {id: 'cangrejo', name: 'Cangrejo ermitaño', icon: '🦀', zone: 1, cost: 15, prod: 0.2},
+  {id: 'payaso', name: 'Pez payaso', icon: '🐠', zone: 1, cost: 110, prod: 1.4},
+  {id: 'nutria', name: 'Nutria marina', icon: '🦦', zone: 2, cost: 1200, prod: 9},
+  {id: 'tortuga', name: 'Tortuga carey', icon: '🐢', zone: 2, cost: 1.3e4, prod: 55},
+  {id: 'pulpo', name: 'Pulpo joyero', icon: '🐙', zone: 3, cost: 1.4e5, prod: 320},
+  {id: 'delfin', name: 'Delfín mensajero', icon: '🐬', zone: 3, cost: 1.6e6, prod: 1900},
+  {id: 'medusa', name: 'Medusa luminosa', icon: '🪼', zone: 4, cost: 2.2e7, prod: 1.15e4},
+  {id: 'calamar', name: 'Calamar gigante', icon: '🦑', zone: 4, cost: 3.3e8, prod: 7e4},
+  {id: 'cachalote', name: 'Cachalote', icon: '🐋', zone: 5, cost: 6e9, prod: 4.2e5},
+  {id: 'buzo', name: 'Buzo científico', icon: '🤿', zone: 5, cost: 1.2e11, prod: 2.5e6},
+  {id: 'fumarola', name: 'Fumarola hidrotermal', icon: '🌋', zone: 6, cost: 2.5e12, prod: 1.5e7},
+  {id: 'ciudad', name: 'Ciudad abisal', icon: '🏙️', zone: 6, cost: 5e13, prod: 9e7},
+];
+const TRAITS = [
+  'Rasgo: las 🦦 Nutrias le dan +2 % cada una',
+  'Rasgo: cada 25 dan +5 % al valor del toque',
+  'Rasgo: +2 % a los Cangrejos por cada nutria',
+  'Rasgo: cada 25 acortan un 5 % las inmersiones (máx. −20 %)',
+  'Rasgo: cada 10 dan +5 % al premio del pez dorado (máx. +50 %)',
+  'Rasgo: cada 25 dan +5 % de muestras en las inmersiones (máx. +30 %)',
+  'Rasgo: cada 10 dan +1 % a todas las criaturas',
+  'Rasgo: con 25 o más, +1 tirada en inmersiones de 2 h o más',
+  'Rasgo: cada 25 dan +5 % de corales (máx. +50 %)',
+  'Rasgo: cada 10 traen +1 🧪 por hora, también sin jugar',
+  'Rasgo: cada 25 dan +50 % a Cachalotes y Buzos',
+  'Rasgo: con 1 se abre la Travesía oceánica',
+];
+const SYMB = {0: 1, 1: 1, 2: 1, 6: 1, 10: 1}; // filas cuyo rasgo duplica Simbiosis (b2)
+const TAPU = [
+  {id: 't1', name: 'Guantes de neopreno', icon: '🧤', cost: 100, mult: 2, pct: 0, zone: 1},
+  {id: 't2', name: 'Cuchillo perlero', icon: '🔪', cost: 600, mult: 2, pct: 0, zone: 1},
+  {id: 't3', name: 'Pulso de marea', icon: '🌊', cost: 3e4, mult: 1, pct: 0.01, zone: 1},
+  {id: 't4', name: 'Lupa de joyero', icon: '🔍', cost: 5e5, mult: 3, pct: 0, zone: 1},
+  {id: 't5', name: 'Aleta de carbono', icon: '🏊', cost: 1e7, mult: 1, pct: 0.02, zone: 1},
+  {id: 't6', name: 'Guante de nácar', icon: '🐚', cost: 3e8, mult: 5, pct: 0, zone: 1},
+  {id: 't7', name: 'Pulso de sonar', icon: '📡', cost: 1e10, mult: 1, pct: 0.03, zone: 1},
+  {id: 't8', name: 'Exotraje abisal', icon: '🥽', cost: 1e12, mult: 10, pct: 0, zone: 1},
+];
+const GLOBU = [
+  {id: 'g1', name: 'Corrientes cálidas', icon: '🌡️', cost: 2500, mult: 1.5, zone: 1},
+  {id: 'g2', name: 'Red de boyas', icon: '⚓', cost: 6e4, mult: 1.5, zone: 1},
+  {id: 'g3', name: 'Faro submarino', icon: '🗼', cost: 1.5e6, mult: 2, zone: 1},
+  {id: 'g4', name: 'Cartas de mareas', icon: '🗺️', cost: 4e7, mult: 2, zone: 1},
+  {id: 'g5', name: 'Estación de buceo', icon: '🏗️', cost: 1e9, mult: 2, zone: 1},
+  {id: 'g6', name: 'Cable submarino', icon: '🔌', cost: 3e10, mult: 3, zone: 1},
+  {id: 'g7', name: 'Granja de ostras', icon: '🦪', cost: 1e12, mult: 3, zone: 1},
+  {id: 'g8', name: 'Reserva marina', icon: '🏝️', cost: 1e14, mult: 5, zone: 5},
+  {id: 'g9', name: 'Planta mareomotriz', icon: '⚡', cost: 1e16, mult: 5, zone: 6},
+  {id: 'g10', name: 'Red oceánica global', icon: '🌐', cost: 1e18, mult: 10, zone: 6},
+];
+const ZONES = [ // thr = perlas ganadas en esta expedición (×scale)
+  {name: 'Arrecife de coral', icon: '🐚', depth: 0, thr: 0, res: null, chart: 0},
+  {name: 'Bosque de kelp', icon: '🌿', depth: 40, thr: 1e3, res: null, chart: 0},
+  {name: 'Mar abierto', icon: '🌊', depth: 200, thr: 1e5, res: null, chart: 0},
+  {name: 'Zona crepuscular', icon: '🌌', depth: 1000, thr: 1e7, res: null, chart: 0},
+  {name: 'Llanura abisal', icon: '🌑', depth: 4000, thr: 3e9, res: 'e3', chart: 1},
+  {name: 'Fosa hadal', icon: '🌋', depth: 11000, thr: 1e12, res: 'e6', chart: 2},
+];
+const H = 3600, M = 60;
+const RES = [ // id,branch,name,icon,cost(muestras),time(s),text
+  {id: 'b1', br: 'b', name: 'Plancton nutritivo', icon: '🦠', cost: 5, time: 2 * M, text: 'Producción ×1,25'},
+  {id: 'b2', br: 'b', name: 'Simbiosis', icon: '🤝', cost: 20, time: 15 * M, text: 'Los rasgos de Pez payaso, Nutria, Medusa y Fumarola valen el doble'},
+  {id: 'b3', br: 'b', name: 'Ecolocalización', icon: '🔊', cost: 60, time: 45 * M, text: 'El pez dorado aparece un 25 % más a menudo'},
+  {id: 'b4', br: 'b', name: 'Genética coralina', icon: '🧬', cost: 200, time: 2 * H, text: 'Cada coral da +11 % en vez de +10 %'},
+  {id: 'b5', br: 'b', name: 'Bioluminiscencia', icon: '✨', cost: 600, time: 4 * H, text: 'Rara, Épica y Legendaria ×1,5 en las zonas 4-6'},
+  {id: 'b6', br: 'b', name: 'Hitos extendidos I', icon: '📈', cost: 1500, time: 8 * H, text: 'Hitos ×2 también a 150 y 200 criaturas'},
+  {id: 'b7', br: 'b', name: 'Hitos extendidos II', icon: '📊', cost: 3500, time: 16 * H, text: 'Hitos ×2 también a 300, 400 y 500 criaturas'},
+  {id: 'b8', br: 'b', name: 'Ecosistema vivo', icon: '🌍', cost: 7000, time: 24 * H, text: '+1 % de producción por cada estrella del catálogo'},
+  {id: 'e1', br: 'e', name: 'Sonar', icon: '📡', cost: 10, time: 5 * M, text: '+25 % de muestras en las inmersiones'},
+  {id: 'e2', br: 'e', name: 'Segunda bahía', icon: '⚓', cost: 50, time: 30 * M, text: '+1 bahía de inmersión'},
+  {id: 'e3', br: 'e', name: 'Casco de titanio', icon: '🛡️', cost: 250, time: 4 * H, text: 'Permite abrir la Llanura abisal (además hace falta su carta náutica)'},
+  {id: 'e4', br: 'e', name: 'Propulsores', icon: '🚀', cost: 500, time: 6 * H, text: 'Inmersiones −20 % de duración'},
+  {id: 'e5', br: 'e', name: 'Dron de toque', icon: '🤖', cost: 900, time: 8 * H, text: '1 toque automático por segundo con el juego abierto'},
+  {id: 'e6', br: 'e', name: 'Batiscafo hadal', icon: '🛸', cost: 1500, time: 12 * H, text: 'Permite abrir la Fosa hadal (además hace falta su carta náutica)'},
+  {id: 'e7', br: 'e', name: 'Brazo robótico', icon: '🦾', cost: 5000, time: 16 * H, text: 'Autocompra de criaturas (interruptor)'},
+  {id: 'e8', br: 'e', name: 'Tercera bahía', icon: '⚓', cost: 8000, time: 24 * H, text: '+1 bahía de inmersión'},
+  {id: 'c1', br: 'c', name: 'Vivero de coral', icon: '🌱', cost: 15, time: 10 * M, text: '+10 % de corales'},
+  {id: 'c2', br: 'c', name: 'Memoria del arrecife', icon: '🧠', cost: 60, time: 1 * H, text: 'Cada expedición empieza con 10 Cangrejos y 10 Peces payaso'},
+  {id: 'c3', br: 'c', name: 'Marea ágil', icon: '🫧', cost: 200, time: 2 * H, text: 'La Marea de perlas se llena con 120 toques y dura 15 s'},
+  {id: 'c4', br: 'c', name: 'Corrientes guía', icon: '🧲', cost: 500, time: 3 * H, text: 'Las recompensas del pez dorado valen el doble'},
+  {id: 'c5', br: 'c', name: 'Arrecife próspero', icon: '🪸', cost: 1200, time: 6 * H, text: '+25 % de corales'},
+  {id: 'c6', br: 'c', name: 'Guardianes', icon: '🏅', cost: 2500, time: 10 * H, text: 'Cada logro da +2 % en vez de +1 %'},
+  {id: 'c7', br: 'c', name: 'Cartografía', icon: '🧭', cost: 4000, time: 14 * H, text: '+1 brújula en cada Travesía'},
+  {id: 'c8', br: 'c', name: 'Corazón del océano', icon: '💙', cost: 8000, time: 24 * H, text: 'Corales ×1,5'},
+];
+const RES_BY_ID = Object.fromEntries(RES.map(r => [r.id, r]));
+const FIELD = {name: 'Estudio de campo', icon: '📋', cost: 5000, growth: 1.6, time: 12 * H, mult: 1.10};
+const RARITY = {C: {name: 'Común', w: 60, col: 'var(--rC)'}, P: {name: 'Poco común', w: 25, col: 'var(--rP)'}, R: {name: 'Rara', w: 10, col: 'var(--rR)'}, E: {name: 'Épica', w: 4, col: 'var(--rE)'}, L: {name: 'Legendaria', w: 1, col: 'var(--rL)'}};
+const STARS = [1, 2, 4, 8, 16];
+const DIVES = [{id: 'd5', label: '5 min', t: 5 * M, mu: 1, rolls: 1}, {id: 'd30', label: '30 min', t: 30 * M, mu: 4, rolls: 2}, {id: 'd2h', label: '2 h', t: 2 * H, mu: 12, rolls: 3}, {id: 'd8h', label: '8 h', t: 8 * H, mu: 40, rolls: 5}];
+const ZONE_MIN_DIVE = [0, 0, 30 * M, 30 * M, 2 * H, 8 * H];
+const CHARTS = [{id: 1, name: 'Carta de la Llanura abisal', from: 4, opens: 5, t: 12 * H, mu: 40, rolls: 5}, {id: 2, name: 'Carta de la Fosa hadal', from: 5, opens: 6, t: 24 * H, mu: 60, rolls: 6}];
+const TUTORIAL_DIVE = {t: 90, mu: 5, species: 'caballito'};
+const OCEANS = [
+  {name: 'Atlántico', icon: '🌊', mod: 'Sin modificador', relic: 'Reliquia del Atlántico: +20 % de muestras de inmersión'},
+  {name: 'Pacífico', icon: '🌋', mod: 'Anillo de fuego: criaturas de las zonas 3 y 6 ×5', relic: 'Reliquia del Pacífico: producción ×1,5'},
+  {name: 'Índico', icon: '🌧️', mod: 'Monzón: el pez dorado aparece el doble y los toques valen ×3', relic: 'Reliquia del Índico: toques ×3'},
+  {name: 'Ártico', icon: '🧊', mod: 'Hielo: inmersiones −30 % y criaturas de las zonas 1-2 ×10', relic: 'Reliquia del Ártico: inmersiones −10 % de duración'},
+  {name: 'Antártico', icon: '🐧', mod: 'Krill: corales +50 %', relic: 'Reliquia del Antártico: corales +25 %'},
+];
+const PERKS = [[1, 'autoUp', 'Autocompra de mejoras (interruptor)'], [3, 'start6', 'Cada expedición empieza con 10 criaturas de cada tipo de las zonas 1-3'], [5, 'keepHab', 'Los hábitats se conservan al hacer una Nueva expedición'], [8, 'bench2', 'Segundo banco del laboratorio'], [12, 'autoFish', 'Si no tocas el pez dorado, se recoge solo con la mitad del premio'], [20, 'ms3', 'Hitos ×2 también de 600 a 1.000 criaturas (cada 100)'], [30, 'roll1', '+1 tirada en todas las inmersiones'], [50, 'deep', 'Abre el Océano Profundo ∞'], [75, 'chartFast', 'Las cartas náuticas tardan un 25 % menos'], [100, 'admiral', 'Título «Almirante del Abismo» y ostra dorada']];
+const EVENTS = [{k: 'luna', name: 'Luna llena', icon: '🌕', text: 'Toques ×3'}, {k: 'floracion', name: 'Floración de plancton', icon: '🦠', text: 'El pez dorado aparece el doble'}, {k: 'ciencia', name: 'Semana científica', icon: '🔬', text: 'Investigaciones −25 % de tiempo y +50 % de muestras de inmersión'}, {k: 'migracion', name: 'Gran migración', icon: '🐋', text: 'Inmersiones −25 % de duración y +1 tirada'}];
+const ACH = [ // key,name,icon,stat,tiers,text
+  {k: 'pop', name: 'Población', icon: '🐠', stat: 'maxOwned', tiers: [10, 50, 100, 250, 500, 1000, 2000, 3000, 5000], text: 'Ten {n} criaturas a la vez'},
+  {k: 'pearls', name: 'Tesorero', icon: '🦪', stat: 'total', tiers: [1e3, 1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27], text: 'Gana {n} perlas en total'},
+  {k: 'taps', name: 'Dedos de nácar', icon: '👆', stat: 'taps', tiers: [100, 1000, 5000, 20000, 50000, 1e5, 2.5e5, 5e5, 1e6], text: 'Toca la ostra {n} veces'},
+  {k: 'fish', name: 'Pescador dorado', icon: '🐡', stat: 'fish', tiers: [1, 5, 25, 50, 100, 250, 500, 750, 1000], text: 'Atrapa {n} peces dorados'},
+  {k: 'dives', name: 'Buzo', icon: '🤿', stat: 'dives', tiers: [1, 5, 10, 25, 50, 100, 200, 350, 500], text: 'Completa {n} inmersiones'},
+  {k: 'species', name: 'Naturalista', icon: '📖', stat: 'species', tiers: [1, 5, 10, 15, 20, 25, 30, 40, 48], text: 'Descubre {n} especies'},
+  {k: 'exp', name: 'Restaurador', icon: '🪸', stat: 'exps', tiers: [1, 5, 10, 25, 50, 100, 250, 500, 1000], text: 'Haz {n} Nuevas expediciones'},
+  {k: 'res', name: 'Científico', icon: '🔬', stat: 'resDone', tiers: [1, 3, 6, 9, 12, 15, 18, 21, 24], text: 'Completa {n} investigaciones'},
+  {k: 'trav', name: 'Navegante', icon: '🧭', stat: 'brTot', tiers: [1, 5, 10, 20, 30, 50, 75, 100, 150], text: 'Reúne {n} brújulas'},
+];
+const LEG_TEXT = {tap2: 'Toques ×2', dive10: '+10 % de muestras y perlas de inmersión', diveTime: 'Inmersiones −15 % de duración', fish20: 'El pez dorado aparece un 20 % más a menudo', coral15: '+15 % de corales', roll8h: '+1 tirada en las inmersiones de 8 h', prod25: 'Producción ×1,25', mu10: '+10 % de muestras de inmersión', roll2h: '+1 tirada en las inmersiones de 2 h o más', coral10: '+10 % de corales'};
+const SPECIES = [ // id,name,icon,zone,r,ocean(0=cualquiera,1..4 solo allí),fact,leg
+  ['cirujano', 'Pez cirujano azul', '🐟', 1, 'C', 0, 'Tiene una espina afilada como un bisturí a cada lado de la cola.'],
+  ['estrella', 'Estrella de mar', '⭐', 1, 'C', 0, 'Si pierde un brazo, le vuelve a crecer.'],
+  ['caballito', 'Caballito de mar', '🐠', 1, 'P', 0, 'Es el macho quien lleva los huevos y da a luz a las crías.'],
+  ['tverde', 'Tortuga verde', '🐢', 1, 'R', 0, 'Su nombre viene del color verdoso de su grasa, no del caparazón.'],
+  ['manta', 'Mantarraya gigante', '🐟', 1, 'E', 0, 'Puede medir 7 metros de ala a ala y salta fuera del agua.'],
+  ['loro', 'Pez loro arcoíris', '🐠', 1, 'L', 0, 'Muerde el coral y lo convierte en arena blanca: crea playas enteras.', 'tap2'],
+  ['erizo', 'Erizo de mar', '🦔', 2, 'C', 0, 'Las nutrias se lo comen y así salvan el bosque de kelp.'],
+  ['garibaldi', 'Garibaldi', '🐠', 2, 'C', 0, 'El macho limpia un jardín de algas para atraer a la hembra.'],
+  ['langosta', 'Langosta espinosa', '🦞', 2, 'P', 0, 'Migra en filas de decenas, cada una tocando a la de delante.'],
+  ['leonmarino', 'León marino', '🦭', 2, 'R', 0, 'Gira sus aletas traseras hacia delante para caminar en tierra.'],
+  ['leopardo', 'Tiburón leopardo', '🦈', 2, 'E', 0, 'Vive entre el kelp de California y no es peligroso para las personas.'],
+  ['dragonmar', 'Dragón de mar foliáceo', '🐉', 2, 'L', 0, 'Su cuerpo imita hojas de alga: es casi invisible.', 'dive10'],
+  ['sardina', 'Sardina', '🐟', 3, 'C', 0, 'Forma bancos de millones que se mueven como un solo animal.'],
+  ['atun', 'Atún rojo', '🐟', 3, 'C', 0, 'Mantiene su cuerpo más caliente que el agua que lo rodea.'],
+  ['volador', 'Pez volador', '🐟', 3, 'P', 0, 'Planea sobre el agua decenas de metros con sus aletas como alas.'],
+  ['vela', 'Pez vela', '🐟', 3, 'R', 0, 'Es uno de los peces más rápidos del océano.'],
+  ['martillo', 'Tiburón martillo', '🦈', 3, 'E', 0, 'Sus ojos tan separados le dan una visión casi completa a su alrededor.'],
+  ['tballena', 'Tiburón ballena', '🦈', 3, 'L', 0, 'Es el pez más grande del mundo y come plancton.', 'diveTime'],
+  ['linterna', 'Pez linterna', '🐟', 4, 'C', 0, 'Es uno de los vertebrados más abundantes del planeta.'],
+  ['hacha', 'Pez hacha', '🐟', 4, 'C', 0, 'Su vientre brilla para borrar su silueta vista desde abajo.'],
+  ['atolla', 'Medusa atolla', '🪼', 4, 'P', 0, 'Si la atacan, enciende anillos de luz azul como una alarma.'],
+  ['luciernaga', 'Calamar luciérnaga', '🦑', 4, 'R', 0, 'Está cubierto de puntos de luz; en Japón tiñe las bahías de azul.'],
+  ['duende', 'Tiburón duende', '🦈', 4, 'E', 0, 'Lanza su mandíbula hacia delante para atrapar a sus presas.'],
+  ['vampiro', 'Calamar vampiro', '🦑', 4, 'L', 0, 'No chupa sangre: come la «nieve marina» que cae desde arriba.', 'fish20'],
+  ['pepino', 'Pepino de mar', '🥒', 5, 'C', 0, 'Recorre el fondo comiendo sedimento y lo deja más limpio.'],
+  ['ofiura', 'Ofiura', '⭐', 5, 'C', 0, 'Prima de la estrella de mar, se mueve rápido con brazos flexibles.'],
+  ['tripode', 'Pez trípode', '🐟', 5, 'P', 0, 'Se apoya en el fondo sobre tres aletas largas, como un trípode.'],
+  ['rape', 'Rape abisal', '🐡', 5, 'R', 0, 'Lleva un farol de luz en la cabeza para atraer a sus presas.'],
+  ['ogro', 'Pez ogro', '🐟', 5, 'E', 0, 'Tiene los dientes más grandes, en proporción, de todos los peces.'],
+  ['dumbo', 'Pulpo dumbo', '🐙', 5, 'L', 0, 'Nada con dos aletas que parecen las orejas de un elefante.', 'coral15'],
+  ['anfipodo', 'Anfípodo gigante', '🦐', 6, 'C', 0, 'Este crustáceo de las fosas puede superar los 30 cm.'],
+  ['holoturia', 'Holoturia translúcida', '🥒', 6, 'C', 0, 'Es tan transparente que se le ven los órganos.'],
+  ['gusano', 'Gusano de fumarola', '🪱', 6, 'P', 0, 'Vive junto a fumarolas y se alimenta gracias a bacterias.'],
+  ['yeti', 'Cangrejo yeti', '🦀', 6, 'R', 0, 'Cultiva bacterias en los pelos de sus pinzas y se las come.'],
+  ['isopodo', 'Isópodo gigante', '🪲', 6, 'E', 0, 'Pariente de la cochinilla, puede pasar años sin comer.'],
+  ['caracol', 'Pez caracol hadal', '🐟', 6, 'L', 0, 'Tiene el récord del pez filmado más hondo: a más de 8.000 m.', 'roll8h'],
+  ['anillos', 'Pulpo de anillos azules', '🐙', 2, 'R', 1, 'Es pequeño y muy venenoso: enseña anillos azules si se siente en peligro.'],
+  ['napoleon', 'Pez napoleón', '🐟', 4, 'E', 1, 'Puede vivir más de 30 años y cambia de hembra a macho.'],
+  ['azul', 'Ballena azul', '🐋', 6, 'L', 1, 'Es el animal más grande que ha existido nunca.', 'prod25'],
+  ['dugongo', 'Dugongo', '🐋', 2, 'R', 2, 'Pariente del manatí, pasta en praderas marinas como una vaca.'],
+  ['leon', 'Pez león', '🐠', 4, 'E', 2, 'Sus espinas venenosas parecen una melena.'],
+  ['celacanto', 'Celacanto', '🐟', 6, 'L', 2, 'Se creía extinguido hace 66 millones de años hasta que apareció en 1938.', 'mu10'],
+  ['morsa', 'Morsa', '🦭', 2, 'R', 3, 'Usa sus colmillos como piolets para subir al hielo.'],
+  ['beluga', 'Beluga', '🐳', 4, 'E', 3, 'La llaman «canario del mar» por la variedad de sus sonidos.'],
+  ['narval', 'Narval', '🦄', 6, 'L', 3, 'Su «cuerno» es un diente que puede medir 3 metros.', 'roll2h'],
+  ['krill', 'Krill antártico', '🦐', 2, 'R', 4, 'Es diminuto, pero entre todos pesan más que casi cualquier otra especie.'],
+  ['emperador', 'Pingüino emperador', '🐧', 4, 'E', 4, 'Bucea a más de 500 m de profundidad.'],
+  ['hielo', 'Pez de hielo', '🐟', 6, 'L', 4, 'Su sangre no tiene hemoglobina: es casi transparente.', 'coral10'],
+].map(([id, name, icon, zone, r, ocean, fact, leg]) => ({id, name, icon, zone, r, ocean, fact, leg: leg || null}));
+const SPECIES_BY_ID = Object.fromEntries(SPECIES.map(s => [s.id, s]));
+const SKINS = [{id: '', name: 'Clásica', gems: 0}, {id: 'oy-rosa', name: 'Nácar rosa', gems: 150}, {id: 'oy-negra', name: 'Perla negra', gems: 300}, {id: 'oy-coral', name: 'Coral vivo', gems: 500}, {id: 'oy-bio', name: 'Bioluminiscente', gems: 800}, {id: 'oy-oro', name: 'Dorada del Almirante', gems: 0, bruj: 100}];
+const SEA_FISH = ['🐠', '🐟', '🐟', '🦑', '🐡', '🦐'];
+
+// ===== EMOJIS (sustitución si el sistema no los dibuja) =====
+const EMO_FALLBACK = {'🪼': '🎐', '🪱': '🐛', '🪲': '🐞', '🦭': '🐋', '🪸': '🌺', '🫧': '💧', '🤿': '🥽', '🦦': '🐾', '🦪': '🐚', '🦾': '💪', '🛟': '⚓'};
+function emojiOK(ch) { try { const c = document.createElement('canvas'); c.width = c.height = 24; const x = c.getContext('2d'); x.textBaseline = 'top'; x.font = '20px sans-serif'; x.fillText(ch, 0, 0); const d = x.getImageData(0, 0, 24, 24).data; for (let i = 0; i < d.length; i += 4) { if (d[i + 3] > 40 && (Math.abs(d[i] - d[i + 1]) > 24 || Math.abs(d[i + 1] - d[i + 2]) > 24)) return true; } return false; } catch (e) { return false; } }
+const IC = {pearl: '<i class="pl"></i>', gem: '💎', coral: '🪸', mu: '🧪', bruj: '🧭', bub: '🫧', dive: '🤿', oy: '🦪', grace: '🛟'};
+const EMO_BAD = Object.keys(EMO_FALLBACK).filter(k => !emojiOK(k));
+const emo = s => EMO_BAD.reduce((a, k) => a.split(k).join(EMO_FALLBACK[k]), s);
+(function fixEmoji() {
+  if (!EMO_BAD.length) return;
+  const walk = o => { for (const k in o) { const v = o[k]; if (typeof v === 'string') o[k] = emo(v); else if (v && typeof v === 'object') walk(v); } };
+  [GEN, TRAITS, TAPU, GLOBU, ZONES, RES, FIELD, OCEANS, PERKS, EVENTS, ACH, LEG_TEXT, SPECIES, SKINS, SEA_FISH, IC].forEach(walk);
+})();
 // ===== MONETIZACIÓN SIMULADA (sustituir por AdMob y Google Play Billing) =====
 const Sim = (() => {
   const ov = document.getElementById('adov'), tag = document.getElementById('adtag'), txt = document.getElementById('adtxt');
@@ -242,17 +561,66 @@ const Shop = (() => {
   };
 })();
 
+
 // ===== ESTADO =====
-const fresh = () => ({gold: 0, run: 0, total: 0, crowns: 0, gems: 0, b: CONFIG.map(() => 0), up: {}, boost: 0,
-  noAds: false, x2: false, daily: {last: '', streak: 0}, adg: {d: '', n: 0}, last: Date.now()});
+const fresh = () => ({v: SAVE_VERSION, created: Date.now(), last: Date.now(),
+  pearls: 0, run: 0, pOcean: 0, total: 0, gems: 0, mu: 0, coral: 0, coralLife: 0, brTot: 0,
+  b: GEN.map(() => 0), tu: {}, gu: {}, hab: {}, buyMode: 1,
+  ocean: 0, oceanZone: 1, charts: {}, relics: {}, visited: {0: 1},
+  zoneMax: 1, res: {}, benches: [], field: 0, sp: {}, pity: 0, zoneDove: {}, bays: [],
+  taps: 0, fish: 0, dives: 0, exps: 0, travs: 0, maxOwned: 0, resDone: 0, mareas: 0, ach: {}, achN: 0,
+  guide: 0, enc: {list: [], done: 0, rerollAt: 0}, rank: 0,
+  meter: 0, boostEnd: 0, mareaEnd: 0, frenEnd: 0, corrEnd: 0,
+  noAds: false, x2: false, mute: false, vib: true, autoUp: true, autoBuy: true, skin: '', skins: {'': 1},
+  daily: {last: -1, streak: 0, cycles: 0, grace: false}, adLim: {d: -1, gems: 0, loot: 0, lab: 0},
+  flags: {}});
 let S = fresh();
+const isObj = o => !!o && typeof o === 'object' && !Array.isArray(o);
+function sanitize(d) {
+  const F = fresh();
+  const s = Object.assign(F, d);
+  for (const k of ['daily', 'enc', 'adLim', 'flags']) s[k] = Object.assign(fresh()[k], isObj(d[k]) ? d[k] : {});
+  s.b = GEN.map((_, i) => { const n = Math.floor(+(d.b && d.b[i])); return n > 0 && isFinite(n) ? n : 0; });
+  const D0 = fresh();
+  for (const k in D0) {
+    const v0 = D0[k];
+    if (typeof v0 === 'number') { const n = +s[k]; s[k] = isFinite(n) && n >= 0 ? n : v0; }
+    else if (typeof v0 === 'boolean') s[k] = typeof s[k] === 'boolean' ? s[k] : v0;
+    else if (typeof v0 === 'string') s[k] = typeof s[k] === 'string' ? s[k] : v0;
+    else if (Array.isArray(v0)) { if (!Array.isArray(s[k])) s[k] = v0; }
+    else if (isObj(v0) && !isObj(s[k])) s[k] = v0;
+  }
+  if (s.buyMode !== 10 && s.buyMode !== 'max') s.buyMode = 1;
+  for (const k of ['last', 'streak', 'cycles']) if (!isFinite(+s.daily[k])) s.daily[k] = D0.daily[k]; else s.daily[k] = +s.daily[k];
+  s.daily.grace = !!s.daily.grace;
+  for (const k of ['d', 'gems', 'loot', 'lab']) s.adLim[k] = isFinite(+s.adLim[k]) ? +s.adLim[k] : D0.adLim[k];
+  for (const k of ['done', 'rerollAt']) s.enc[k] = isFinite(+s.enc[k]) && +s.enc[k] >= 0 ? +s.enc[k] : 0;
+  if (!Array.isArray(s.enc.list)) s.enc.list = [];
+  s.enc.list = s.enc.list.filter(isObj);
+  const okTimer = o => isObj(o) && isFinite(+o.end) && isFinite(+o.start);
+  s.benches = s.benches.filter(okTimer);
+  s.bays = s.bays.filter(okTimer);
+  s.ocean = Math.floor(s.ocean); s.oceanZone = Math.min(6, Math.max(1, Math.floor(s.oceanZone))); s.zoneMax = Math.min(6, Math.max(1, Math.floor(s.zoneMax)));
+  s.skins[''] = 1;
+  if (!s.visited[0]) s.visited[0] = 1;
+  return s;
+}
+function migrate(s) {
+  switch (s.v) {
+    case 1: break;
+    default: s.v = SAVE_VERSION;
+  }
+  return s;
+}
+let wiping = false;
 function load() {
   try {
     const d = JSON.parse(localStorage.getItem(SAVE_KEY));
-    if (d) { S = Object.assign(fresh(), d); S.b = CONFIG.map((_, i) => +(d.b && d.b[i]) || 0); }
-  } catch (e) {}
+    if (isObj(d)) S = migrate(sanitize(d));
+  } catch (e) { S = fresh(); }
 }
 function save() {
+  if (wiping) return;
   S.last = Date.now();
   try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch (e) {}
 }
@@ -265,164 +633,187 @@ function el(tag, cls, html) {
   if (html != null) e.innerHTML = html;
   return e;
 }
+const setT = (e, s) => { if (e._t !== s) { e._t = s; e.textContent = s; } };
+const setH = (e, s) => { if (e._h !== s) { e._h = s; e.innerHTML = s; } };
+const setW = (e, p) => { const v = Math.max(0, Math.min(100, p || 0)).toFixed(1) + '%'; if (e._w !== v) { e._w = v; e.style.width = v; } };
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const SUF = ['', 'K', 'M', 'B', 'T'];
 function fmt(n, dec) {
   if (!isFinite(n)) return '∞';
   if (n < 1000) return String(dec && n < 100 ? Math.floor(n * 10 + 1e-9) / 10 : Math.floor(n)).replace('.', ',');
   let e = Math.floor(Math.log10(n) / 3), v = n / Math.pow(1000, e);
   if (v >= 1000) { v /= 1000; e++; } else if (v < 1) { v *= 1000; e--; }
+  let d = v < 10 ? 2 : v < 100 ? 1 : 0, r = Math.floor(v * Math.pow(10, d) + 1e-9) / Math.pow(10, d);
+  if (r >= 1000) { r = 1; d = 2; e++; }
   const s = e < 5 ? SUF[e] : String.fromCharCode(97 + Math.floor((e - 5) / 26), 97 + (e - 5) % 26);
-  const d = v < 10 ? 2 : v < 100 ? 1 : 0, p = Math.pow(10, d);
-  return (Math.floor(v * p + 1e-9) / p).toFixed(d).replace('.', ',') + s;
+  return r.toFixed(d).replace('.', ',') + s;
 }
+const fmtM = v => v < 1000 ? (Math.round(v * 100) / 100).toFixed(2).replace('.', ',') : fmt(v);
+const fmtN = v => String(Math.round(v * 100) / 100).replace('.', ',');
+const fmtInt = n => String(Math.floor(Math.max(0, n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 function fmtTime(s) {
-  s = Math.floor(s);
+  s = Math.max(0, Math.floor(s));
   const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60);
   return h ? `${h} h ${m} min` : m ? `${m} min ${s % 60} s` : `${s} s`;
 }
 const mmss = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-function dayKey(off) {
-  const d = new Date();
-  d.setDate(d.getDate() + (off || 0));
-  return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+const dayNum = d => Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - new Date(2020, 0, 1)) / 864e5);
+function isoWeek(d) { const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); const w = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - w); const y0 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1)); return Math.ceil(((t - y0) / 864e5 + 1) / 7); }
+let evCache = {t: 0, k: null};
+function eventNow() {
+  const now = Date.now();
+  if (now - evCache.t > 1000) evCache = {t: now, k: now - S.created < EVENT_DELAY_MS ? null : EVENTS[isoWeek(new Date(now)) % 4].k};
+  return evCache.k;
 }
+const EVENT_BY_K = Object.fromEntries(EVENTS.map(e => [e.k, e]));
+
+// ===== GANCHOS (Parte B se registra aquí) =====
+const Hooks = {tick1s: [], tick5hz: [], onTap: [], onBuy: [], onExpedition: [], onTravesia: [], onAway: [], offlineLines: [], goalProviders: [], tabOpen: [], init: [],
+  frame: [], tabDot: {gen: [], up: [], exp: [], reef: [], shop: []}};
+// goalProviders: {order, fn:()=>null|{icon,text,p,right,go}}; Parte A usa 30,50,60,80 y Parte B 10,20,40,70.
+// offlineLines: fn(segundos) => array de textos. onAway(segundos) se ejecuta antes de construir el modal.
+// onTap(valor, auto) · onBuy({kind,i|id,qty,milestone}) · tabOpen(pestaña, segmento) · frame(dt, now) · tabDot[pestaña]: fn => true muestra el punto rojo.
+function runH(name, ...a) {
+  for (const f of Hooks[name]) { try { f(...a); } catch (e) { console.error(e); } }
+}
+const Game = {autoFirstDaily: true, dailyRoll: null};
+
+// ===== ECONOMÍA (fórmulas del §3.3) =====
+const C = {dirty: true, ms: MS_BASE, cat: 1, zc: [1, 1, 1, 1, 1, 1, 1], leg: {}, gm: 1, spN: 0, stars: 0};
+function invalidateCaches() { C.dirty = true; }
+const perk = k => PERKS.some(p => p[1] === k && S.brTot >= p[0]);
+const deepN = () => Math.max(0, S.ocean - 4);
+const oceanKind = () => S.ocean <= 4 ? S.ocean : ((S.ocean - 5) % 4) + 1;
+const scale = () => Math.pow(DEEP.COST_BASE, deepN());
+const msMult = (n, ms) => ms.reduce((m, x) => n >= x ? m * 2 : m, 1);
+const starsOf = c => STARS.reduce((s, x) => c >= x ? s + 1 : s, 0);
+function rebuildCaches() {
+  C.dirty = false;
+  let l = MS_BASE;
+  if (S.res.b6) l = l.concat(MS_B6);
+  if (S.res.b7) l = l.concat(MS_B7);
+  if (perk('ms3')) l = l.concat(MS_PERK);
+  C.ms = l;
+  C.leg = {};
+  let n = 0, st = 0;
+  for (const s of SPECIES) { const c = S.sp[s.id] || 0; if (c > 0) { n++; st += starsOf(c); if (s.leg) C.leg[s.leg] = 1; } }
+  C.spN = n; C.stars = st;
+  C.cat = 1 + 0.02 * n + 0.01 * (st - n) + (S.res.b8 ? 0.01 * st : 0);
+  for (let z = 1; z <= 6; z++) C.zc[z] = SPECIES.every(s => s.ocean !== 0 || s.zone !== z || S.sp[s.id] > 0);
+  let m = 1;
+  for (const u of GLOBU) if (S.gu[u.id]) m *= u.mult;
+  m *= 1 + (S.res.b4 ? CORAL.RATE2 : CORAL.RATE) * S.coral; m *= 1 + (S.res.c6 ? 0.02 : 0.01) * S.achN; m *= C.cat;
+  if (S.res.b1) m *= 1.25; m *= 1 + 0.01 * S.rank; if (S.x2) m *= 2; if (S.relics[1]) m *= 1.5; if (C.leg.prod25) m *= 1.25;
+  if (S.field) m *= Math.pow(FIELD.mult, S.field);
+  C.gm = m;
+}
+const ensureC = () => { if (C.dirty) rebuildCaches(); };
+const leg = k => { ensureC(); return !!C.leg[k]; };
+function milestones() { ensureC(); return C.ms; }
+const zoneComplete = z => { ensureC(); return C.zc[z]; };
+function catalogMult() { ensureC(); return C.cat; }
+function oceanGenMult(i) { const z = GEN[i].zone, k = oceanKind(); if (k === 1 && (z === 3 || z === 6)) return 5; if (k === 3 && (z === 1 || z === 2)) return 10; return 1; }
+function traitMult(i) { const k = S.res.b2 ? 2 : 1; let m = 1 + 0.01 * k * Math.floor(S.b[6] / 10); if (i === 0) m *= 1 + 0.02 * k * S.b[2]; if (i === 8 || i === 9) m *= 1 + 0.5 * k * Math.floor(S.b[10] / 25); return m; }
+const unitMult = i => (S.hab[i] ? HAB.mult : 1) * (zoneComplete(GEN[i].zone) ? 3 : 1) * traitMult(i) * oceanGenMult(i);
+function creatureProd(i, ms) { const n = S.b[i]; if (!n) return 0; return n * GEN[i].prod * msMult(n, ms) * unitMult(i); }
+function creatureSum() { const ms = milestones(); let s = 0; for (let i = 0; i < GEN.length; i++) s += creatureProd(i, ms); return s; }
+function globalMult() { ensureC(); return C.gm; }
+const prodBase = () => creatureSum() * globalMult();
+const tempMult = now => (now < S.boostEnd ? 2 : 1) * (now < S.mareaEnd ? 2 : 1) * (now < S.frenEnd ? 3 : 1);
+function prodNow(now) { return prodBase() * tempMult(now); }
+function tapBase(pb) {
+  let flat = 1, pct = 0; for (const u of TAPU) if (S.tu[u.id]) { flat *= u.mult; pct += u.pct; }
+  const k = S.res.b2 ? 2 : 1; let v = (flat + pct * pb) * (1 + 0.05 * k * Math.floor(S.b[1] / 25));
+  if (leg('tap2')) v *= 2; if (S.relics[2]) v *= 3; if (oceanKind() === 2) v *= 3; return v;
+}
+function tapNow(now) { let v = tapBase(prodBase()); if (now < S.mareaEnd) v *= 2; if (now < S.corrEnd) v *= 10; if (eventNow() === 'luna') v *= 3; return v; }
+const unitCost = i => GEN[i].cost * scale() * Math.pow(COST_MULT, S.b[i]);
+const costOf = (i, k) => unitCost(i) * (Math.pow(COST_MULT, k) - 1) / (COST_MULT - 1);
+function maxAff(i) { let k = Math.floor(Math.log(S.pearls * (COST_MULT - 1) / unitCost(i) + 1) / Math.log(COST_MULT)); while (k > 0 && costOf(i, k) > S.pearls) k--; return Math.max(0, k); }
+const habCost = i => GEN[i].cost * scale() * HAB.costMult, upCost = u => u.cost * scale();
+function zoneOpen(z) { const Z = ZONES[z - 1]; if (z === 1) return true; if (S.run < Z.thr * scale()) return false; if (Z.res && !S.res[Z.res]) return false; if (Z.chart && !S.charts[Z.chart]) return false; return true; }
+function openZone() { let z = 1; while (z < 6 && zoneOpen(z + 1)) z++; return z; }
+function coralMult() {
+  let a = 1; if (S.res.c1) a += 0.10; if (S.res.c5) a += 0.25; if (leg('coral15')) a += 0.15; if (leg('coral10')) a += 0.10;
+  a += Math.min(0.5, 0.05 * Math.floor(S.b[8] / 25)); if (oceanKind() === 4) a += 0.5; if (S.relics[4]) a += 0.25;
+  let m = a; if (S.res.c8) m *= 1.5; return m * (1 + BRUJ.CORAL_BONUS * S.brTot);
+}
+const coralTotal = () => S.pOcean <= 0 ? 0 : Math.floor(CORAL.K * Math.pow(S.pOcean / (CORAL.PMIN * scale()), CORAL.EXP) * coralMult());
+const coralPending = () => Math.max(0, coralTotal() - S.coral);
+const canExpedition = () => { const p = coralPending(); return p >= 1 && (S.exps > 0 || p >= 10); };
+const pearlsForCorals = t => CORAL.PMIN * scale() * Math.pow(t / (CORAL.K * coralMult()), 1 / CORAL.EXP);
+const coralRate = () => S.res.b4 ? CORAL.RATE2 : CORAL.RATE;
+const expRecommended = () => { const p = coralPending(); return canExpedition() && (S.exps === 0 ? p >= 10 : p >= Math.max(1, Math.ceil(0.5 * S.coral))); };
+function brujPending() { if (S.b[11] < 1) return 0; let b = Math.floor(Math.pow(S.coral / BRUJ.DIV, BRUJ.EXP) * (1 + DEEP.BRUJ_BONUS * deepN())); if (S.res.c7) b += 1; return Math.max(1, b); }
+const bayCount = () => 1 + (S.res.e2 ? 1 : 0) + (S.res.e8 ? 1 : 0);
+function diveDuration(d) { let t = d.t; t *= 1 - Math.min(0.2, 0.05 * Math.floor(S.b[3] / 25)); if (S.res.e4) t *= 0.8; if (leg('diveTime')) t *= 0.85; if (S.relics[3]) t *= 0.9; if (oceanKind() === 3) t *= 0.7; if (eventNow() === 'migracion') t *= 0.75; return Math.round(t); }
+function diveMuestras(base, z) { const a = 1 + (S.res.e1 ? 0.25 : 0) + Math.min(0.3, 0.05 * Math.floor(S.b[5] / 25)) + (leg('dive10') ? 0.1 : 0) + (leg('mu10') ? 0.1 : 0) + (S.relics[0] ? 0.2 : 0); let m = base * (1 + 0.25 * (z - 1)) * a; if (eventNow() === 'ciencia') m *= 1.5; return Math.floor(m); }
+const divePearls = t => 0.10 * prodBase() * t * (leg('dive10') ? 1.1 : 1);
+function diveRolls(d) { let r = d.rolls; if (S.b[7] >= 25 && d.t >= 7200) r++; if (leg('roll8h') && d.t >= 28800) r++; if (leg('roll2h') && d.t >= 7200) r++; if (perk('roll1')) r++; if (eventNow() === 'migracion') r++; return r; }
+function rarityWeights(z) { const w = {C: 60, P: 25, R: 10, E: 4, L: 1}; if (S.res.b5 && z >= 4) { w.R = 15; w.E = 6; w.L = 1.5; w.C = 52.5; } return w; }
+function rollSpecies(z, forceRare) {
+  const w = rarityWeights(z); const keys = forceRare || S.pity >= 9 ? ['R', 'E', 'L'] : ['C', 'P', 'R', 'E', 'L'];
+  let tot = keys.reduce((a, k) => a + w[k], 0), x = Math.random() * tot, r = keys[keys.length - 1]; for (const k of keys) { if (x < w[k]) { r = k; break; } x -= w[k]; }
+  if (r === 'R' || r === 'E' || r === 'L') S.pity = 0; else S.pity++;
+  const ex = SPECIES.find(s => s.ocean > 0 && s.ocean === oceanKind() && s.r === r && s.zone <= z);
+  if (ex && Math.random() < 0.5) return ex; const pool = SPECIES.filter(s => s.ocean === 0 && s.zone === z && s.r === r); return pool[Math.floor(Math.random() * pool.length)];
+}
+function addSpecies(s) { const c = (S.sp[s.id] || 0) + 1; S.sp[s.id] = c; if (c > 16) S.mu += 5; invalidateCaches(); return c; }
+function newRun() {
+  S.pearls = 0; S.run = 0; S.b = GEN.map(() => 0); S.tu = {}; S.gu = {}; if (!perk('keepHab')) S.hab = {};
+  if (S.res.c2) { S.b[0] = 10; S.b[1] = 10; } if (perk('start6')) for (let i = 0; i < 6; i++) S.b[i] = Math.max(S.b[i], 10);
+  S.mareaEnd = S.frenEnd = S.corrEnd = 0;
+  S.maxOwned = Math.max(S.maxOwned, ownedSum());
+  invalidateCaches();
+}
+function earn(x) { if (!(x > 0)) return; x = Math.min(x, 1e300); S.pearls = Math.min(1e305, S.pearls + x); S.run = Math.min(1e305, S.run + x); S.pOcean = Math.min(1e305, S.pOcean + x); S.total = Math.min(1e305, S.total + x); }
+const ownedSum = () => S.b.reduce((a, n) => a + n, 0);
+const meterNeed = () => S.res.c3 ? METER_NEED_C3 : METER_NEED;
+const mareaDur = () => (S.res.c3 ? MAREA_S_C3 : MAREA_S) * 1000;
+function adLim() { const d = dayNum(new Date()); if (S.adLim.d !== d) S.adLim = {d, gems: 0, loot: 0, lab: 0}; return S.adLim; }
+
+// ===== SONIDO =====
+const Snd = (() => {
+  let ctx = null, voices = 0;
+  function init() {
+    if (!ctx) { try { const A = window.AudioContext || window.webkitAudioContext; if (A) ctx = new A(); } catch (e) {} }
+    if (ctx && ctx.state === 'suspended' && !document.hidden) ctx.resume().catch(() => {});
+  }
+  function tone(type, f1, f2, dur, g, delay) {
+    if (!ctx || S.mute || voices >= 6) return;
+    try {
+      const t = ctx.currentTime + (delay || 0), o = ctx.createOscillator(), a = ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(f1, t);
+      if (f2 !== f1) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+      a.gain.setValueAtTime(g, t); a.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(a); a.connect(ctx.destination);
+      voices++;
+      o.onended = () => { voices--; o.disconnect(); a.disconnect(); };
+      o.start(t); o.stop(t + dur + 0.02);
+    } catch (e) {}
+  }
+  return {
+    init,
+    suspend() { if (ctx && ctx.state === 'running') ctx.suspend().catch(() => {}); },
+    tap: () => tone('sine', 520, 260, 0.09, 0.10),
+    buy: () => tone('triangle', 660, 660, 0.06, 0.06),
+    ms: () => { tone('triangle', 784, 784, 0.09, 0.08); tone('triangle', 1046, 1046, 0.09, 0.08, 0.09); },
+    marea: () => [523, 659, 784, 1046].forEach((f, i) => tone('sine', f, f, 0.07, 0.08, i * 0.07)),
+    fish: () => tone('triangle', 880, 1320, 0.15, 0.09),
+    done: () => tone('sine', 440, 660, 0.12, 0.07),
+  };
+})();
+function vib(ms) { if (S.vib && navigator.vibrate) { try { navigator.vibrate(ms); } catch (e) {} } }
+
+// ===== AVISOS Y MODALES =====
 function toast(t) {
+  const box = $('toasts');
+  while (box.children.length >= 3) box.firstChild.remove();
   const e = el('div', 'toast');
   e.textContent = t;
-  $('toasts').appendChild(e);
+  box.appendChild(e);
   setTimeout(() => e.remove(), 2200);
 }
-
-// ===== ECONOMÍA =====
-const bMult = n => MILESTONES.reduce((m, x) => n >= x ? m * 2 : m, 1);
-const boostOn = () => Date.now() < S.boost;
-function globalMult() {
-  let m = (1 + CROWN_BONUS * S.crowns) * (S.x2 ? 2 : 1);
-  UPGRADES.forEach(u => { if (u.type === 'g' && S.up[u.id]) m *= u.mult; });
-  return m;
-}
-const unitProd = i => CONFIG[i].prod * bMult(S.b[i]);
-function baseProd() {
-  let p = 0;
-  CONFIG.forEach((c, i) => { p += S.b[i] * unitProd(i); });
-  return p * globalMult();
-}
-const prod = () => baseProd() * (boostOn() ? 2 : 1);
-function tapValue() {
-  let m = 1, pct = 0;
-  UPGRADES.forEach(u => { if (u.type === 't' && S.up[u.id]) { if (u.mult) m *= u.mult; if (u.pct) pct += u.pct; } });
-  return m + pct * prod();
-}
-function addGold(x) { S.gold += x; S.run += x; S.total += x; }
-const unitCost = i => CONFIG[i].cost * Math.pow(COST_MULT, S.b[i]);
-const costOf = (i, k) => unitCost(i) * (Math.pow(COST_MULT, k) - 1) / (COST_MULT - 1);
-function maxAff(i) {
-  let k = Math.floor(Math.log(S.gold * (COST_MULT - 1) / unitCost(i) + 1) / Math.log(COST_MULT));
-  while (k > 0 && costOf(i, k) > S.gold) k--;
-  return Math.max(0, k);
-}
-let buyMode = 1;
-const qty = i => buyMode === 'max' ? Math.max(1, maxAff(i)) : buyMode;
-function buyB(i) {
-  const k = qty(i), c = costOf(i, k);
-  if (S.gold < c) return;
-  const before = bMult(S.b[i]);
-  S.gold = Math.max(0, S.gold - c);
-  S.b[i] += k;
-  if (bMult(S.b[i]) > before) toast(`${CONFIG[i].icon} ¡${CONFIG[i].name} produce x${bMult(S.b[i])}!`);
-  refresh();
-}
-function buyU(u) {
-  if (S.up[u.id] || S.gold < u.cost) return;
-  S.gold -= u.cost;
-  S.up[u.id] = 1;
-  toast(`${u.icon} ${u.name}`);
-  buildUpgrades();
-  refresh();
-}
-const pending = () => S.run < ASCEND_MIN ? 0 : Math.floor(CROWN_K * Math.sqrt(S.run / ASCEND_MIN));
-function ascend() {
-  const p = pending();
-  if (!p) return;
-  modal({title: '👑 Ascender',
-    body: `<p>Obtendrás <b class="gtxt">+${p} coronas</b> (+${p * 10} % de producción permanente).</p><p class="mut">Se reinician el oro, los edificios y las mejoras.</p>`,
-    buttons: [{t: '👑 Ascender', cls: 'g', fn: () => {
-      S.crowns += p; S.gold = 0; S.run = 0; S.b = CONFIG.map(() => 0); S.up = {};
-      save(); buildUpgrades(); refresh();
-      toast(`👑 ¡+${p} coronas!`);
-      Ads.interstitial();
-    }}, {t: 'Cancelar'}]});
-}
-
-// ===== OFFLINE, DIARIO, ANUNCIOS Y GEMAS =====
-function offline(sec) {
-  if (sec < OFFLINE_MIN) { addGold(baseProd() * sec); return; }
-  const t = Math.min(sec, OFFLINE_MAX), g = baseProd() * t;
-  if (g <= 0) return;
-  modal({title: '🏰 ¡Bienvenido de vuelta!',
-    body: `<p>Mientras no estabas (${fmtTime(t)}${sec > OFFLINE_MAX ? ', máx. 8 h' : ''}) tu imperio produjo:</p><div class="big">💰 ${fmt(g)}</div>`,
-    buttons: [
-      {t: `📺 Duplicar (${fmt(g * 2)})`, cls: 'g', fn: () => Ads.rewarded(() => { addGold(g * 2); toast(`💰 +${fmt(g * 2)}`); refresh(); })},
-      {t: 'Recoger', fn: () => { addGold(g); refresh(); Ads.interstitial(); }},
-    ]});
-}
-function dailyInfo() {
-  if (S.daily.last === dayKey()) return {can: false, day: S.daily.streak};
-  return {can: true, day: S.daily.last === dayKey(-1) ? S.daily.streak % 7 + 1 : 1};
-}
-const dailyGold = r => Math.max(baseProd() * r.min * 60, 50 * r.min);
-const dailyLabel = r => r.gems ? `💎 ${r.gems}` : `💰 ${fmt(dailyGold(r))}`;
-function showDaily() {
-  const d = dailyInfo();
-  const cells = DAILY.map((r, i) => {
-    const n = i + 1, done = d.can ? n < d.day : n <= d.day;
-    const cls = done ? 'done' : d.can && n === d.day ? 'cur' : '';
-    return `<div class="day ${cls}${n === 7 ? ' d7' : ''}">Día ${n}<b>${r.gems ? '💎' : '💰'}</b>${r.gems || fmt(dailyGold(r))}${done ? ' ✔' : ''}</div>`;
-  }).join('');
-  modal({title: '📅 Recompensa diaria',
-    body: `<p>Racha: <b class="gtxt">${d.can ? d.day - 1 : d.day}/7</b></p><div class="days">${cells}</div><p class="mut">${d.can ? '¡Entra cada día para no perder la racha!' : 'Ya la reclamaste hoy. ¡Vuelve mañana!'}</p>`,
-    buttons: d.can ? [{t: `🎁 Reclamar día ${d.day}`, cls: 'g', fn: claimDaily}, {t: 'Más tarde'}] : [{t: 'Cerrar'}]});
-}
-function claimDaily() {
-  const d = dailyInfo();
-  if (!d.can) return;
-  const r = DAILY[d.day - 1];
-  toast(`🎁 Día ${d.day}: ${dailyLabel(r)}`);
-  if (r.gems) S.gems += r.gems; else addGold(dailyGold(r));
-  S.daily = {last: dayKey(), streak: d.day};
-  save(); refresh();
-}
-function adGemsLeft() {
-  if (S.adg.d !== dayKey()) S.adg = {d: dayKey(), n: 0};
-  return AD_GEMS_DAY - S.adg.n;
-}
-function adGems() {
-  if (adGemsLeft() <= 0) return;
-  Ads.rewarded(() => { adGemsLeft(); S.adg.n++; S.gems += AD_GEMS; toast(`💎 +${AD_GEMS} gemas`); refresh(); });
-}
-function adBoost() {
-  if (boostOn()) return;
-  Ads.rewarded(() => { S.boost = Date.now() + BOOST_MS; toast('⚡ ¡Producción x2 durante 5 min!'); refresh(); });
-}
-function jump(j) {
-  const g = baseProd() * j.h * 3600;
-  if (S.gems < j.gems || g <= 0) return;
-  S.gems -= j.gems;
-  addGold(g);
-  toast(`⏩ +${fmt(g)} de oro`);
-  refresh();
-}
-const owned = sku => (sku === 'sin_anuncios' && S.noAds) || (sku === 'x2_permanente' && S.x2);
-function grant(sku) {
-  if (sku === 'sin_anuncios') { S.noAds = Ads.noAds = true; Ads.banner(); }
-  else if (sku === 'gemas_100') S.gems += 100;
-  else if (sku === 'gemas_500') S.gems += 500;
-  else if (sku === 'x2_permanente') S.x2 = true;
-  toast('✅ Compra completada: ' + Shop.SKUS[sku].name);
-  save(); refresh();
-}
-
-// ===== MODALES =====
 const mq = [];
 let mOpen = false;
 function modal(o) { mq.push(o); if (!mOpen) nextModal(); }
@@ -431,185 +822,1854 @@ function nextModal() {
   if (!o) { mOpen = false; $('modal').classList.add('hidden'); return; }
   mOpen = true;
   const box = $('mbox');
-  box.innerHTML = `<h2>${o.title}</h2><div class="mbody">${o.body}</div><div class="mbtns"></div>`;
-  o.buttons.forEach(b => {
+  box.innerHTML = `<h2>${o.title}</h2><div class="mbody">${o.body || ''}</div><div class="mbtns"></div>`;
+  (o.buttons || [{t: 'Cerrar'}]).forEach(b => {
     const e = el('button', 'btn ' + (b.cls || ''), b.t);
-    e.onclick = () => { nextModal(); if (b.fn) b.fn(); };
+    e.type = 'button';
+    if (b.dis) e.disabled = true;
+    e.onclick = () => { if (!b.keep) nextModal(); if (b.fn) b.fn(); };
     box.lastChild.appendChild(e);
   });
+  box.scrollTop = 0;
   $('modal').classList.remove('hidden');
+  if (o.onShow) o.onShow(box);
+}
+let sheetOpen = false;
+function naturalPause() {
+  if (!mOpen && mq.length === 0 && !sheetOpen && (S.guide >= 10 || S.exps > 0)) Ads.interstitial();
 }
 
-// ===== UI =====
+// ===== PESTAÑAS Y SEGMENTOS =====
+const TABS = [
+  {k: 'gen', icon: '🐠', name: 'Criaturas'},
+  {k: 'up', icon: '⬆️', name: 'Mejoras', unlock: () => S.total >= 50 || S.guide >= 3, msg: 'Se abre al ganar 50 perlas'},
+  {k: 'exp', icon: '🧭', name: 'Explorar', unlock: () => S.zoneMax >= 2, msg: 'Se abre en el 🌿 Bosque de kelp'},
+  {k: 'reef', icon: IC.coral, name: 'Arrecife', unlock: () => S.pOcean >= 0.01 * CORAL.PMIN * scale() || S.exps > 0 || S.travs > 0, msg: 'Se abre al acercarte a tu primera expedición'},
+  {k: 'shop', icon: '💎', name: 'Tienda'},
+];
+const TAB_BY = Object.fromEntries(TABS.map(t => [t.k, t]));
+const tabUnlocked = t => !t.unlock || !!S.flags['tab_' + t.k] || t.unlock();
+let curTab = 'gen';
+TABS.forEach(t => {
+  const b = el('button', '', `${t.icon}<span>${t.name}</span><i class="dot"></i><b class="lki hidden">🔒</b>`);
+  b.type = 'button';
+  b.onclick = () => showTab(t.k);
+  t.btn = b; t.lk = b.querySelector('.lki');
+  $('tabs').appendChild(b);
+});
+function showTab(k) {
+  const t = TAB_BY[k];
+  if (!tabUnlocked(t)) { toast('🔒 ' + t.msg); return; }
+  curTab = k;
+  TABS.forEach(x => { x.btn.classList.toggle('on', x === t); $('t-' + x.k).classList.toggle('on', x === t); });
+  $('panel').scrollTop = 0;
+  if (k === 'up') markUpSeen();
+  updateTab(Date.now());
+  runH('tabOpen', k, SEGS[k] ? SEGS[k].cur : null);
+}
+function updTabs() {
+  for (const t of TABS) {
+    let open = tabUnlocked(t);
+    if (t.unlock && open && !S.flags['tab_' + t.k]) {
+      S.flags['tab_' + t.k] = 1;
+      if (S.total > 0) { toast(`🔓 ¡Nueva pestaña: ${t.name}!`); Snd.ms(); t.btn.classList.add('new'); t.fresh = true; }
+    }
+    t.btn.classList.toggle('lk', !open);
+    t.lk.classList.toggle('hidden', open);
+    if (!open || t.k === curTab) { t.fresh = false; t.btn.classList.remove('new'); continue; }
+    const dot = t.fresh || Hooks.tabDot[t.k].some(f => { try { return f(); } catch (e) { return false; } });
+    t.btn.classList.toggle('new', dot);
+  }
+}
+const SEGS = {
+  exp: {cur: 'dives', items: [
+    {k: 'dives', label: IC.dive + ' Inmersiones', mount: 'm-dives'},
+    {k: 'catalog', label: '📖 Catálogo', mount: 'm-catalog', unlock: () => S.dives >= 1, msg: 'Se abre al completar tu primera inmersión'},
+    {k: 'lab', label: '🔬 Laboratorio', mount: 'm-lab', unlock: () => S.zoneMax >= 3, msg: 'Se abre al llegar a 🌊 Mar abierto'}]},
+  reef: {cur: 'exped', items: [
+    {k: 'exped', label: IC.coral + ' Expedición', mount: 'm-exped'},
+    {k: 'trav', label: '🧭 Travesía', mount: 'm-travesia', unlock: () => S.oceanZone >= 6 || S.travs >= 1, msg: 'Llega a la Fosa hadal y construye una Ciudad abisal'}]},
+  sheet: {cur: 'enc', items: [
+    {k: 'enc', label: '🎯 Encargos', mount: 'm-enc'}, {k: 'ach', label: '🏅 Logros', mount: 'm-ach'},
+    {k: 'events', label: '🌊 Mareas', mount: 'm-events'}, {k: 'odds', label: '🎲 Azar', mount: 'm-odds'}]},
+};
+const segOpen = it => !it.unlock || it.unlock();
+function buildSeg(name) {
+  const g = SEGS[name], box = $('seg-' + name);
+  g.items.forEach(it => {
+    const b = el('button', '', it.label);
+    b.type = 'button';
+    b.onclick = () => showSeg(name, it.k);
+    it.btn = b;
+    box.appendChild(b);
+  });
+  showSeg(name, g.cur, true);
+}
+function showSeg(name, k, silent) {
+  const g = SEGS[name], it = g.items.find(x => x.k === k) || g.items[0];
+  if (!segOpen(it)) { if (!silent) toast('🔒 ' + it.msg); return; }
+  g.cur = it.k;
+  g.items.forEach(x => { x.btn.classList.toggle('on', x === it); $(x.mount).classList.toggle('on', x === it); });
+  if (silent) return;
+  if (name === 'sheet') document.querySelector('#sheet .sbody').scrollTop = 0; else $('panel').scrollTop = 0;
+  runH('tabOpen', name === 'sheet' ? 'sheet' : curTab, it.k);
+  updateTab(Date.now());
+}
+function updSegs() { for (const n in SEGS) for (const it of SEGS[n].items) it.btn.classList.toggle('lk', !segOpen(it)); }
+function openSheet(k) {
+  sheetOpen = true;
+  $('sheet').classList.remove('hidden');
+  showSeg('sheet', k || SEGS.sheet.cur, true);
+  runH('tabOpen', 'sheet', SEGS.sheet.cur);
+}
+function closeSheet() { sheetOpen = false; $('sheet').classList.add('hidden'); }
+$('sheetX').onclick = closeSheet;
+$('logBtn').onclick = () => openSheet();
+
+// ===== HÉROE: FONDO, BURBUJAS, OSTRA =====
+const hero = $('hero'), oy = $('oyster'), fxBox = $('fx');
+const Sea = (() => {
+  const cv = $('sea'), cx = cv.getContext('2d');
+  let W = 1, Hh = 1, px = 0, py = 0, fishCh = SEA_FISH[0], pi = 0;
+  const R = (a, b) => a + Math.random() * (b - a);
+  const amb = [], pool = [], fish = [];
+  for (let i = 0; i < 12; i++) amb.push({x: 0, y: 0, r: R(1.5, 4), v: R(12, 30), ph: R(0, 6.28)});
+  for (let i = 0; i < 60; i++) pool.push({on: false, x: 0, y: 0, vx: 0, vy: 0, l: 0, m: 1, r: 2, g: false});
+  for (let i = 0; i < 3; i++) fish.push({x: 0, y: 0, v: R(8, 20) * (Math.random() < 0.5 ? -1 : 1), ph: R(0, 6)});
+  function resize() {
+    const r = hero.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = r.width || 1; Hh = r.height || 1;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(Hh * dpr);
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const o = oy.querySelector('.oy-pearl').getBoundingClientRect();
+    px = o.left - r.left + o.width / 2; py = o.top - r.top + o.height / 2;
+    amb.forEach(b => { b.x = R(0, W); b.y = R(0, Hh); });
+    fish.forEach(f => { f.x = R(0, W); f.y = R(30, Math.max(40, Hh - 30)); });
+  }
+  function burst(n, gold) {
+    for (let k = 0; k < n; k++) {
+      const p = pool[pi++ % pool.length];
+      p.on = true; p.x = px + R(-14, 14); p.y = py + R(-8, 8); p.vx = R(-30, 30); p.vy = -R(60, 140);
+      p.m = p.l = R(0.8, 1.4); p.r = R(2, 5); p.g = gold;
+    }
+  }
+  function draw(dt, t) {
+    cx.clearRect(0, 0, W, Hh);
+    cx.globalAlpha = 0.18; cx.font = '22px sans-serif'; cx.textBaseline = 'middle'; cx.textAlign = 'center';
+    for (const f of fish) {
+      f.x += f.v * dt;
+      if (f.x < -30) f.x = W + 30; else if (f.x > W + 30) f.x = -30;
+      const y = f.y + Math.sin(t * 0.8 + f.ph) * 6;
+      if (f.v > 0) { cx.save(); cx.translate(f.x, y); cx.scale(-1, 1); cx.fillText(fishCh, 0, 0); cx.restore(); } else cx.fillText(fishCh, f.x, y);
+    }
+    cx.globalAlpha = 1; cx.lineWidth = 1; cx.strokeStyle = 'rgba(200,240,255,.55)';
+    cx.beginPath();
+    for (const b of amb) {
+      b.y -= b.v * dt; b.ph += dt * 2;
+      if (b.y < -6) { b.y = Hh + 6; b.x = R(0, W); }
+      const x = b.x + Math.sin(b.ph) * 4;
+      cx.moveTo(x + b.r, b.y); cx.arc(x, b.y, b.r, 0, 6.2832);
+    }
+    cx.stroke();
+    for (const p of pool) {
+      if (!p.on) continue;
+      p.l -= dt;
+      if (p.l <= 0) { p.on = false; continue; }
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      cx.globalAlpha = p.l / p.m;
+      cx.strokeStyle = p.g ? 'rgba(246,201,69,.8)' : 'rgba(200,240,255,.7)';
+      cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 6.2832); cx.stroke();
+    }
+    cx.globalAlpha = 1;
+  }
+  return {resize, burst, draw, setZone(z) { fishCh = SEA_FISH[z - 1]; }};
+})();
+const FT = [];
+for (let i = 0; i < 20; i++) { const d = el('div', 'ft'); fxBox.appendChild(d); FT.push({d, a: null}); }
+let ftI = 0;
+function floatText(x, y, s) {
+  const o = FT[ftI++ % FT.length];
+  if (o.a) o.a.cancel();
+  o.d.textContent = s;
+  o.d.style.left = (x + Math.random() * 40 - 20) + 'px';
+  o.d.style.top = (y - 10) + 'px';
+  o.a = o.d.animate([{transform: 'translate(-50%,-50%)', opacity: 1}, {transform: 'translate(-50%,-160%) scale(1.15)', opacity: 0}], {duration: 900, easing: 'ease-out', fill: 'forwards'});
+}
+let hitQ = false;
+function hitOyster() {
+  if (hitQ) return;
+  if (!oy.classList.contains('hit')) { oy.classList.add('hit'); return; }
+  hitQ = true;
+  oy.classList.remove('hit');
+  requestAnimationFrame(() => requestAnimationFrame(() => { hitQ = false; oy.classList.add('hit'); }));
+}
+oy.querySelector('.oy-top').addEventListener('animationend', () => oy.classList.remove('hit'));
+const meterBar = $('meterBar'), meterTxt = $('meterTxt');
+function checkMeter(now) {
+  const need = meterNeed();
+  if (S.meter < need) return;
+  S.meter -= need;
+  S.mareaEnd = Math.max(S.mareaEnd, now) + mareaDur();
+  S.mareas++;
+  Snd.marea(); vib(30);
+  toast(`${IC.bub} ¡Marea de perlas! Producción y toques ×2`);
+}
+function updMeter(now) {
+  const on = now < S.mareaEnd;
+  hero.classList.toggle('marea', on);
+  if (on) {
+    const left = (S.mareaEnd - now) / 1000;
+    setW(meterBar, left / (mareaDur() / 1000) * 100);
+    setT(meterTxt, `¡Marea! ×2 · ${Math.ceil(left)} s`);
+  } else {
+    setW(meterBar, S.meter / meterNeed() * 100);
+    setT(meterTxt, `${IC.bub} ${S.meter}/${meterNeed()}`);
+  }
+}
+function tapCore(now, auto) {
+  const v = tapNow(now);
+  earn(v);
+  S.taps++; S.meter++;
+  checkMeter(now);
+  runH('onTap', v, !!auto);
+  return v;
+}
+let hintGone = false;
+oy.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  Snd.init();
+  const now = Date.now(), v = tapCore(now, false);
+  floatText(e.clientX, e.clientY, '+' + fmt(v, 1));
+  Sea.burst(5, now < S.mareaEnd);
+  vib(12);
+  Snd.tap();
+  hitOyster();
+  updMeter(now);
+  if (!hintGone) { hintGone = true; $('hint').classList.add('hidden'); }
+});
+document.addEventListener('pointerdown', () => Snd.init(), {passive: true});
+['gesturestart', 'gesturechange', 'dblclick', 'contextmenu', 'selectstart'].forEach(ev => document.addEventListener(ev, e => e.preventDefault(), {passive: false}));
+document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, {passive: false});
+
+// ===== ZONAS Y MEDIDOR DE PROFUNDIDAD =====
+let curZone = 0;
+const depthEl = $('depth'), depthMk = depthEl.querySelector('.mk'), depthT = $('depthT');
+for (let z = 0; z < 6; z++) { const t = el('i', 'tk'); t.style.top = (z / 5 * 100) + '%'; depthEl.insertBefore(t, depthMk); }
+function zoneBlocks(z) {
+  const Z = ZONES[z - 1], out = [];
+  out.push({ok: S.run >= Z.thr * scale(), txt: `Gana ${fmt(Z.thr * scale())} perlas en esta expedición`, short: `faltan ${fmt(Math.max(0, Z.thr * scale() - S.run))} perlas`});
+  if (Z.res) out.push({ok: !!S.res[Z.res], txt: `Investigación: ${RES_BY_ID[Z.res].name}`, short: `investiga ${RES_BY_ID[Z.res].name}`});
+  if (Z.chart) { const ch = CHARTS[Z.chart - 1].name; out.push({ok: !!S.charts[Z.chart], txt: `Carta náutica: ${ch}`, short: `traza la ${ch}`}); }
+  return out;
+}
+const pearlBlocked = z => zoneBlocks(z).slice(1).some(r => !r.ok);
+function depthInfo() {
+  const z = curZone || openZone(), sc = scale();
+  let x = 1;
+  if (z < 6) {
+    const a = Math.log10(Math.max(1, ZONES[z - 1].thr * sc)), b = Math.log10(ZONES[z].thr * sc);
+    x = clamp((Math.log10(Math.max(1, S.run)) - a) / (b - a), 0, 1);
+    if (pearlBlocked(z + 1)) x = Math.min(x, 0.98);
+  }
+  const d0 = ZONES[z - 1].depth, d1 = z < 6 ? ZONES[z].depth : d0;
+  return {z, x, depth: d0 + (d1 - d0) * x};
+}
+let gaugeH = 120;
+function updDepth() {
+  const d = depthInfo();
+  const y = Math.round(Math.min(1, (d.z - 1 + d.x) / 5) * gaugeH * 10) / 10;
+  if (depthMk._y !== y) { depthMk._y = y; depthMk.style.transform = `translateY(${y}px)`; }
+  setT(depthT, `${ZONES[d.z - 1].icon} ${fmtInt(d.depth)} m`);
+}
+depthEl.onclick = () => {
+  const z = curZone, Z = ZONES[z - 1];
+  if (z >= 6) { toast(`${Z.icon} ${Z.name} · ¡Has llegado al fondo del océano!`); return; }
+  const N = ZONES[z], cond = zoneBlocks(z + 1).filter(r => !r.ok).map(r => r.short).join(', ');
+  toast(`${Z.icon} ${Z.name} · Próxima: ${N.icon} ${N.name} (${cond || 'lista'})`);
+};
+function heroFlash() { hero.querySelector('.flash').animate([{opacity: 0.75}, {opacity: 0}], {duration: 600, easing: 'ease-out'}); }
+function newZoneModal(z) {
+  const Z = ZONES[z - 1], g = GEN.filter(x => x.zone === z);
+  modal({title: `${Z.icon} ¡Nuevo hábitat: ${Z.name}!`,
+    body: `<p>${fmtInt(Z.depth)} m bajo el mar. Llegan ${g[0].icon} <b>${g[0].name}</b> y ${g[1].icon} <b>${g[1].name}</b>.</p>`,
+    buttons: [{t: '¡A explorar!', cls: 'g', fn: () => showTab('gen')}]});
+}
+function checkZone(init) {
+  const z = openZone();
+  if (z === curZone) return;
+  const up = z > curZone && !init;
+  curZone = z;
+  for (let k = 1; k <= 6; k++) hero.classList.toggle('z' + k, k === z);
+  Sea.setZone(z);
+  const first = z > S.zoneMax;
+  if (!init) heroFlash();
+  if (up) {
+    const Z = ZONES[z - 1];
+    toast(`${Z.icon} ¡${Z.name}! ${fmtInt(Z.depth)} m`);
+    Snd.ms();
+    if (first) for (let k = S.zoneMax + 1; k <= z; k++) newZoneModal(k);
+  }
+  S.zoneMax = Math.max(S.zoneMax, z);
+  S.oceanZone = Math.max(S.oceanZone, z);
+  genLayout();
+  upSig = '';
+}
+
+// ===== HÉROE: CONTROLES =====
+const boostBtn = $('boostBtn');
+function adBoost() {
+  if (Date.now() < S.boostEnd) return;
+  Ads.rewarded(() => { S.boostEnd = Date.now() + BOOST_MS; toast('⚡ ¡Producción x2 durante 5 min!'); save(); });
+}
+boostBtn.onclick = adBoost;
+function updHero(now) {
+  updMeter(now);
+  updDepth();
+  const show = S.mareas >= 1 || S.exps > 0;
+  boostBtn.classList.toggle('hidden', !show);
+  if (show) {
+    const on = now < S.boostEnd;
+    boostBtn.classList.toggle('act', on);
+    setT(boostBtn, on ? `⚡ x2 · ${mmss((S.boostEnd - now) / 1000)}` : '📺 x2 · 5 min');
+  }
+  const ev = eventNow(), pill = $('evPill');
+  pill.classList.toggle('hidden', !ev);
+  if (ev) setT(pill, `${EVENT_BY_K[ev].icon} ${EVENT_BY_K[ev].name}`);
+  $('dailyBtn').classList.toggle('new', dailyInfo().can);
+  setT($('tapInfo'), `+${fmt(tapBase(prodBase()), 1)} por toque` + tempTxt(now));
+}
+const muteBtn = $('muteBtn');
+const updMute = () => { muteBtn.textContent = S.mute ? '🔇' : '🔊'; };
+muteBtn.onclick = () => { S.mute = !S.mute; updMute(); save(); if (curTab === 'shop') updateTab(Date.now()); };
+$('dailyBtn').onclick = () => showDaily();
+
+// ===== PANTALLA: CRIATURAS =====
 function mkRow(parent, icon, name, sub, buy, fn) {
-  const r = el('button', 'row', `<div class="ic">${icon}</div><div class="info"><div class="nm">${name}</div><div class="sub">${sub}</div></div><div class="buy">${buy}</div>`);
+  const r = el('button', 'row', `<div class="ic">${icon}</div><div class="info"><div class="nm">${name}</div><div class="sub w">${sub}</div></div><div class="buy">${buy}</div>`);
+  r.type = 'button';
   if (fn) r.onclick = fn;
   parent.appendChild(r);
-  return {r, sub: r.querySelector('.sub'), buy: r.querySelector('.buy')};
+  return {r, nm: r.querySelector('.nm'), sub: r.querySelector('.sub'), buy: r.querySelector('.buy')};
 }
-const tB = $('t-b'), tU = $('t-u'), tS = $('t-s');
-tB.innerHTML = '<div class="thead"><span class="mut">Comprar</span><div class="seg"><button data-m="1" class="on">x1</button><button data-m="10">x10</button><button data-m="max">MAX</button></div></div>';
-tB.querySelectorAll('.seg button').forEach(b => b.onclick = () => {
-  buyMode = b.dataset.m === 'max' ? 'max' : +b.dataset.m;
-  tB.querySelectorAll('.seg button').forEach(x => x.classList.toggle('on', x === b));
-  updateTab();
-});
-const rowsB = CONFIG.map((c, i) => {
-  const r = el('button', 'row', `<div class="ic">${c.icon}</div><div class="info"><div class="nm">${c.name}<span class="cnt"></span></div><div class="sub"></div><div class="bar"><i></i></div><div class="ms"></div></div><div class="buy"><small></small><span></span></div>`);
-  r.onclick = () => buyB(i);
-  tB.appendChild(r);
-  return {r, cnt: r.querySelector('.cnt'), sub: r.querySelector('.sub'), bar: r.querySelector('.bar i'), ms: r.querySelector('.ms'), q: r.querySelector('.buy small'), c: r.querySelector('.buy span')};
-});
-function updB() {
-  const gm = globalMult() * (boostOn() ? 2 : 1);
-  rowsB.forEach((o, i) => {
-    const n = S.b[i], k = qty(i), c = costOf(i, k), u = unitProd(i) * gm;
-    const nx = MILESTONES.find(m => m > n), pv = MILESTONES.filter(m => m <= n).pop() || 0;
-    o.cnt.textContent = n;
-    o.sub.textContent = `${fmt(u, 1)}/s c/u · total ${fmt(u * n, 1)}/s`;
-    o.bar.style.width = (nx ? (n - pv) / (nx - pv) * 100 : 100) + '%';
-    o.ms.textContent = nx ? `🎯 ${n}/${nx} → x2 producción` : `★ x${bMult(n)} máximo`;
-    o.q.textContent = 'x' + k;
-    o.c.textContent = '💰' + fmt(c);
-    o.r.classList.toggle('off', S.gold < c);
+const genList = $('genList'), zoneHdr = [], genRows = [];
+ZONES.forEach((Z, zi) => {
+  const z = zi + 1, h = el('div', 'zh', '<span></span><div></div>');
+  genList.appendChild(h);
+  zoneHdr[z] = {h, t: h.firstChild, req: h.lastChild};
+  GEN.forEach((g, i) => {
+    if (g.zone !== z) return;
+    const r = el('button', 'row', `<div class="ic">${g.icon}</div><div class="info"><div class="nm"><span class="gn"></span><span class="cnt"></span></div><div class="sub"></div><div class="trait"></div><div class="bar"><i></i></div><div class="ms"></div></div><div class="buy"><small></small><span>${IC.pearl}<b></b></span></div>`);
+    r.type = 'button';
+    r.onclick = () => buyGen(i);
+    genList.appendChild(r);
+    const q = s => r.querySelector(s);
+    genRows[i] = {r, nm: q('.gn'), cnt: q('.cnt'), sub: q('.sub'), trait: q('.trait'), bar: q('.bar i'), ms: q('.ms'), q: q('.buy small'), c: q('.buy b')};
   });
-}
-const upRows = new Map();
-const upDesc = u => u.mult ? `${u.type === 't' ? 'Toque' : 'Producción'} x${String(u.mult).replace('.', ',')}` : `+${Math.round(u.pct * 100)} % de la producción/s por toque`;
-function buildUpgrades() {
-  tU.innerHTML = '';
-  upRows.clear();
-  [['t', '👆 Poder de toque'], ['g', '🌍 Multiplicadores globales']].forEach(([t, title]) => {
-    tU.appendChild(el('div', 'sec', title));
-    UPGRADES.filter(u => u.type === t).sort((a, b) => (!!S.up[a.id] - !!S.up[b.id]) || a.cost - b.cost).forEach(u => {
-      const done = !!S.up[u.id];
-      const o = mkRow(tU, u.icon, u.name, upDesc(u), done ? '✔' : '💰' + fmt(u.cost), done ? null : () => buyU(u));
-      if (done) o.r.classList.add('done'); else upRows.set(u, o.r);
+});
+function genLayout() {
+  for (let z = 1; z <= 6; z++) {
+    const H_ = zoneHdr[z], Z = ZONES[z - 1], open = z <= curZone, next = z === curZone + 1;
+    H_.h.classList.toggle('hidden', !open && !next);
+    H_.h.classList.toggle('lk', next);
+    setT(H_.t, `${next ? '🔒' : Z.icon} ${Z.name} · ${fmtInt(Z.depth)} m`);
+    H_.req.classList.toggle('hidden', !next);
+    GEN.forEach((g, i) => {
+      if (g.zone !== z) return;
+      const o = genRows[i];
+      o.r.classList.toggle('hidden', !open && !next);
+      o.r.classList.toggle('sil', next);
+      o.r.disabled = next;
+      if (next) { setT(o.nm, '???'); setT(o.sub, 'Se revela al llegar a la zona'); } else setT(o.nm, g.name);
     });
-  });
+  }
 }
-function updU() { upRows.forEach((r, u) => r.classList.toggle('off', S.gold < u.cost)); }
-tS.appendChild(el('div', 'sec', '📺 Recompensas gratis'));
-const sBoost = mkRow(tS, '⚡', 'Producción x2', 'Durante 5 minutos', '📺 Ver', adBoost);
-const sGems = mkRow(tS, '💎', `+${AD_GEMS} gemas gratis`, '', '📺 Ver', adGems);
-tS.appendChild(el('div', 'sec', '⏩ Saltos temporales'));
-const jumpRows = JUMPS.map(j => Object.assign(mkRow(tS, '⏳', `Salto de ${j.h} h`, '', `💎 ${j.gems}`, () => jump(j)), {j}));
-tS.appendChild(el('div', 'sec', '🛒 Tienda'));
+const qty = i => S.buyMode === 'max' ? Math.max(1, maxAff(i)) : S.buyMode;
+function buyGen(i) {
+  if (GEN[i].zone > curZone) return;
+  const k = qty(i), c = costOf(i, k);
+  if (!(S.pearls >= c)) return;
+  const ms = milestones(), before = msMult(S.b[i], ms);
+  S.pearls = Math.max(0, S.pearls - c);
+  S.b[i] += k;
+  S.maxOwned = Math.max(S.maxOwned, ownedSum());
+  invalidateCaches();
+  const after = msMult(S.b[i], ms), m = after > before;
+  if (m) { toast(`${GEN[i].icon} ¡${GEN[i].name} produce ×${after}!`); Snd.ms(); } else Snd.buy();
+  runH('onBuy', {kind: 'b', i, qty: k, milestone: m});
+  updateTab(Date.now());
+}
+const buySeg = $('buySeg');
+function updBuySeg() { buySeg.querySelectorAll('button').forEach(b => b.classList.toggle('on', String(S.buyMode) === b.dataset.m)); }
+buySeg.querySelectorAll('button').forEach(b => b.onclick = () => {
+  S.buyMode = b.dataset.m === 'max' ? 'max' : +b.dataset.m;
+  updBuySeg();
+  updateTab(Date.now());
+});
+function updGen(now) {
+  const ms = milestones(), gm = globalMult() * tempMult(now);
+  for (let i = 0; i < GEN.length; i++) {
+    const g = GEN[i], o = genRows[i];
+    if (g.zone > curZone) continue;
+    const n = S.b[i], k = qty(i), c = costOf(i, k);
+    const unit = (n ? creatureProd(i, ms) / n : g.prod * unitMult(i)) * gm;
+    setT(o.cnt, fmtInt(n));
+    setT(o.sub, `${fmt(unit, 1)}/s c/u · total ${fmt(unit * n, 1)}/s`);
+    setT(o.trait, TRAITS[i] + (S.res.b2 && SYMB[i] ? ' · ×2 por Simbiosis' : ''));
+    const nx = ms.find(x => x > n), pv = ms.filter(x => x <= n).pop() || 0;
+    setW(o.bar, nx ? (n - pv) / (nx - pv) * 100 : 100);
+    setT(o.ms, nx ? `🎯 ${n}/${nx} → ×2` : `★ ×${fmt(msMult(n, ms))} máximo`);
+    setT(o.q, 'x' + k);
+    setT(o.c, fmt(c));
+    o.r.classList.toggle('off', !(S.pearls >= c));
+  }
+  if (curZone < 6) setH(zoneHdr[curZone + 1].req, zoneBlocks(curZone + 1).map(r => `<div class="req"><span class="${r.ok ? 'ok' : 'no'}">${r.ok ? '✔' : '✖'}</span> ${r.txt}</div>`).join(''));
+}
+
+// ===== PANTALLA: MEJORAS =====
+const upList = $('upList'), upSeen = new Set(), upDone = {t: false, g: false, h: false};
+let upSig = '', upRows = [];
+const tapDesc = u => u.mult > 1 ? `Toque ×${fmtN(u.mult)}` : `+${Math.round(u.pct * 100)} % de tu producción/s en cada toque`;
+const globDesc = u => `Producción ×${fmtN(u.mult)}`;
+function upAffordable() {
+  const out = [];
+  for (const u of TAPU) if (!S.tu[u.id] && u.zone <= curZone && S.pearls >= upCost(u)) out.push(u.id);
+  for (const u of GLOBU) if (!S.gu[u.id] && u.zone <= curZone && S.pearls >= upCost(u)) out.push(u.id);
+  for (let i = 0; i < GEN.length; i++) if (!S.hab[i] && S.b[i] >= HAB.req && S.pearls >= habCost(i)) out.push('h' + i);
+  return out;
+}
+const markUpSeen = () => upAffordable().forEach(id => upSeen.add(id));
+Hooks.tabDot.up.push(() => upAffordable().some(id => !upSeen.has(id)));
+const upSigNow = () => [curZone, Object.keys(S.tu).join(), Object.keys(S.gu).join(), Object.keys(S.hab).join(), S.b.map(n => n > 0 ? 1 : 0).join(''), upDone.t, upDone.g, upDone.h].join('|');
+function doneBlock(key, items) {
+  if (!items.length) return;
+  const b = el('button', 'row sm done', `<div class="info"><div class="nm" style="font-size:14px">✔ Compradas (${items.length}) ${upDone[key] ? '▴' : '▾'}</div></div>`);
+  b.type = 'button';
+  b.onclick = () => { upDone[key] = !upDone[key]; updUp(); };
+  upList.appendChild(b);
+  if (upDone[key]) items.forEach(([ic, nm, d]) => mkRow(upList, ic, nm, d, '✔').r.classList.add('done'));
+}
+function upSection(key, title, list, owned, desc) {
+  upList.appendChild(el('div', 'sec', title));
+  const avail = list.filter(u => !owned[u.id]).sort((a, b) => a.cost - b.cost).slice(0, 4);
+  avail.forEach(u => {
+    const lock = u.zone > curZone;
+    const o = mkRow(upList, u.icon, u.name, lock ? `🔒 Necesita ${ZONES[u.zone - 1].name} abierta` : desc(u), lock ? '🔒' : `${IC.pearl}${fmt(upCost(u))}`);
+    if (lock) { o.r.classList.add('off'); return; }
+    o.r.onclick = () => buyUp(key, u);
+    upRows.push({r: o.r, cost: () => upCost(u)});
+  });
+  if (!avail.length) upList.appendChild(el('div', 'note mut', 'Ya tienes todas las mejoras de esta sección en esta expedición.'));
+  doneBlock(key, list.filter(u => owned[u.id]).map(u => [u.icon, u.name, desc(u)]));
+}
+function buildUp() {
+  upList.innerHTML = '';
+  upRows = [];
+  upSection('t', '👆 Poder de toque', TAPU, S.tu, tapDesc);
+  upSection('g', '🌍 Mejoras globales', GLOBU, S.gu, globDesc);
+  upList.appendChild(el('div', 'sec', '🏠 Hábitats'));
+  const offer = GEN.map((g, i) => i).filter(i => S.b[i] >= 1 && !S.hab[i]).sort((a, b) => habCost(a) - habCost(b));
+  offer.forEach(i => {
+    const g = GEN[i], o = mkRow(upList, g.icon, `🏠 Hábitat: ${g.name}`, '', `${IC.pearl}${fmt(habCost(i))}`);
+    o.r.onclick = () => buyHab(i);
+    upRows.push({r: o.r, cost: () => habCost(i), need: () => S.b[i] >= HAB.req, upd: () => setT(o.sub, `${g.name} ×2 · necesita ${HAB.req} (${Math.min(S.b[i], HAB.req)}/${HAB.req})`)});
+  });
+  if (!offer.length && !Object.keys(S.hab).length) upList.appendChild(el('div', 'note mut', 'Compra criaturas para poder construir sus hábitats: cada uno duplica a su criatura y pide 25 de ella.'));
+  doneBlock('h', GEN.map((g, i) => i).filter(i => S.hab[i]).map(i => [GEN[i].icon, `🏠 Hábitat: ${GEN[i].name}`, `${GEN[i].name} ×2`]));
+}
+function updUp() {
+  const sig = upSigNow();
+  if (sig !== upSig) { upSig = sig; buildUp(); }
+  for (const o of upRows) {
+    o.r.classList.toggle('off', !(S.pearls >= o.cost()) || (o.need && !o.need()));
+    if (o.upd) o.upd();
+  }
+  markUpSeen();
+}
+function buyUp(kind, u) {
+  const own = kind === 't' ? S.tu : S.gu, c = upCost(u);
+  if (own[u.id] || u.zone > curZone || !(S.pearls >= c)) return;
+  S.pearls = Math.max(0, S.pearls - c);
+  own[u.id] = 1;
+  invalidateCaches();
+  toast(`${u.icon} ${u.name}`);
+  Snd.buy();
+  runH('onBuy', {kind, id: u.id, qty: 1, milestone: false});
+  updateTab(Date.now());
+}
+function buyHab(i) {
+  const c = habCost(i);
+  if (S.hab[i] || S.b[i] < HAB.req || !(S.pearls >= c)) return;
+  S.pearls = Math.max(0, S.pearls - c);
+  S.hab[i] = 1;
+  invalidateCaches();
+  toast(`${GEN[i].icon} Hábitat: ${GEN[i].name}`);
+  Snd.buy();
+  runH('onBuy', {kind: 'h', i, qty: 1, milestone: false});
+  updateTab(Date.now());
+}
+
+// ===== PANTALLA: ARRECIFE (Nueva expedición) =====
+const RESET_NOTE = 'Se reinician las perlas, las criaturas, las mejoras, los hábitats y las zonas de esta expedición. Conservas corales, gemas, muestras, investigación, catálogo, logros, inmersiones en curso, brújulas y compras.';
+$('m-exped').innerHTML = `<div class="asc">
+  <div class="bigic">${IC.coral}</div>
+  <div class="ah">Corales: <span id="rCoral" class="gtxt">0</span></div>
+  <div class="mut" id="rBonus"></div>
+  <div class="card"><span class="mut">Perlas en este océano</span><b class="v" id="rPO">0</b><div class="bar"><i id="rBar"></i></div><small class="mut" id="rNeed"></small></div>
+  <div class="card"><span class="mut">Corales al hacer una Nueva expedición</span><b class="v gtxt"><span id="rPend">+0</span><span class="badge hidden" id="rRec">⭐ Recomendado</span></b><small class="mut" id="rHint"></small></div>
+  <button class="btn g" id="rBtn" type="button">${IC.coral} Nueva expedición</button>
+  <p class="mut note">${RESET_NOTE}</p></div>`;
+function updReef() {
+  if (SEGS.reef.cur !== 'exped') return;
+  const p = coralPending(), t = Math.max(coralTotal(), S.coral), r = coralRate();
+  setT($('rCoral'), fmt(S.coral));
+  setT($('rBonus'), `+${Math.round(r * 100)} % de producción por coral · ahora ×${fmtM(1 + r * S.coral)}`);
+  setT($('rPO'), fmt(S.pOcean));
+  if (S.exps === 0 && p < 10) {
+    const need = pearlsForCorals(10);
+    setW($('rBar'), S.pOcean / need * 100);
+    setT($('rNeed'), `Primera expedición: necesitas 10 corales (${fmt(need)} perlas en este océano)`);
+  } else {
+    const a = pearlsForCorals(t), b = pearlsForCorals(t + 1);
+    setW($('rBar'), (S.pOcean - a) / (b - a) * 100);
+    setT($('rNeed'), `Siguiente coral en ${fmt(Math.max(0, b - S.pOcean))} perlas`);
+  }
+  setT($('rPend'), '+' + fmt(p));
+  $('rRec').classList.toggle('hidden', !expRecommended());
+  setT($('rHint'), canExpedition() ? `Producción ×${fmtM(1 + r * S.coral)} → ×${fmtM(1 + r * (S.coral + p))}` : S.exps === 0 ? 'Con 10 corales tu producción será ×2 para siempre.' : 'Sigue ganando perlas en este océano.');
+  $('rBtn').disabled = !canExpedition();
+}
+function askExpedition() {
+  if (!canExpedition()) return;
+  const p = coralPending(), c = S.coral, r = coralRate();
+  modal({title: `${IC.coral} Nueva expedición`,
+    body: `<p>Plantarás <b class="gtxt">+${fmt(p)} corales</b> (${fmt(c)} → ${fmt(c + p)}). Producción ×${fmtM(1 + r * c)} → ×${fmtM(1 + r * (c + p))}.</p><p class="mut note">${RESET_NOTE}</p>`,
+    buttons: [{t: `${IC.coral} Plantar corales`, cls: 'g', fn: doExpedition}, {t: 'Cancelar'}]});
+}
+function doExpedition() {
+  if (!canExpedition()) return;
+  const p = coralPending();
+  S.coral += p; S.coralLife += p; S.exps++;
+  newRun();
+  upSeen.clear();
+  checkZone();
+  save();
+  toast(`${IC.coral} ¡+${fmt(p)} corales!`);
+  Snd.ms();
+  runH('onExpedition', p);
+  showTab('gen');
+  naturalPause();
+}
+$('rBtn').onclick = askExpedition;
+
+// ===== PANTALLA: TIENDA =====
+const shopList = $('shopList');
+const adGemsLeft = () => AD_GEMS_DAY - adLim().gems;
+function adGems() {
+  if (adGemsLeft() <= 0) return;
+  Ads.rewarded(() => { adLim().gems++; S.gems += AD_GEMS; toast(`💎 +${AD_GEMS} gemas`); save(); });
+}
+function askJump(j) {
+  const g = prodBase() * j.h * 3600;
+  if (S.gems < j.gems || g <= 0) return;
+  modal({title: `⏳ Salto de ${j.h} h`, body: `<p>Gasta <b>${j.gems} 💎</b> y recibe al instante la producción de ${j.h} h:</p><div class="big">+${fmt(g)} ${IC.pearl}</div>`,
+    buttons: [{t: '⏩ Saltar', cls: 'g', fn: () => jump(j)}, {t: 'Cancelar'}]});
+}
+function jump(j) {
+  const g = prodBase() * j.h * 3600;
+  if (S.gems < j.gems || g <= 0) return;
+  S.gems -= j.gems;
+  earn(g);
+  toast(`⏩ +${fmt(g)} perlas`);
+  Snd.done();
+  save();
+}
+const owned = sku => (sku === 'sin_anuncios' && S.noAds) || (sku === 'x2_permanente' && S.x2);
+function grant(sku) {
+  if (sku === 'sin_anuncios') { S.noAds = Ads.noAds = true; Ads.banner(); }
+  else if (sku === 'gemas_100') S.gems += 100;
+  else if (sku === 'gemas_500') S.gems += 500;
+  else if (sku === 'x2_permanente') { S.x2 = true; invalidateCaches(); }
+  toast('✅ Compra completada: ' + Shop.SKUS[sku].name);
+  save();
+}
+function askWipe() {
+  modal({title: '🗑️ Borrar partida', body: '<p>¿Seguro? Se borrará todo tu progreso.</p>',
+    buttons: [{t: 'Borrar partida', cls: 'r', fn: () => modal({title: '⚠️ Último aviso', body: '<p>Esta acción no se puede deshacer.</p>',
+      buttons: [{t: 'Sí, borrar todo', cls: 'r', fn: wipe}, {t: 'Cancelar'}]})}, {t: 'Cancelar'}]});
+}
+function wipe() { wiping = true; try { localStorage.removeItem(SAVE_KEY); } catch (e) {} location.reload(); }
+shopList.appendChild(el('div', 'sec', '📺 Recompensas gratis'));
+const sBoost = mkRow(shopList, '⚡', 'Producción x2 · 5 min', 'Duplica toda tu producción', '📺 Ver', adBoost);
+const sGems = mkRow(shopList, '💎', `+${AD_GEMS} gemas`, '', '📺 Ver', adGems);
+shopList.appendChild(el('div', 'sec', '⏩ Saltos temporales'));
+const jumpRows = JUMPS.map(j => Object.assign(mkRow(shopList, '⏳', `Salto de ${j.h} h`, '', `💎 ${j.gems}`, () => askJump(j)), {j}));
+shopList.appendChild(el('div', 'sec', '🐚 Aspectos de la ostra'));
+const skinMount = el('div');
+skinMount.id = 'm-skins';
+shopList.appendChild(skinMount);
+shopList.appendChild(el('div', 'sec', '🛒 Tienda'));
 const skuRows = Object.keys(Shop.SKUS).map(sku => {
   const p = Shop.SKUS[sku];
-  return Object.assign(mkRow(tS, p.icon, p.name, p.desc, p.price, () => { if (!owned(sku)) Shop.buy(sku, grant); }), {sku});
+  return Object.assign(mkRow(shopList, p.icon, p.name, p.desc, p.price, () => { if (!owned(sku)) Shop.buy(sku, grant); }), {sku});
 });
-function updS() {
-  const on = boostOn(), left = adGemsLeft(), bp = baseProd();
-  sBoost.buy.textContent = on ? '⚡ ' + mmss((S.boost - Date.now()) / 1000) : '📺 Ver';
+shopList.appendChild(el('p', 'mut note', 'Todo el contenido se consigue jugando. Las compras solo aceleran y nunca venden nada al azar.'));
+shopList.appendChild(el('div', 'sec', '⚙️ Ajustes'));
+const sSound = mkRow(shopList, '🔊', 'Sonido', 'Efectos de sonido del juego', '', () => { S.mute = !S.mute; updMute(); save(); updShop(Date.now()); });
+const sVib = mkRow(shopList, '📳', 'Vibración', 'Vibra al tocar la ostra', '', () => { S.vib = !S.vib; if (S.vib) vib(20); save(); updShop(Date.now()); });
+mkRow(shopList, '🗑️', 'Borrar partida', 'Empieza de cero (pide confirmación)', 'Borrar', askWipe).buy.classList.add('danger');
+function updShop(now) {
+  const on = now < S.boostEnd, left = adGemsLeft(), pb = prodBase();
+  setT(sBoost.buy, on ? '⚡ ' + mmss((S.boostEnd - now) / 1000) : '📺 Ver');
   sBoost.r.classList.toggle('off', on);
-  sGems.sub.textContent = left > 0 ? `Quedan ${left} de ${AD_GEMS_DAY} hoy` : 'Límite diario alcanzado';
+  setT(sGems.sub, left > 0 ? `Quedan ${left}/${AD_GEMS_DAY} hoy` : 'Límite diario alcanzado · vuelve mañana');
   sGems.r.classList.toggle('off', left <= 0);
   jumpRows.forEach(o => {
-    o.sub.textContent = `+${fmt(bp * o.j.h * 3600)} de oro al instante`;
-    o.r.classList.toggle('off', S.gems < o.j.gems || bp <= 0);
+    setT(o.sub, `+${fmt(pb * o.j.h * 3600)} perlas al instante`);
+    o.r.classList.toggle('off', S.gems < o.j.gems || pb <= 0);
   });
   skuRows.forEach(o => {
     const own = owned(o.sku);
     o.r.classList.toggle('done', own);
-    o.buy.textContent = own ? '✔ Comprado' : Shop.SKUS[o.sku].price;
+    setT(o.buy, own ? '✔ Comprado' : Shop.SKUS[o.sku].price);
   });
+  setT(sSound.buy, S.mute ? 'Desactivado' : 'Activado');
+  sSound.r.classList.toggle('off', S.mute);
+  setT(sVib.buy, S.vib ? 'Activada' : 'Desactivada');
+  sVib.r.classList.toggle('off', !S.vib);
 }
-function updA() {
-  const p = pending();
-  let pr, need;
-  $('aCr').textContent = fmt(S.crowns);
-  $('aBonus').textContent = `+${fmt(S.crowns * 10)} % de producción permanente`;
-  $('aRun').textContent = fmt(S.run);
-  $('aPend').textContent = '+' + fmt(p);
-  if (!p) {
-    pr = S.run / ASCEND_MIN;
-    need = `Gana ${fmt(ASCEND_MIN)} de oro en esta partida para poder ascender`;
-  } else {
-    const a = ASCEND_MIN * Math.pow(p / CROWN_K, 2), b = ASCEND_MIN * Math.pow((p + 1) / CROWN_K, 2);
-    pr = (S.run - a) / (b - a);
-    need = `Siguiente corona en ${fmt(b - S.run)} de oro`;
+
+// ===== DESGLOSE DE PRODUCCIÓN =====
+function showDesglose() {
+  const now = Date.now(), cat = catalogMult();
+  let gu = 1;
+  for (const u of GLOBU) if (S.gu[u.id]) gu *= u.mult;
+  const L = (n, v) => `<div class="dl${v === 1 ? ' dim' : ''}"><span>${n}</span><b>×${fmtM(v)}</b></div>`;
+  const T = (n, v) => `<div class="dl tot"><span>${n}</span><b>${v}</b></div>`;
+  let pct = 0;
+  for (const u of TAPU) if (S.tu[u.id]) pct += u.pct;
+  const body = [
+    `<div class="dl"><span>Criaturas (suma)</span><b>${fmt(creatureSum(), 1)}/s</b></div>`,
+    L('Mejoras globales', gu),
+    L(`Corales (${fmt(S.coral)})`, 1 + coralRate() * S.coral),
+    L(`Logros (${S.achN})`, 1 + (S.res.c6 ? 0.02 : 0.01) * S.achN),
+    L(`Catálogo (${C.spN} especies, ${C.stars} ★)`, cat),
+    L('Investigación', S.res.b1 ? 1.25 : 1),
+    L(`Rango ${S.rank}`, 1 + 0.01 * S.rank),
+    L('Reliquias', S.relics[1] ? 1.5 : 1),
+    L('Especies legendarias', leg('prod25') ? 1.25 : 1),
+    L(`Estudio de campo (nivel ${S.field})`, Math.pow(FIELD.mult, S.field)),
+    L('x2 permanente', S.x2 ? 2 : 1),
+    T('= Producción base', `${fmt(prodBase(), 1)}/s`),
+    L('Anuncio (x2 · 5 min)', now < S.boostEnd ? 2 : 1),
+    L('Marea de perlas', now < S.mareaEnd ? 2 : 1),
+    L('Frenesí de sardinas', now < S.frenEnd ? 3 : 1),
+    T('= Ahora', `${fmt(prodNow(now), 1)}/s`),
+    `<p class="mut note">Toque: ${fmt(tapBase(prodBase()), 1)} (+${fmtN(pct * 100)} % de la producción)</p>`,
+  ].join('');
+  modal({title: '📊 Desglose de producción', body, buttons: [{t: 'Cerrar'}]});
+}
+$('pps').onclick = showDesglose;
+
+// ===== CABECERA =====
+const pearlsEl = $('pearls'), ppsT = $('ppsT');
+const pill = id => ({box: $(id), v: $(id).querySelector('b')});
+const P = {gem: pill('pGem'), coral: pill('pCoral'), mu: pill('pMu'), bruj: pill('pBruj')};
+$('pCoral').querySelector('.icc').textContent = IC.coral;
+function renderTop(now) {
+  setT(pearlsEl, fmt(S.pearls));
+  setT(ppsT, fmt(prodNow(now), 1) + ' /s' + (now < S.boostEnd ? ' ⚡x2' : ''));
+  setT(P.gem.v, fmt(S.gems));
+  setT(P.coral.v, fmt(S.coral));
+  setT(P.mu.v, fmt(S.mu));
+  setT(P.bruj.v, fmt(S.brTot));
+}
+function updPills() {
+  P.coral.box.classList.toggle('hidden', !(S.coral > 0 || S.exps > 0));
+  P.mu.box.classList.toggle('hidden', S.zoneMax < 3);
+  P.bruj.box.classList.toggle('hidden', !(S.brTot > 0));
+}
+
+// ===== GANANCIAS SIN CONEXIÓN =====
+function handleAway(t) {
+  lastT = Date.now();
+  t = Math.max(0, t);
+  if (!(t > 0)) return;
+  runH('onAway', t);
+  const pb = prodBase();
+  if (t < OFFLINE_MIN) { earn(pb * t); return; }
+  const tt = Math.min(t, OFFLINE_MAX), g = pb * tt, lines = [];
+  for (const f of Hooks.offlineLines) { try { lines.push(...(f(t) || [])); } catch (e) { console.error(e); } }
+  if (!(g > 0) && !lines.length) return;
+  S.flags.offG = g > 0 ? g : 0;
+  save();
+  modal({title: '🌊 Mientras no estabas',
+    body: `<p>Tu estación siguió trabajando durante ${fmtTime(tt)}${t > OFFLINE_MAX ? ' (máx. 8 h)' : ''}:</p><div class="big">+${fmt(g)} ${IC.pearl}</div>${lines.map(l => `<p>${l}</p>`).join('')}`,
+    buttons: [
+      g > 0 && {t: `📺 Duplicar (+${fmt(2 * g)})`, cls: 'g', fn: () => Ads.rewarded(() => { S.flags.offG = 0; earn(2 * g); toast(`🌊 +${fmt(2 * g)} perlas`); save(); })},
+      {t: 'Recoger', fn: () => { S.flags.offG = 0; earn(g); save(); naturalPause(); }},
+    ].filter(Boolean)});
+}
+let autoDailyDay = -1;
+function afterAway() {
+  const d = dailyInfo();
+  if (!S.flags.firstDailyShown || !d.can || autoDailyDay === d.t) return;
+  autoDailyDay = d.t;
+  showDaily();
+}
+
+// ===== BITÁCORA DIARIA =====
+const dailyK = () => Math.min(2, 1 + 0.1 * S.daily.cycles);
+function dailyInfo() {
+  const t = dayNum(new Date()), d = S.daily;
+  if (d.last === t) return {can: false, day: d.streak, t};
+  if (d.last < 0) return {can: true, day: 1, t};
+  const gap = t - d.last;
+  if (gap < 0) return {can: false, day: d.streak, t};
+  if (gap === 1) return {can: true, day: d.streak % 7 + 1, t};
+  if (gap === 2 && !d.grace) return {can: true, day: d.streak % 7 + 1, useGrace: true, t};
+  return {can: true, day: 1, broken: d.streak > 0 && d.streak < 7, t};
+}
+function dailyAmt(r, k) {
+  if (r.min) return {p: Math.max(prodBase() * r.min * 60, 20 * r.min) * k};
+  if (r.mu) return {m: Math.round(r.mu * k)};
+  return {g: Math.round(r.gems * k)};
+}
+const dailyExtra = k => Game.dailyRoll ? ' + 🎲 Rara+' : ` + ${Math.round(D7_FALLBACK_GEMS * k)} 💎`;
+function dailyLabel(r, k) {
+  const a = dailyAmt(r, k);
+  return (a.p != null ? `${fmt(a.p)} perlas` : a.m ? `${a.m} 🧪` : `${a.g} 💎`) + (r.roll ? dailyExtra(k) : '');
+}
+function dailyCell(r, k) {
+  const a = dailyAmt(r, k);
+  if (a.p != null) return `<b>${IC.pearl}</b>${r.min >= 60 ? r.min / 60 + ' h' : r.min + ' min'}<br>${fmt(a.p)}`;
+  if (a.m) return `<b>🧪</b>${a.m} muestras`;
+  return `<b>💎</b>${a.g}${r.roll ? dailyExtra(k) : ''}`;
+}
+function showDaily() {
+  const d = dailyInfo(), k = dailyK(), D = S.daily, n = d.can ? d.day - 1 : D.streak;
+  const cells = DAILY.map((r, i) => {
+    const day = i + 1, done = d.can ? day < d.day : day <= D.streak, cur = d.can && day === d.day;
+    return `<div class="day${done ? ' done' : ''}${cur ? ' cur' : ''}${day === 7 ? ' d7' : ''}">Día ${day}${dailyCell(r, k)}${done ? ' ✔' : ''}</div>`;
+  }).join('');
+  const msg = (d.useGrace ? `<p class="cy">${IC.grace} Día de gracia: faltaste un día y tu racha sigue.</p>` : '') +
+    (d.broken ? '<p class="cy">🌊 Nuevo ciclo de bitácora: empiezas otra vez en el día 1. No pierdes nada de lo que ganaste.</p>' : '') +
+    `<p class="mut">${d.can ? '¡Tu recompensa de hoy te espera!' : 'Ya la recogiste hoy. ¡Vuelve mañana!'}</p>`;
+  modal({title: '📅 Bitácora diaria',
+    body: `<p>Racha: <b class="gtxt">${n}/7</b> · Ciclos completados: ${D.cycles} (premios ×${fmtN(k)})</p><div class="days">${cells}</div>${msg}`,
+    buttons: d.can ? [{t: `🎁 Recoger día ${d.day}`, cls: 'g', fn: claimDaily}, {t: 'Más tarde'}] : [{t: 'Cerrar'}]});
+}
+function claimDaily() {
+  const d = dailyInfo();
+  if (!d.can) return;
+  const D = S.daily, k = dailyK(), r = DAILY[d.day - 1], a = dailyAmt(r, k), label = dailyLabel(r, k);
+  if (a.p != null) earn(a.p);
+  if (a.g) S.gems += a.g;
+  if (a.m) S.mu += a.m;
+  if (r.roll) { if (Game.dailyRoll) Game.dailyRoll(k); else S.gems += Math.round(D7_FALLBACK_GEMS * k); }
+  if (d.day === 1) D.grace = false;
+  if (d.useGrace) D.grace = true;
+  D.last = d.t;
+  D.streak = d.day;
+  if (d.day === 7) D.cycles++;
+  toast(`🎁 Día ${d.day}: ${label}`);
+  Snd.done();
+  save();
+}
+
+// ===== CINTA DE OBJETIVO =====
+const goalEls = {i: $('goalI'), t: $('goalT'), b: $('goalB'), r: $('goalR')};
+let goalCur = null;
+function addGoal(order, fn) { Hooks.goalProviders.push({order, fn}); Hooks.goalProviders.sort((a, b) => a.order - b.order); }
+function updGoal() {
+  let g = null;
+  for (const p of Hooks.goalProviders) {
+    try { g = p.fn(); } catch (e) { console.error(e); g = null; }
+    if (g) break;
   }
-  $('aBar').style.width = Math.min(100, pr * 100) + '%';
-  $('aNeed').textContent = need;
-  $('aBtn').disabled = !p;
+  goalCur = g;
+  if (!g) return;
+  setT(goalEls.i, g.icon || '🎯');
+  setT(goalEls.t, g.text);
+  setW(goalEls.b, (g.p || 0) * 100);
+  setT(goalEls.r, g.right || '›');
 }
-$('aBtn').onclick = ascend;
-
-let cur = 'b';
-document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => {
-  cur = b.dataset.tab;
-  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.id === 't-' + cur));
-  $('panel').scrollTop = 0;
-  updateTab();
+$('goal').onclick = () => { if (goalCur && goalCur.go) goalCur.go(); };
+function goReef(seg) { showTab('reef'); if (curTab === 'reef') showSeg('reef', seg || 'exped'); }
+addGoal(30, () => {
+  if (!expRecommended()) return null;
+  const p = coralPending(), r = coralRate();
+  return {icon: '⭐', text: `Nueva expedición: +${fmt(p)} ${IC.coral} (producción ×${fmtM((1 + r * (S.coral + p)) / (1 + r * S.coral))})`, p: 1, go: () => goReef('exped')};
 });
-const goldEl = $('gold'), ppsEl = $('pps'), boostBtn = $('boostBtn');
-function renderTop() {
-  goldEl.textContent = fmt(S.gold);
-  ppsEl.textContent = fmt(prod(), 1) + ' /s' + (boostOn() ? ' ⚡x2' : '');
-}
-function updHero() {
-  const on = boostOn();
-  boostBtn.classList.toggle('act', on);
-  boostBtn.textContent = on ? `⚡ x2 · ${mmss((S.boost - Date.now()) / 1000)}` : '📺 x2 · 5 min';
-  $('dailyBtn').classList.toggle('new', dailyInfo().can);
-  $('tabA').classList.toggle('new', pending() > 0);
-  $('tapInfo').textContent = `+${fmt(tapValue(), 1)} por toque`;
-  $('gems').textContent = fmt(S.gems);
-  $('crowns').textContent = fmt(S.crowns);
-}
-function updateTab() {
-  ({b: updB, u: updU, s: updS, a: updA})[cur]();
-  updHero();
-}
-function refresh() { renderTop(); updateTab(); }
-boostBtn.onclick = adBoost;
-$('dailyBtn').onclick = showDaily;
-
-// ===== TOQUE =====
-const chest = $('chest'), fx = $('fx');
-chest.addEventListener('pointerdown', e => {
-  e.preventDefault();
-  const v = tapValue();
-  addGold(v);
-  const f = el('div', 'ft');
-  f.textContent = '+' + fmt(v, 1);
-  f.style.left = (e.clientX + Math.random() * 40 - 20) + 'px';
-  f.style.top = (e.clientY - 10) + 'px';
-  fx.appendChild(f);
-  if (fx.childNodes.length > 40) fx.firstChild.remove();
-  setTimeout(() => f.remove(), 900);
-  try { if (navigator.vibrate) navigator.vibrate(12); } catch (_) {}
-  chest.classList.remove('hit'); void chest.offsetWidth; chest.classList.add('hit');
+addGoal(50, () => {
+  const z = curZone;
+  if (z >= 6) return null;
+  const N = ZONES[z], thr = N.thr * scale();
+  if (pearlBlocked(z + 1) || S.run < 0.1 * thr) return null;
+  return {icon: N.icon, text: `Baja a ${N.name}: ${fmt(S.run)}/${fmt(thr)}`, p: depthInfo().x, go: () => showTab('gen')};
 });
-['gesturestart', 'gesturechange', 'dblclick', 'contextmenu', 'selectstart'].forEach(ev => document.addEventListener(ev, e => e.preventDefault(), {passive: false}));
-document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, {passive: false});
+addGoal(60, () => {
+  const ms = milestones(), none = ownedSum() === 0;
+  let best = null;
+  for (let i = 0; i < GEN.length; i++) {
+    if (GEN[i].zone > curZone || (S.b[i] < 1 && !(none && i === 0))) continue;
+    const n = S.b[i], nx = ms.find(x => x > n);
+    if (!nx) continue;
+    const c = costOf(i, nx - n);
+    if (!best || c < best.c) best = {i, n, nx, c};
+  }
+  if (!best) return null;
+  const g = GEN[best.i];
+  return {icon: '🎯', text: `${g.icon} ${g.name} ${best.n}/${best.nx} → ×2`, p: best.n / best.nx, go: () => showTab('gen')};
+});
+addGoal(80, () => {
+  const target = S.exps === 0 && coralPending() < 10 ? pearlsForCorals(10) : pearlsForCorals(Math.max(coralTotal(), S.coral) + 1);
+  return {icon: IC.coral, text: `Próximo coral: ${fmt(S.pOcean)}/${fmt(target)}`, p: S.pOcean / target, go: () => goReef('exped')};
+});
+Hooks.tabDot.reef.push(() => expRecommended());
 
-// ===== BUCLE Y GUARDADO =====
-let lastT = Date.now(), uiT = 0;
+// ===== BUCLE, TEMPORIZADORES Y GUARDADO =====
+let lastT = Date.now(), t5 = 0, t1 = 0, t1Last = Date.now(), loopGen = 0, sessPlay = 0;
+function updateTab(now) {
+  if (curTab === 'gen') updGen(now);
+  else if (curTab === 'up') updUp();
+  else if (curTab === 'reef') updReef();
+  else if (curTab === 'shop') updShop(now);
+}
+function tick5(now) {
+  checkZone();
+  updHero(now);
+  updGoal();
+  updTabs();
+  updSegs();
+  updPills();
+  updateTab(now);
+  runH('tick5hz', now);
+}
+function tick1(now) {
+  const dt = clamp((now - t1Last) / 1000, 0, 5);
+  t1Last = now;
+  sessPlay += dt;
+  invalidateCaches();
+  adLim();
+  const bz = Math.floor(S.b[9] / 10);
+  if (bz > 0) {
+    S.flags.muAcc = (+S.flags.muAcc || 0) + bz * dt / 3600;
+    if (S.flags.muAcc >= 1) { const n = Math.floor(S.flags.muAcc); S.mu += n; S.flags.muAcc -= n; }
+  }
+  if (Game.autoFirstDaily && !S.flags.firstDailyShown && sessPlay >= FIRST_DAILY_S) {
+    S.flags.firstDailyShown = 1;
+    if (dailyInfo().can && !mOpen) { autoDailyDay = dailyInfo().t; showDaily(); }
+  }
+  runH('tick1s', now);
+}
 function frame() {
-  const now = Date.now(), dt = (now - lastT) / 1000;
+  const now = Date.now();
+  let dt = (now - lastT) / 1000;
   lastT = now;
-  if (dt > 10) offline(dt); else if (dt > 0) addGold(prod() * dt);
-  renderTop();
-  if (now - uiT > 200) { uiT = now; updateTab(); }
-  requestAnimationFrame(frame);
+  if (dt > 5) { handleAway(dt); afterAway(); dt = 0; }
+  else if (dt > 0) earn(prodNow(now) * dt);
+  renderTop(now);
+  Sea.draw(Math.min(dt, 0.1), now / 1000);
+  if (Hooks.frame.length) runH('frame', dt, now);
+  if (now - t5 >= 200) { t5 = now; tick5(now); }
+  if (now - t1 >= 1000) { t1 = now; tick1(now); }
+}
+function startLoop() {
+  const g = ++loopGen;
+  lastT = Date.now();
+  const f = () => { if (g !== loopGen || document.hidden) return; frame(); requestAnimationFrame(f); };
+  requestAnimationFrame(f);
 }
 setInterval(() => { if (!document.hidden) save(); }, 10000);
-document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { loopGen++; save(); Snd.suspend(); return; }
+  handleAway(Math.max(0, (Date.now() - S.last) / 1000));
+  afterAway();
+  startLoop();
+});
 window.addEventListener('pagehide', save);
 window.addEventListener('beforeunload', save);
+window.addEventListener('resize', () => { Sea.resize(); gaugeH = depthEl.clientHeight || 120; });
 
+// ===== PARTE B: SISTEMAS PROFUNDOS (se registran en Hooks antes del arranque) =====
+Game.autoFirstDaily = false;
+const emoWalk = o => { for (const k in o) { const v = o[k]; if (typeof v === 'string') o[k] = emo(v); else if (v && typeof v === 'object') emoWalk(v); } return o; };
+const ZN = z => ZONES[z - 1];
+const RC = r => RARITY[r].col;
+const fmtA = n => n >= 1e6 ? fmt(n) : fmtInt(n);
+function fmtD(s) {
+  s = Math.max(0, Math.round(s));
+  const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+  return h ? h + ' h' + (m ? ` ${m} min` : '') : m ? m + ' min' + (x ? ` ${x} s` : '') : x + ' s';
+}
+const cdown = s => s >= 3600 ? fmtTime(s) : mmss(s);
+const pbSec = s => Math.max(100, prodBase() * s);
+const flagN = k => +S.flags[k] || 0;
+const flagInc = (k, n) => { S.flags[k] = flagN(k) + (n || 1); };
+const goSeg = (tab, seg) => { showTab(tab); if (curTab === tab) showSeg(tab, seg); };
+const maxB = () => Math.max(...S.b);
+function tempTxt(now) {
+  let s = '';
+  if (now < S.corrEnd) s += ` · ⚡×10 ${Math.ceil((S.corrEnd - now) / 1000)} s`;
+  if (now < S.frenEnd) s += ` · 🐟×3 ${Math.ceil((S.frenEnd - now) / 1000)} s`;
+  return s;
+}
+function giveReward(r) {
+  const out = [];
+  if (r.p) { earn(r.p); out.push(`+${fmt(r.p)} perlas`); }
+  if (r.s) { const x = pbSec(r.s); earn(x); out.push(`+${fmt(x)} perlas`); }
+  if (r.g) { S.gems += r.g; out.push(`+${r.g} 💎`); }
+  if (r.m) { S.mu += r.m; out.push(`+${r.m} ${IC.mu}`); }
+  return out.join(' ');
+}
+const rewardShort = r => r.p ? `+${fmt(r.p)} ${IC.oy}` : r.s ? `+${r.s} s ${IC.oy}` : [r.g && `+${r.g} 💎`, r.m && `+${r.m} ${IC.mu}`].filter(Boolean).join(' ');
+const rewardLong = r => r.p ? `+${fmt(r.p)} perlas` : r.s ? `${r.s} s de producción` : [r.g && `+${r.g} 💎`, r.m && `+${r.m} ${IC.mu}`].filter(Boolean).join(' ');
+
+// ===== GUÍA DE LA DRA. MARINA =====
+const afford = i => S.pearls / unitCost(i);
+const GUIDE = emoWalk([
+  {t: 'Toca la ostra 10 veces', c: () => S.taps >= 10, p: () => S.taps / 10, r: {p: 20}, hint: '👆 Toca la ostra del centro'},
+  {t: 'Compra un 🦀 Cangrejo ermitaño', c: () => S.b[0] >= 1, p: () => afford(0), r: {p: 15}, go: 'gen'},
+  {t: 'Ten 5 Cangrejos ermitaños', c: () => S.b[0] >= 5, p: () => S.b[0] / 5, r: {p: 40}, go: 'gen'},
+  {t: 'Abre ⬆️ Mejoras y compra 🧤 Guantes de neopreno', c: () => !!S.tu.t1, p: () => S.pearls / upCost(TAPU[0]), r: {p: 60}, go: 'up'},
+  {t: '¡Toca el 🐡 pez globo dorado!', c: () => S.fish >= 1, r: {p: 100}, start: () => Fish.force(5), hint: '🐡 Atento: el pez dorado cruza el agua en unos segundos'},
+  {t: 'Compra un 🐠 Pez payaso', c: () => S.b[1] >= 1, p: () => afford(1), r: {p: 150}, go: 'gen'},
+  {t: 'Llena el medidor 🫧 y provoca una Marea de perlas', c: () => S.mareas >= 1, p: () => S.meter / meterNeed(), r: {p: 300}, hint: '🫧 Cada toque llena el medidor bajo la ostra'},
+  {t: 'Baja al 🌿 Bosque de kelp: gana 1.000 perlas en esta expedición', c: () => openZone() >= 2, p: () => S.run / (1e3 * scale()), r: {g: 2}, go: 'gen'},
+  {t: 'Compra una 🦦 Nutria marina', c: () => S.b[2] >= 1, p: () => afford(2), r: {p: 500}, go: 'gen'},
+  {t: 'Abre 🧭 Explorar y envía la inmersión de prueba', c: () => !!S.flags.tutSent, r: {g: 3}, go: 'dives', start: firstDaily},
+  {t: 'Recoge la inmersión y descubre tu primera especie', c: () => S.dives >= 1, p: () => { const b = S.bays.find(x => x.kind === 'tut'); return b ? (Date.now() - b.start) / (b.end - b.start) : 0; }, r: {p: 1000}, go: 'dives'},
+  {t: 'Consigue un hito ×2: ten 10 de una criatura', c: () => maxB() >= 10, p: () => maxB() / 10, r: {s: 30}, go: 'gen'},
+  {t: 'Compra 🌡️ Corrientes cálidas', c: () => !!S.gu.g1, p: () => S.pearls / upCost(GLOBU[0]), r: {s: 30}, go: 'up'},
+  {t: 'Compra una 🐢 Tortuga carey', c: () => S.b[3] >= 1, p: () => afford(3), r: {s: 30}, go: 'gen'},
+  {t: 'Baja a 🌊 Mar abierto: gana 100 mil perlas', c: () => openZone() >= 3, p: () => S.run / (1e5 * scale()), r: {g: 5, m: 15}, go: 'gen'},
+  {t: 'Abre 🔬 Laboratorio e inicia una investigación', c: () => flagN('resN') > 0 || S.resDone > 0 || S.benches.length > 0, r: {s: 60}, go: 'lab'},
+  {t: 'Compra un 🏠 hábitat (pide 25 de una criatura)', c: () => flagN('habN') > 0 || Object.keys(S.hab).length > 0, p: () => maxB() / HAB.req, r: {s: 60}, go: 'up'},
+  {t: 'Baja a la 🌌 Zona crepuscular: gana 10 millones de perlas', c: () => openZone() >= 4, p: () => S.run / (1e7 * scale()), r: {g: 5, m: 20}, go: 'gen'},
+  {t: 'Compra un 🦑 Calamar gigante', c: () => S.b[7] >= 1, p: () => afford(7), r: {s: 60}, go: 'gen'},
+  {t: 'Haz tu primera 🪸 Nueva expedición (10 corales)', c: () => S.exps >= 1, p: () => S.pOcean / pearlsForCorals(10), r: {g: 50}, go: 'reef'},
+]);
+const guideOn = () => S.guide < GUIDE.length;
+function firstDaily() {
+  if (S.flags.firstDailyShown) return;
+  S.flags.firstDailyShown = 1;
+  const d = dailyInfo();
+  if (d.can) { autoDailyDay = d.t; showDaily(); }
+}
+let gIdx = -1, gStart = 0;
+function guideTick(now) {
+  if (!guideOn()) return;
+  const g = GUIDE[S.guide];
+  if (gIdx !== S.guide) { gIdx = S.guide; gStart = now; if (g.start) g.start(); }
+  if (now - gStart < 1500 || !g.c()) return;
+  const lbl = giveReward(g.r);
+  S.guide++;
+  toast(`👩‍🔬 ¡Paso ${S.guide} completado! ${lbl}`);
+  Snd.ms();
+  if (!guideOn()) { toast('👩‍🔬 ¡Guía completada! Ahora la estación te dará Encargos.'); encFill(); }
+  save();
+}
+function guideGo(g) {
+  if (g.go === 'dives' || g.go === 'lab') goSeg('exp', g.go);
+  else if (g.go === 'reef') goReef('exped');
+  else if (g.go) showTab(g.go);
+  else if (g.hint) toast(g.hint);
+}
+
+// ===== PEZ GLOBO DORADO =====
+const FISH_ODDS = [['tes', 45], ['fren', 30], ['corr', 15], ['mu', 7], ['gem', 3]];
+const Fish = (() => {
+  const btn = $('goldfish');
+  let wait = 120, on = false, forced = false, t = 0, dir = 1, y0 = 0, W = 300;
+  function interval() {
+    let s = FISH_MIN + Math.random() * (FISH_MAX - FISH_MIN);
+    if (S.res.b3) s *= 0.8;
+    if (leg('fish20')) s /= 1.2;
+    if (oceanKind() === 2) s *= 0.5;
+    if (eventNow() === 'floracion') s *= 0.5;
+    return s;
+  }
+  function roll() { let x = Math.random() * 100; for (const [k, w] of FISH_ODDS) { if (x < w) return k; x -= w; } return 'tes'; }
+  function reward(kind, k, auto) {
+    const now = Date.now(), c4 = S.res.c4 ? 2 : 1, pul = 1 + Math.min(0.5, 0.05 * Math.floor(S.b[4] / 10)), pre = auto ? '🤖 ' : '';
+    if (kind === 'tes') { const pb = prodBase(), x = Math.max(60 * pb, 25 * tapBase(pb)) * c4 * pul * k; earn(x); toast(`${pre}🐡 ¡Tesoro! +${fmt(x)} perlas`); }
+    else if (kind === 'fren') { const d = 30 * c4 * k; S.frenEnd = Math.max(S.frenEnd, now) + d * 1000; toast(`${pre}🐟 ¡Frenesí de sardinas! Producción ×3 · ${fmtN(d)} s`); }
+    else if (kind === 'corr') { const d = 15 * c4 * k; S.corrEnd = Math.max(S.corrEnd, now) + d * 1000; toast(`${pre}⚡ ¡Corriente eléctrica! Toques ×10 · ${fmtN(d)} s`); }
+    else if (kind === 'mu') { const n = Math.max(1, Math.floor(2 * openZone() * c4 * pul * k)); S.mu += n; toast(`${pre}🧪 +${n} muestras`); }
+    else { const n = Math.max(1, Math.round(2 * c4 * k)); S.gems += n; toast(`${pre}💎 +${n} gemas`); }
+  }
+  function place() {
+    const d = (W + 56) * t / FISH_VISIBLE, x = dir > 0 ? d - 56 : W - d;
+    btn.style.transform = `translate(${x.toFixed(1)}px,${(y0 + 10 * Math.sin(t * 3)).toFixed(1)}px) scaleX(${dir > 0 ? -1 : 1})`;
+  }
+  function spawn() {
+    W = hero.clientWidth || 300;
+    dir = Math.random() < 0.5 ? 1 : -1; t = 0;
+    y0 = (hero.clientHeight || 210) * (0.2 + Math.random() * 0.5) - 28;
+    on = true; place(); btn.classList.remove('hidden');
+  }
+  function end(caught) {
+    on = false; btn.classList.add('hidden'); S.flags.fish1 = 1;
+    if (!caught && S.guide === 4) { wait = 8; forced = true; } else { wait = interval(); forced = false; }
+  }
+  btn.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    if (!on) return;
+    Snd.init();
+    S.fish++;
+    Snd.fish(); vib(20);
+    reward(forced ? 'tes' : roll(), 1);
+    floatText(e.clientX, e.clientY, '🐡');
+    end(true);
+    save();
+  });
+  return {
+    init() { if (!S.flags.fish1) { wait = FISH_FIRST; forced = true; } else wait = interval(); },
+    force(s) { if (!on) { wait = Math.min(wait, s); forced = true; } },
+    frame(dt) {
+      if (on) {
+        t += dt;
+        if (t < FISH_VISIBLE) { place(); return; }
+        if (perk('autoFish')) reward(forced ? 'tes' : roll(), 0.5, true);
+        end(false);
+        return;
+      }
+      wait -= dt;
+      if (wait <= 0) { if (mOpen || sheetOpen) wait = 3; else spawn(); }
+    },
+    roll, reward, interval, get on() { return on; }, get wait() { return wait; },
+  };
+})();
+
+// ===== INMERSIONES Y CARTAS NÁUTICAS =====
+const freeBays = () => bayCount() - S.bays.filter(b => b.kind !== 'tut').length;
+const minDiveOk = (z, i) => i >= 0 && DIVES[i].t >= ZONE_MIN_DIVE[z - 1];
+function diveSel() {
+  const z = clamp(Math.floor(+S.flags.dz || S.zoneMax), 1, S.zoneMax);
+  let d = clamp(Math.floor(+S.flags.dd || 0), 0, DIVES.length - 1);
+  if (!minDiveOk(z, d)) d = DIVES.findIndex((_, i) => minDiveOk(z, i));
+  return {z, d};
+}
+const newBayId = () => { S.flags.bid = flagN('bid') + 1; return S.flags.bid; };
+const chartRun = c => S.bays.some(b => b.kind === 'chart' && b.chart === c.id);
+const chartAvail = c => !S.charts[c.id] && !chartRun(c) && S.oceanZone >= c.from;
+const chartDur = c => c.t * (perk('chartFast') ? 0.75 : 1);
+const bayTitle = b => b.kind === 'tut' ? '🐠 Inmersión de prueba · 90 s' : b.kind === 'chart' ? `🗺️ ${CHARTS[b.chart - 1].name}` : `${ZN(b.z).icon} ${ZN(b.z).name} · ${(DIVES.find(d => d.id === b.type) || DIVES[0]).label}`;
+function addBay(o, dur) {
+  const now = Date.now();
+  S.bays.push(Object.assign({id: newBayId(), start: now, end: now + dur * 1000}, o));
+  Snd.buy();
+  save();
+  dvSig = '';
+  updExplore(now);
+}
+function sendDive() {
+  const {z, d} = diveSel(), D = DIVES[d];
+  if (freeBays() <= 0 || !D) return;
+  const dur = diveDuration(D);
+  addBay({kind: 'dive', z, type: D.id, rolls: diveRolls(D), mu: diveMuestras(D.mu, z), t: D.t}, dur);
+  toast(`${IC.dive} Rumbo a ${ZN(z).name} · vuelve en ${fmtD(dur)}`);
+}
+function sendTut() {
+  if (S.flags.tutSent) return;
+  S.flags.tutSent = 1;
+  addBay({kind: 'tut', z: 1, type: 'tut', rolls: 0, mu: TUTORIAL_DIVE.mu, t: TUTORIAL_DIVE.t}, TUTORIAL_DIVE.t);
+  toast(`${IC.dive} ¡Inmersión de prueba en marcha! Vuelve en 90 s`);
+}
+function sendChart(id) {
+  const c = CHARTS[id - 1];
+  if (!c || !chartAvail(c) || freeBays() <= 0) return;
+  addBay({kind: 'chart', chart: c.id, z: c.from, type: 'chart', rolls: c.rolls, mu: diveMuestras(c.mu, c.from), t: c.t}, chartDur(c));
+  toast(`🗺️ Trazando la ${c.name} · ${fmtD(chartDur(c))}`);
+}
+function rollFor(z, first) {
+  if (first) {
+    const pool = SPECIES.filter(x => x.ocean === 0 && x.zone === z && (x.r === 'C' || x.r === 'P') && !S.sp[x.id]);
+    if (pool.length) return pool[Math.floor(Math.random() * pool.length)];
+  }
+  return rollSpecies(z);
+}
+function addSp(s) { const c = addSpecies(s); return {s, c, nw: c === 1, up: c <= 16 && starsOf(c) > starsOf(c - 1), ex: c > 16}; }
+function zoneDoneToasts(zc0) {
+  ensureC();
+  for (let z = 1; z <= 6; z++) if (C.zc[z] && !zc0[z]) { const g = GEN.filter(x => x.zone === z); toast(`📖 ¡${ZN(z).name} completa! ${g[0].icon} y ${g[1].icon} ×3`); }
+}
+const spRow = r => `<div class="spr" style="border-color:${RC(r.s.r)}"><span class="si">${r.s.icon}</span><span class="sn"><b>${r.s.name}</b><small style="color:${RC(r.s.r)}">${RARITY[r.s.r].name}</small></span><b class="tag">${r.nw ? '¡Nueva!' : r.ex ? `+5 ${IC.mu}` : '★' + starsOf(r.c) + (r.up ? ' ⬆' : '')}</b></div>`;
+const legLines = got => got.filter(r => r.nw && r.s.leg).map(r => `<p class="gtxt">✨ ${r.s.name}: ${LEG_TEXT[r.s.leg]}</p>`).join('');
+function collectBay(b) {
+  const now = Date.now(), k = S.bays.indexOf(b);
+  if (k < 0 || now < b.end) return;
+  S.bays.splice(k, 1);
+  ensureC();
+  const zc0 = C.zc.slice(), first = !S.zoneDove[b.z], pearls = b.kind === 'tut' ? 0 : divePearls(b.t), got = [];
+  S.dives++;
+  S.mu += b.mu;
+  earn(pearls);
+  if (b.kind === 'tut') got.push(addSp(SPECIES_BY_ID[TUTORIAL_DIVE.species]));
+  for (let r = 0; r < b.rolls; r++) got.push(addSp(rollFor(b.z, first && r === 0)));
+  S.zoneDove[b.z] = 1;
+  zoneDoneToasts(zc0);
+  if (b.kind === 'chart') {
+    S.charts[b.chart] = 1;
+    toast(`🗺️ ¡Carta trazada! Ya puedes bajar a ${ZN(CHARTS[b.chart - 1].opens).name} en este océano`);
+  }
+  Snd.done();
+  save();
+  const left = AD_LOOT_DAY - adLim().loot, mu = b.mu;
+  const btns = [];
+  if (b.kind !== 'tut' && left > 0) btns.push({t: `📺 Doble botín (${left}/${AD_LOOT_DAY})`, cls: 'g', fn: () => Ads.rewarded(() => {
+    adLim().loot++; S.mu += mu; earn(pearls);
+    toast(`📺 Doble botín: +${mu} ${IC.mu}${pearls > 0 ? ` · +${fmt(pearls)} perlas` : ''}`);
+    save();
+  })});
+  btns.push({t: 'Genial'});
+  modal({title: b.kind === 'chart' ? `🗺️ ${CHARTS[b.chart - 1].name}` : `${IC.dive} Inmersión en ${ZN(b.z).name}`,
+    body: `<div class="big" style="font-size:22px">+${mu} ${IC.mu}${pearls > 0 ? ` · +${fmt(pearls)} perlas` : ''}</div>${got.map(spRow).join('')}${legLines(got)}`,
+    buttons: btns});
+  dvSig = '';
+  updExplore(now);
+}
+const oddsLine = z => { const w = rarityWeights(z); return Object.keys(RARITY).map(k => `${RARITY[k].name} ${fmtN(w[k])} %`).join(' · '); };
+function bayHint() {
+  if (!S.res.e2) return 'Investiga ⚓ Segunda bahía (⚙️ Ingeniería) para enviar dos inmersiones a la vez.';
+  if (!S.res.e8) return 'Investiga ⚓ Tercera bahía (⚙️ Ingeniería) para tener una más.';
+  return 'Tus tres bahías están trabajando.';
+}
+const mDives = $('m-dives');
+let dvSig = '', dvRefs = [], dvPrev = null, dvPity = null;
+function dvSigNow(now) {
+  const s = diveSel();
+  return [bayCount(), S.zoneMax, S.oceanZone, S.guide === 9 && !S.flags.tutSent, S.charts[1] ? 1 : 0, S.charts[2] ? 1 : 0, S.res.e3 ? 1 : 0, S.res.e6 ? 1 : 0, s.z, s.d, perk('chartFast'), S.bays.map(b => b.id + (now >= b.end ? 'r' : '')).join(',')].join('|');
+}
+function buildDives(now) {
+  const s = diveSel(), free = freeBays(), h = [];
+  if (S.guide === 9 && !S.flags.tutSent) h.push(`<div class="card gl"><div class="ct">🐠 Inmersión de prueba · 90 s · gratis</div><p class="mut">La Dra. Marina te acompaña: vuelve con ${TUTORIAL_DIVE.mu} ${IC.mu} y una especie asegurada.</p><button class="btn g" type="button" data-a="tut">${IC.dive} Enviar</button></div>`);
+  for (const c of CHARTS) {
+    if (!chartAvail(c)) continue;
+    const Z = ZN(c.opens), r = RES_BY_ID[Z.res];
+    h.push(`<div class="card gl"><div class="ct">🗺️ ${c.name}</div><p class="mut">Abre ${Z.icon} ${Z.name} en este océano (también hace falta ${r.icon} ${r.name}${S.res[r.id] ? ' ✔' : ''}). Ocupa una bahía y trae ${diveMuestras(c.mu, c.from)} ${IC.mu} y ${c.rolls} tiradas.</p><button class="btn g" type="button" data-a="chart" data-c="${c.id}"${free > 0 ? '' : ' disabled'}>🗺️ Trazar carta · ${fmtD(chartDur(c))}</button>${free > 0 ? '' : '<p class="mut small">Necesita una bahía libre.</p>'}</div>`);
+  }
+  for (const b of [...S.bays].sort((x, y) => (y.kind === 'chart') - (x.kind === 'chart'))) {
+    const rd = now >= b.end;
+    h.push(`<div class="card bay${rd ? ' rdy' : ''}" data-id="${b.id}"><div class="bh"><span>${bayTitle(b)}</span><span class="tm"></span></div><div class="bar"><i></i></div>${rd ? `<button class="btn g" type="button" data-a="col" data-id="${b.id}">✅ ¡De vuelta! Recoger</button>` : ''}</div>`);
+  }
+  if (free > 0) {
+    const zs = [];
+    for (let z = 1; z <= S.zoneMax; z++) zs.push(`<button type="button" data-a="z" data-z="${z}" class="${z === s.z ? 'on' : ''}">${ZN(z).icon} ${z}</button>`);
+    const ds = DIVES.map((D, i) => `<button type="button" data-a="d" data-d="${i}" class="${i === s.d ? 'on' : ''}"${minDiveOk(s.z, i) ? '' : ' disabled'}>${D.label}<small>+${diveMuestras(D.mu, s.z)} 🧪</small></button>`).join('');
+    const min = ZONE_MIN_DIVE[s.z - 1];
+    h.push(`<div class="card"><div class="ct">${IC.dive} Enviar el batiscafo <span class="mut">· bahías libres ${free}/${bayCount()}</span></div><div class="lbl">Zona: ${ZN(s.z).icon} ${ZN(s.z).name}</div><div class="chips">${zs.join('')}</div><div class="lbl">Duración</div><div class="durs">${ds}</div>${min ? `<p class="mut small">Mínimo ${fmtD(min)} en esta zona</p>` : ''}<p class="pv" id="dvPrev"></p><p class="mut small">${oddsLine(s.z)}</p><p class="mut small" id="dvPity"></p><button class="btn g" type="button" data-a="send">${IC.dive} Enviar</button></div>`);
+  } else h.push(`<div class="card"><div class="ct">⚓ Todas las bahías están ocupadas</div><p class="mut">${bayHint()}</p></div>`);
+  const done = CHARTS.filter(c => S.charts[c.id]);
+  if (done.length) h.push(done.map(c => `<p class="ok small" style="margin:6px 4px">✔ ${c.name} trazada en este océano</p>`).join(''));
+  if (!S.bays.length && S.dives === 0 && S.guide !== 9) h.push('<p class="mut note">El batiscafo baja a las zonas que ya conoces y vuelve con 🧪 muestras para el laboratorio, perlas y especies para tu catálogo.</p>');
+  mDives.innerHTML = h.join('');
+  dvRefs = S.bays.map(b => { const e = mDives.querySelector(`.bay[data-id="${b.id}"]`); return {b, tm: e.querySelector('.tm'), bar: e.querySelector('.bar i')}; });
+  dvPrev = $('dvPrev'); dvPity = $('dvPity');
+}
+function updDives(now) {
+  const sig = dvSigNow(now);
+  if (sig !== dvSig) { dvSig = sig; buildDives(now); }
+  for (const o of dvRefs) {
+    const left = (o.b.end - now) / 1000;
+    setT(o.tm, left > 0 ? cdown(left) : '✅');
+    setW(o.bar, (now - o.b.start) / (o.b.end - o.b.start) * 100);
+  }
+  if (dvPrev) {
+    const {z, d} = diveSel(), D = DIVES[d];
+    setT(dvPrev, `Vuelve en ${fmtD(diveDuration(D))} · +${diveMuestras(D.mu, z)} 🧪 · ${diveRolls(D)} tiradas · ≈ ${fmt(divePearls(D.t))} perlas al recoger`);
+    setT(dvPity, `Rara o mejor garantizada en ${10 - Math.min(9, S.pity)} tiradas`);
+  }
+}
+mDives.addEventListener('click', e => {
+  const t = e.target.closest('[data-a]');
+  if (!t || t.disabled) return;
+  const a = t.dataset.a, now = Date.now();
+  if (a === 'tut') sendTut();
+  else if (a === 'chart') sendChart(+t.dataset.c);
+  else if (a === 'col') { const b = S.bays.find(x => x.id === +t.dataset.id); if (b) collectBay(b); }
+  else if (a === 'z') { S.flags.dz = +t.dataset.z; updDives(now); }
+  else if (a === 'd') { S.flags.dd = +t.dataset.d; updDives(now); }
+  else if (a === 'send') sendDive();
+});
+
+// ===== CATÁLOGO DE ESPECIES =====
+const mCat = $('m-catalog'), ctCards = {};
+let ctSig = '', ctFilter = 'all';
+function buildCatalog() {
+  mCat.innerHTML = '<div class="card" id="ctHdr" style="font-weight:900"></div><div class="chips" id="ctChips"></div><div class="grid3" id="ctGrid"></div>';
+  const chips = [['all', 'Todas'], ...[1, 2, 3, 4, 5, 6].map(z => [String(z), `${ZN(z).icon} ${z}`]), ['oc', '🌍 Océanos']];
+  $('ctChips').innerHTML = chips.map(([k, l]) => `<button type="button" data-f="${k}">${l}</button>`).join('');
+  $('ctChips').onclick = e => { const t = e.target.closest('[data-f]'); if (t) { ctFilter = t.dataset.f; ctSig = ''; updCatalog(); } };
+  const g = $('ctGrid');
+  for (const s of SPECIES) {
+    const b = el('button', 'spc', '<div class="si"></div><div class="sn"></div><div class="ss"></div>');
+    b.type = 'button';
+    b.style.borderColor = RC(s.r);
+    b.onclick = () => spModal(s);
+    g.appendChild(b);
+    ctCards[s.id] = {b, i: b.children[0], n: b.children[1], s: b.children[2]};
+  }
+}
+function updCatalog() {
+  ensureC();
+  const sig = ctFilter + '|' + SPECIES.map(s => S.sp[s.id] || 0).join(',');
+  if (sig === ctSig) return;
+  ctSig = sig;
+  setT($('ctHdr'), `📖 ${C.spN}/${SPECIES.length} especies · ★ ${C.stars}/${SPECIES.length * 5} · +${Math.round((C.cat - 1) * 100)} % producción`);
+  $('ctChips').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.f === ctFilter));
+  for (const s of SPECIES) {
+    const o = ctCards[s.id], c = S.sp[s.id] || 0, st = starsOf(c);
+    const show = ctFilter === 'all' || (ctFilter === 'oc' ? s.ocean > 0 : s.ocean === 0 && String(s.zone) === ctFilter);
+    o.b.classList.toggle('hidden', !show);
+    o.b.classList.toggle('unk', !c);
+    setT(o.i, c ? s.icon : '❔');
+    setT(o.n, c ? s.name : '???');
+    setT(o.s, c ? '★'.repeat(st) + '☆'.repeat(5 - st) : `Zona ${s.zone} · ${RARITY[s.r].name}${s.ocean ? ` · Solo en el ${OCEANS[s.ocean].name}` : ''}`);
+  }
+}
+function spModal(s) {
+  const c = S.sp[s.id] || 0;
+  if (!c) { toast(`❔ Aún no la has visto: búscala en la zona ${s.zone}${s.ocean ? ` del ${OCEANS[s.ocean].name}` : ''}`); return; }
+  const st = starsOf(c), nx = STARS[st];
+  modal({title: s.name, body: `<div class="spbig">${s.icon}</div><p style="color:${RC(s.r)};font-weight:900">${RARITY[s.r].name} · Zona ${s.zone}${s.ocean ? ` · Solo en el ${OCEANS[s.ocean].name}` : ''}</p><p class="gtxt">${'★'.repeat(st)}${'☆'.repeat(5 - st)}</p><p>${s.fact}</p><p class="mut">${c} ${c === 1 ? 'copia' : 'copias'} · ${nx ? `siguiente ★ con ${nx}` : `★5 máximo: cada copia extra da +5 ${IC.mu}`}</p>${s.leg ? `<p class="gtxt">✨ Efecto legendario: ${LEG_TEXT[s.leg]}</p>` : ''}`,
+    buttons: [{t: 'Cerrar'}]});
+}
+
+
+// ===== LABORATORIO =====
+const BRANCHES = [['b', '🧬 Biología'], ['e', '⚙️ Ingeniería'], ['c', '🌿 Ecología']];
+const benchCount = () => 1 + (perk('bench2') ? 1 : 0);
+const benchFree = () => S.benches.length < benchCount();
+const resPrev = r => { const l = RES.filter(x => x.br === r.br), i = l.indexOf(r); return i > 0 ? l[i - 1] : null; };
+const resRunning = id => S.benches.some(b => b.id === id);
+const allRes = () => RES.every(r => S.res[r.id]);
+const fieldCost = () => FIELD.cost * Math.pow(FIELD.growth, S.field);
+const resName = id => id === 'field' ? FIELD.name : RES_BY_ID[id].name;
+const resInfo = id => id === 'field' ? {name: `${FIELD.name} (nivel ${S.field + 1})`, icon: FIELD.icon, cost: fieldCost(), time: FIELD.time} : RES_BY_ID[id];
+const resTime = t => t * (eventNow() === 'ciencia' ? 0.75 : 1);
+const LAB_IDS = RES.map(r => r.id).concat('field');
+function resState(id) {
+  if (id !== 'field' && S.res[id]) return 'done';
+  if (resRunning(id)) return 'run';
+  if (id === 'field') { if (!allRes()) return 'lock'; }
+  else { const p = resPrev(RES_BY_ID[id]); if (p && !S.res[p.id]) return 'lock'; }
+  if (!benchFree()) return 'busy';
+  return S.mu >= resInfo(id).cost ? 'ok' : 'poor';
+}
+function startRes(id) {
+  if (resState(id) !== 'ok') return;
+  const r = resInfo(id), now = Date.now(), t = resTime(r.time);
+  S.mu -= r.cost;
+  S.benches.push({id, start: now, end: now + t * 1000});
+  flagInc('resN');
+  S.flags.resNew = '';
+  toast(`🔬 Investigando ${r.name} · ${fmtD(t)}`);
+  Snd.buy();
+  save();
+  updExplore(now);
+}
+function finishRes(id, quiet) {
+  let name;
+  if (id === 'field') { S.field++; name = `${FIELD.name} (nivel ${S.field})`; }
+  else { if (S.res[id] || !RES_BY_ID[id]) return null; S.res[id] = 1; S.resDone++; name = RES_BY_ID[id].name; }
+  invalidateCaches();
+  S.flags.resNew = id;
+  if (!quiet) { toast(`🔬 ¡${name} completada!`); Snd.done(); }
+  return name;
+}
+function labTick(now, quiet) {
+  const out = [];
+  if (!S.benches.some(b => now >= b.end)) return out;
+  S.benches = S.benches.filter(b => { if (now < b.end) return true; const n = finishRes(b.id, quiet); if (n) out.push(n); return false; });
+  save();
+  return out;
+}
+function labAd(id) {
+  if (AD_LAB_DAY - adLim().lab <= 0 || !resRunning(id)) return;
+  Ads.rewarded(() => {
+    const b = S.benches.find(x => x.id === id);
+    if (!b) return;
+    adLim().lab++;
+    b.end -= AD_LAB_CUT;
+    toast('📺 −30 min de investigación');
+    labTick(Date.now());
+    save();
+  });
+}
+const mLab = $('m-lab'), lbRows = {};
+let lbBr = 'b', lbSig = '', lbBench = [];
+function buildLab() {
+  mLab.innerHTML = `<div id="lbBench"></div><div class="seg wide" id="lbSeg" style="margin:6px 0 10px">${BRANCHES.map(([k, l]) => `<button type="button" data-br="${k}">${l}</button>`).join('')}</div><div id="lbList"></div><p class="mut note">La investigación es permanente: se conserva en todas las expediciones y travesías. Los bancos siguen trabajando aunque cierres el juego.</p>`;
+  const list = $('lbList');
+  const row = (id, icon, name, text, br) => { const o = mkRow(list, icon, name, text, '', () => startRes(id)); const ms = el('div', 'ms'); o.sub.after(ms); return Object.assign(o, {br, ms}); };
+  lbRows.field = row('field', FIELD.icon, FIELD.name, '', 'f');
+  for (const r of RES) lbRows[r.id] = row(r.id, r.icon, r.name, r.text, r.br);
+  $('lbSeg').onclick = e => { const t = e.target.closest('[data-br]'); if (t) { lbBr = t.dataset.br; updLab(Date.now()); } };
+  $('lbBench').onclick = e => { const t = e.target.closest('[data-ad]'); if (t && !t.disabled) labAd(t.dataset.ad); };
+}
+function buildBench() {
+  const box = $('lbBench'), h = S.benches.map(b => `<div class="card bay"><div class="bh"><span>🔬 ${resInfo(b.id).name}</span><span class="tm"></span></div><div class="bar"><i></i></div><button class="btn s" type="button" data-ad="${b.id}"></button></div>`);
+  for (let i = S.benches.length; i < benchCount(); i++) h.push('<div class="card"><div class="ct">🔬 Banco libre: elige una investigación</div></div>');
+  box.innerHTML = h.join('');
+  lbBench = S.benches.map((b, i) => { const c = box.children[i]; return {b, tm: c.querySelector('.tm'), bar: c.querySelector('.bar i'), ad: c.querySelector('[data-ad]')}; });
+}
+const RES_LBL = {done: '✔ Hecha', run: '⏳ En curso', lock: '🔒', busy: 'Banco ocupado', ok: 'Investigar'};
+function updLab(now) {
+  const sig = benchCount() + '|' + S.benches.map(b => b.id + b.start).join(',');
+  if (sig !== lbSig) { lbSig = sig; buildBench(); }
+  const left = AD_LAB_DAY - adLim().lab;
+  for (const o of lbBench) {
+    setT(o.tm, cdown((o.b.end - now) / 1000));
+    setW(o.bar, (now - o.b.start) / (o.b.end - o.b.start) * 100);
+    setT(o.ad, left > 0 ? `📺 −30 min (${left}/${AD_LAB_DAY})` : '📺 Límite diario alcanzado');
+    o.ad.disabled = left <= 0;
+  }
+  $('lbSeg').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.br === lbBr));
+  for (const id of LAB_IDS) {
+    const o = lbRows[id], vis = id === 'field' ? allRes() : o.br === lbBr;
+    o.r.classList.toggle('hidden', !vis);
+    if (!vis) continue;
+    const st = resState(id), r = resInfo(id);
+    o.r.classList.toggle('done', st === 'done');
+    o.r.classList.toggle('off', st !== 'ok' && st !== 'done');
+    if (id === 'field') {
+      setT(o.nm, `${FIELD.name} (nivel ${S.field})`);
+      setT(o.sub, `Producción ×1,10 por nivel · ahora ×${fmtM(Math.pow(FIELD.mult, S.field))}`);
+    }
+    setT(o.ms, st === 'lock' ? (id === 'field' ? 'Requiere las 24 investigaciones' : `🔒 Requiere ${resPrev(RES_BY_ID[id]).name}`) : `${fmt(r.cost)} 🧪 · ${fmtD(resTime(r.time))}`);
+    setT(o.buy, st === 'poor' ? `Faltan ${fmt(r.cost - S.mu)} 🧪` : RES_LBL[st]);
+  }
+}
+function updExplore(now) {
+  if (curTab !== 'exp') return;
+  const s = SEGS.exp.cur;
+  if (s === 'dives') updDives(now); else if (s === 'catalog') updCatalog(); else updLab(now);
+}
+
+// ===== LOGROS =====
+const achStat = st => st === 'species' ? (ensureC(), C.spN) : +S[st] || 0;
+const achRate = () => S.res.c6 ? 2 : 1;
+const ACH_FIRST = {fish: 'Atrapa tu primer pez dorado', dives: 'Completa tu primera inmersión', species: 'Descubre tu primera especie', exp: 'Haz tu primera Nueva expedición', res: 'Completa tu primera investigación', trav: 'Reúne tu primera brújula'};
+const achTxt = (a, n) => a.tiers[n] === 1 && ACH_FIRST[a.k] ? ACH_FIRST[a.k] : a.text.replace('{n}', fmtA(a.tiers[n]));
+const ACH_MAX = ACH.length * 9;
+function achTick() {
+  S.maxOwned = Math.max(S.maxOwned, ownedSum());
+  const got = [];
+  let gems = 0;
+  for (const a of ACH) {
+    let n = clamp(Math.floor(+S.ach[a.k] || 0), 0, 9);
+    const v = achStat(a.stat);
+    while (n < 9 && v >= a.tiers[n]) {
+      got.push(`🏅 Logro: ${achTxt(a, n)}`);
+      n++; S.achN++;
+      if (S.achN % 10 === 0) gems += 10;
+    }
+    S.ach[a.k] = n;
+  }
+  if (!got.length) return;
+  S.gems += gems;
+  invalidateCaches();
+  Snd.ms();
+  if (got.length <= 3) got.forEach(toast);
+  else { got.slice(0, 2).forEach(toast); toast(`🏅 ¡Y ${got.length - 2} logros más!`); }
+  if (gems) toast(`💎 +${gems} gemas por llegar a ${Math.floor(S.achN / 10) * 10} logros`);
+}
+const mAch = $('m-ach'), achRows = [];
+function buildAch() {
+  mAch.innerHTML = '<div class="card" id="achHdr" style="font-weight:900"></div>';
+  for (const a of ACH) {
+    const r = el('div', 'row', `<div class="ic">${a.icon}</div><div class="info"><div class="nm">${a.name}<span class="cnt"></span></div><div class="sub w"></div><div class="pips">${'<i></i>'.repeat(9)}</div><div class="bar"><i></i></div><div class="ms"></div></div>`);
+    mAch.appendChild(r);
+    achRows.push({a, cnt: r.querySelector('.cnt'), sub: r.querySelector('.sub'), pips: [...r.querySelectorAll('.pips i')], bar: r.querySelector('.bar i'), ms: r.querySelector('.ms')});
+  }
+  mAch.appendChild(el('p', 'mut note', 'Cada logro da +1 % de producción para siempre (+2 % con 🏅 Guardianes) y cada 10 logros, +10 💎.'));
+}
+function updAch() {
+  setT($('achHdr'), `🏅 ${S.achN}/${ACH_MAX} · +${S.achN * achRate()} % de producción`);
+  for (const o of achRows) {
+    const n = clamp(+S.ach[o.a.k] || 0, 0, 9), v = achStat(o.a.stat), nx = o.a.tiers[n], pv = n ? o.a.tiers[n - 1] : 0;
+    setT(o.cnt, `${n}/9`);
+    setT(o.sub, n < 9 ? achTxt(o.a, n) : '★ ¡Completado!');
+    o.pips.forEach((p, i) => p.classList.toggle('on', i < n));
+    setW(o.bar, n < 9 ? (v - pv) / (nx - pv) * 100 : 100);
+    setT(o.ms, n < 9 ? `${fmtA(v)}/${fmtA(nx)}` : fmtA(v));
+  }
+}
+
+// ===== ENCARGOS Y RANGO =====
+const topGen = () => { let i = GEN.length - 1; while (i > 0 && GEN[i].zone > curZone) i--; return i; };
+const sig2 = x => +x.toPrecision(2);
+const ENC = {
+  buyTop: {mk: () => { const i = topGen(), n = i >= 10 ? 3 : 10; return {text: `Compra ${n} ${GEN[i].icon} ${GEN[i].name}`, target: n, i, c: 0, icon: '🛒'}; }, prog: e => e.c},
+  prod: {mk: () => { const x = sig2(Math.max(20 * scale(), 2 * prodBase())); return {text: `Llega a ${fmt(x)} perlas/s`, target: x, icon: '⚡'}; }, prog: () => prodBase()},
+  taps: {mk: () => ({text: 'Toca la ostra 300 veces', target: 300, base: S.taps, icon: '👆'}), prog: e => S.taps - e.base},
+  fish: {mk: () => ({text: 'Atrapa 2 peces dorados', target: 2, base: S.fish, icon: '🐡'}), prog: e => S.fish - e.base},
+  dive: {ok: () => S.zoneMax >= 2, mk: () => ({text: 'Completa 1 inmersión', target: 1, base: S.dives, icon: IC.dive}), prog: e => S.dives - e.base},
+  res: {ok: () => S.zoneMax >= 3, mk: () => ({text: 'Inicia 1 investigación', target: 1, base: flagN('resN'), icon: '🔬'}), prog: e => flagN('resN') - e.base},
+  ms: {mk: () => ({text: 'Consigue un hito ×2', target: 1, base: flagN('msN'), icon: '🎯'}), prog: e => flagN('msN') - e.base},
+  earn: {mk: () => { const x = sig2(Math.max(1000, 600 * prodBase())); return {text: `Gana ${fmt(x)} perlas`, target: x, base: S.total, icon: IC.oy}; }, prog: e => S.total - e.base},
+  marea: {mk: () => ({text: 'Provoca 2 Mareas de perlas', target: 2, base: S.mareas, icon: IC.bub}), prog: e => S.mareas - e.base},
+  hab: {ok: () => GEN.some((_, i) => !S.hab[i] && S.b[i] >= 1), mk: () => ({text: 'Compra un hábitat', target: 1, base: flagN('habN'), icon: '🏠'}), prog: e => flagN('habN') - e.base},
+  exp: {ok: () => S.exps >= 1, mk: () => ({text: 'Haz una Nueva expedición', target: 1, base: S.exps, icon: IC.coral}), prog: e => S.exps - e.base},
+};
+const encProg = e => clamp(ENC[e.key].prog(e) / e.target, 0, 1);
+const encDone = e => !!e.fin || encProg(e) >= 1;
+const encReady = () => !guideOn() && S.enc.list.some(encDone);
+function encNew(excl) {
+  const keys = Object.keys(ENC).filter(k => !excl.includes(k) && (!ENC[k].ok || ENC[k].ok()));
+  const k = keys[Math.floor(Math.random() * keys.length)] || 'taps';
+  return Object.assign({key: k, start: Date.now(), base: 0, i: 0, c: 0, fin: 0}, ENC[k].mk());
+}
+function encFill() {
+  if (guideOn()) return;
+  while (S.enc.list.length < 3) S.enc.list.push(encNew(S.enc.list.map(e => e.key)));
+}
+const RANK_GEMS = {5: 10, 10: 20, 20: 30, 30: 40, 40: 50, 50: 100};
+function rankCheck() {
+  const r = Math.min(50, Math.floor(S.enc.done / 10));
+  if (S.rank >= r) return;
+  while (S.rank < r) {
+    S.rank++;
+    toast(`⚓ ¡Rango ${S.rank}!`);
+    const g = RANK_GEMS[S.rank];
+    if (g) { S.gems += g; toast(`💎 +${g} gemas por el rango ${S.rank}`); }
+  }
+  Snd.ms();
+  invalidateCaches();
+}
+function encClaim(i) {
+  const e = S.enc.list[i];
+  if (!e || !encDone(e)) return;
+  const pearls = pbSec(60), mu = S.zoneMax, third = (S.enc.done + 1) % 3 === 0;
+  earn(pearls);
+  S.mu += mu;
+  if (third) S.gems += 3;
+  S.enc.done++;
+  S.enc.list[i] = encNew(S.enc.list.map(x => x.key));
+  toast(`📋 Encargo cobrado: +${fmt(pearls)} perlas · +${mu} 🧪${third ? ' · +3 💎' : ''}`);
+  Snd.done();
+  rankCheck();
+  save();
+  updEnc(Date.now());
+}
+function encReroll(i) {
+  const now = Date.now(), free = now >= S.enc.rerollAt;
+  if (!S.enc.list[i] || (!free && S.gems < ENC_REROLL_GEMS)) return;
+  if (free) S.enc.rerollAt = now + ENC_REROLL_MS; else S.gems -= ENC_REROLL_GEMS;
+  S.enc.list[i] = encNew(S.enc.list.map(x => x.key));
+  toast(`🔄 Nuevo encargo: ${S.enc.list[i].text}`);
+  save();
+  updEnc(now);
+}
+function encTick() {
+  if (guideOn()) return;
+  encFill();
+  const done = S.enc.list.filter(e => !e.fin && encProg(e) >= 1);
+  if (!done.length) return;
+  done.forEach(e => { e.fin = 1; });
+  toast(done.length > 1 ? `📋 ¡${done.length} encargos cumplidos! Cóbralos en la Bitácora` : '📋 ¡Encargo cumplido! Cóbralo en la Bitácora');
+  Snd.ms();
+}
+function encPt(e) {
+  const p = ENC[e.key].prog(e);
+  if (e.key === 'prod') return `${fmt(p, 1)}/${fmt(e.target)} perlas/s`;
+  if (e.key === 'earn') return `${fmt(Math.min(p, e.target))}/${fmt(e.target)}`;
+  return `${Math.min(Math.floor(p), e.target)}/${e.target}`;
+}
+const mEnc = $('m-enc');
+let encSig = '', encRefs = [], encFreeEl = null;
+function buildEnc(now) {
+  encRefs = []; encFreeEl = null;
+  if (guideOn()) {
+    const g = GUIDE[S.guide];
+    mEnc.innerHTML = `<div class="card gl"><div class="ct">👩‍🔬 Dra. Marina · Paso ${S.guide + 1}/${GUIDE.length}</div><p class="et">${g.t}</p><div class="bar"><i></i></div><p class="mut small">Premio: ${rewardLong(g.r)}</p><button class="btn g s" type="button" data-a="go">Ir ›</button></div><p class="mut note">Al terminar la guía empezarán los Encargos de la estación: tres tareas a la vez que suben tu ⚓ Rango (+1 % de producción por rango).</p>`;
+    encRefs.push({bar: mEnc.querySelector('.bar i'), p: () => g.c() ? 1 : g.p ? clamp(g.p(), 0, 1) : 0});
+    return;
+  }
+  const free = now >= S.enc.rerollAt, third = (S.enc.done + 1) % 3 === 0;
+  const rk = S.rank >= 50 ? '¡Rango máximo!' : `${S.enc.done % 10}/10 encargos para el siguiente`;
+  const h = [`<div class="card gl"><div class="ct">⚓ Rango ${S.rank} · ${rk}</div><p class="mut small">Producción +${S.rank} % · ${S.enc.done} encargos cobrados</p></div>`];
+  S.enc.list.forEach((e, i) => {
+    const d = encDone(e);
+    h.push(`<div class="card${d ? ' gl' : ''}"><div class="ct">${e.icon} ${e.text}</div><div class="bar"><i></i></div><p class="mut small" data-pt></p><p class="small">60 s de producción · +${S.zoneMax} 🧪${third ? ' (+3 💎)' : ''}</p><div class="ebtns"><button class="btn g" type="button" data-a="claim" data-i="${i}"${d ? '' : ' disabled'}>Cobrar</button><button class="btn" type="button" data-a="rr" data-i="${i}"${free || S.gems >= ENC_REROLL_GEMS ? '' : ' disabled'}>🔄 Cambiar · ${free ? 'gratis' : ENC_REROLL_GEMS + ' 💎'}</button></div></div>`);
+  });
+  h.push('<p class="mut note" id="encFree"></p>');
+  mEnc.innerHTML = h.join('');
+  const cards = mEnc.querySelectorAll('.card');
+  S.enc.list.forEach((e, i) => { const c = cards[i + 1]; encRefs.push({bar: c.querySelector('.bar i'), pt: c.querySelector('[data-pt]'), e}); });
+  encFreeEl = $('encFree');
+}
+function updEnc(now) {
+  const sig = [S.guide, S.enc.done, S.zoneMax, now >= S.enc.rerollAt, S.gems >= ENC_REROLL_GEMS, S.enc.list.map(e => e.key + e.start + (encDone(e) ? 'f' : '')).join()].join('|');
+  if (sig !== encSig) { encSig = sig; buildEnc(now); }
+  for (const o of encRefs) {
+    setW(o.bar, (o.e ? encProg(o.e) : o.p()) * 100);
+    if (o.pt) setT(o.pt, encPt(o.e));
+  }
+  if (encFreeEl) setT(encFreeEl, now >= S.enc.rerollAt ? 'Tienes un cambio de encargo gratis. Después hay uno gratis cada 30 min.' : `Próximo cambio gratis en ${mmss((S.enc.rerollAt - now) / 1000)}.`);
+}
+mEnc.addEventListener('click', e => {
+  const t = e.target.closest('[data-a]');
+  if (!t || t.disabled) return;
+  if (t.dataset.a === 'claim') encClaim(+t.dataset.i);
+  else if (t.dataset.a === 'rr') encReroll(+t.dataset.i);
+  else if (t.dataset.a === 'go' && guideOn()) { closeSheet(); guideGo(GUIDE[S.guide]); }
+});
+
+// ===== TRAVESÍA OCEÁNICA, OCÉANOS, RELIQUIAS Y VENTAJAS =====
+const kindOf = i => i <= 4 ? i : ((i - 5) % 4) + 1;
+const oceanName = i => i <= 4 ? OCEANS[i].name : `Océano Profundo ${i - 4} · ${OCEANS[kindOf(i)].name}`;
+const oceanIcon = i => i <= 4 ? OCEANS[i].icon : '🌀';
+const nextOcean = B => S.ocean < 4 ? S.ocean + 1 : S.ocean === 4 ? (S.brTot + B >= 50 ? 5 : 4) : S.ocean + 1;
+const travRecommended = () => { const B = brujPending(); return B > 0 && B >= Math.max(5, Math.ceil(0.25 * S.brTot)); };
+const relicDue = () => S.ocean <= 4 && S.b[11] >= 1 && !S.relics[S.ocean];
+const TRAV_NOTE = 'Se reinician corales, perlas, criaturas, mejoras, hábitats, zonas y cartas náuticas de este océano. Conservas brújulas, investigación, catálogo, logros, reliquias, gemas, muestras y compras.';
+function grantRelic() {
+  if (!relicDue()) return false;
+  const o = OCEANS[S.ocean];
+  S.relics[S.ocean] = 1;
+  invalidateCaches();
+  Snd.ms();
+  modal({title: `🏺 ¡Reliquia del ${o.name}!`, body: `<div class="spbig">🏺</div><p>Tu primera 🏙️ Ciudad abisal en el ${o.name} ha encontrado una reliquia.</p><p class="gtxt"><b>${o.relic}</b></p><p class="mut note">Es permanente: la conservas en todos los océanos.</p>`, buttons: [{t: '¡Genial!', cls: 'g'}]});
+  save();
+  return true;
+}
+function askTravesia() {
+  const B = brujPending();
+  if (!B) return;
+  const nx = nextOcean(B), c0 = 1 + BRUJ.CORAL_BONUS * S.brTot, c1 = 1 + BRUJ.CORAL_BONUS * (S.brTot + B);
+  modal({title: '⛵ Travesía oceánica',
+    body: `<p>Zarparás al <b>${oceanIcon(nx)} ${oceanName(nx)}</b> con <b class="gtxt">+${B} brújulas</b> (${S.brTot} → ${S.brTot + B}). Corales ×${fmtM(c0)} → ×${fmtM(c1)} en todos los océanos.</p>${relicDue() ? `<p class="gtxt">🏺 Antes de zarpar recibes la ${OCEANS[S.ocean].relic}</p>` : ''}<p class="mut note">${TRAV_NOTE}</p>`,
+    buttons: [{t: '⛵ Zarpar', cls: 'g', fn: doTravesia}, {t: 'Cancelar'}]});
+}
+function doTravesia() {
+  const B = brujPending();
+  if (!B) return;
+  grantRelic();
+  const nx = nextOcean(B), had = PERKS.filter(p => S.brTot >= p[0]).length;
+  S.brTot += B; S.travs++; S.ocean = nx; S.visited[nx] = 1;
+  S.coral = 0; S.pOcean = 0; S.charts = {}; S.oceanZone = 1;
+  S.bays = S.bays.filter(b => b.kind !== 'chart');
+  newRun();
+  upSeen.clear();
+  checkZone();
+  save();
+  toast(`🧭 ¡+${B} brújulas! Rumbo al ${oceanName(nx)}`);
+  toast(`${oceanIcon(nx)} ${OCEANS[kindOf(nx)].mod}`);
+  PERKS.slice(had).filter(p => S.brTot >= p[0]).forEach(p => toast(`🎁 Nueva ventaja: ${p[2]}`));
+  Snd.ms();
+  runH('onTravesia', B);
+  showTab('gen');
+  naturalPause();
+}
+const mTrav = $('m-travesia');
+function buildTrav() {
+  mTrav.innerHTML = `<div class="asc"><div class="bigic">🧭</div><div class="ah">Brújulas: <span id="tvB" class="gtxt"></span></div><div class="mut" id="tvBonus"></div><div class="gtxt hidden" id="tvAdm" style="margin-top:6px;font-weight:900">🎖️ Almirante del Abismo</div><div class="card" id="tvCur"></div></div>
+<div class="sec">🌍 Océanos</div><div id="tvList"></div>
+<div class="asc"><div class="card"><span class="mut">Brújulas al zarpar</span><b class="v gtxt"><span id="tvPend"></span><span class="badge hidden" id="tvRec">⭐ Recomendado</span></b><small class="mut" id="tvHint"></small></div><button class="btn g" id="tvBtn" type="button"></button><p class="mut note">${TRAV_NOTE}</p></div>
+<div class="sec">🎁 Ventajas de las brújulas</div><div id="tvPerks"></div>`;
+  $('tvBtn').onclick = askTravesia;
+}
+function updTrav() {
+  if (curTab !== 'reef' || SEGS.reef.cur !== 'trav') return;
+  const B = brujPending(), nx = nextOcean(B), i = S.ocean, N = deepN(), k = kindOf(i);
+  setT($('tvB'), fmt(S.brTot));
+  setT($('tvBonus'), `Corales ×${fmtM(1 + BRUJ.CORAL_BONUS * S.brTot)} en todos los océanos`);
+  $('tvAdm').classList.toggle('hidden', !perk('admiral'));
+  const relic = i <= 4 ? (S.relics[i] ? `<p class="ok">🏺 ✔ ${OCEANS[i].relic}</p>` : `<p class="mut">🏺 Pendiente: compra una 🏙️ Ciudad abisal · ${OCEANS[i].relic}</p>`) : '';
+  setH($('tvCur'), `<div class="ct">${oceanIcon(i)} ${oceanName(i)}</div><p class="cy">${OCEANS[k].mod}</p>${relic}${N ? `<p class="gtxt">Presión ×${fmt(scale())}: costes y umbrales ×${fmt(scale())} · brújulas ×${fmtN(1 + DEEP.BRUJ_BONUS * N)}</p>` : ''}`);
+  const rows = OCEANS.map((o, j) => `<div class="dl${i === j ? ' tot' : ''}"><span>${o.icon} ${o.name}<br><small class="mut">${o.mod}</small></span><b>${i === j ? '📍 aquí' : S.visited[j] ? '✔ visitado' : '🔒'}</b></div>`);
+  rows.push(`<div class="dl${i >= 5 ? ' tot' : ''}"><span>🌀 Océano Profundo ∞<br><small class="mut">Repite las reglas de los océanos con presión ×3 por nivel</small></span><b>${i >= 5 ? `📍 nivel ${N}` : perk('deep') ? '✔ abierto' : '🔒 50 🧭'}</b></div>`);
+  setH($('tvList'), rows.join(''));
+  setT($('tvPend'), '+' + fmt(B));
+  $('tvRec').classList.toggle('hidden', !travRecommended());
+  setT($('tvHint'), S.b[11] < 1 ? 'Necesitas 1 🏙️ Ciudad abisal' : i === 4 && nx === 4 ? `Te faltan ${50 - S.brTot} brújulas para el Océano Profundo ∞` : `Corales ×${fmtM(1 + BRUJ.CORAL_BONUS * S.brTot)} → ×${fmtM(1 + BRUJ.CORAL_BONUS * (S.brTot + B))}`);
+  setT($('tvBtn'), `⛵ Zarpar al ${oceanName(nx)}`);
+  $('tvBtn').disabled = !B;
+  setH($('tvPerks'), PERKS.map(p => `<div class="dl${S.brTot >= p[0] ? '' : ' dim'}"><span>${p[2]}</span><b>${S.brTot >= p[0] ? '✔' : `🔒 ${p[0]} 🧭`}</b></div>`).join(''));
+}
+
+// ===== MAREAS SEMANALES Y AZAR =====
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const fDate = d => `${d.getDate()} de ${MESES[d.getMonth()]}`;
+const mondayOf = d => { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; };
+const mEv = $('m-events');
+function updEvents() {
+  const now = new Date(), k = eventNow(), m0 = mondayOf(now);
+  let h = k ? (x => `<div class="card gl"><div class="ct">${x.icon} ${x.name}</div><p>${x.text}</p><p class="mut small">Termina el domingo a las 23:59</p></div>`)(EVENT_BY_K[k])
+    : `<div class="card"><div class="ct">🌊 Mareas semanales</div><p>Las Mareas empiezan en tu tercer día (${fDate(new Date(S.created + EVENT_DELAY_MS))}).</p><p class="mut small">Cada semana el océano cambia con una ventaja para todos.</p></div>`;
+  h += '<div class="sec">📅 Próximas semanas</div>';
+  for (let w = 1; w <= 3; w++) {
+    const d = new Date(m0); d.setDate(d.getDate() + 7 * w);
+    const x = EVENTS[isoWeek(d) % 4];
+    h += `<div class="dl"><span>Lunes ${fDate(d)}<br><small class="mut">${x.text}</small></span><b>${x.icon} ${x.name}</b></div>`;
+  }
+  h += '<p class="mut note">Cada Marea vuelve cada 4 semanas y nada es exclusivo: no te pierdes nada si un día no juegas.</p>';
+  setH(mEv, h);
+}
+const mOdds = $('m-odds');
+function buildOdds() {
+  const L = (a, b) => `<div class="dl"><span>${a}</span><b>${b}</b></div>`;
+  const W = {C: 52.5, P: 25, R: 15, E: 6, L: 1.5};
+  mOdds.innerHTML = `<div class="sec">🐡 Pez globo dorado</div>${L('🐡 Tesoro: 60 s de producción (mín. 25 toques)', '45 %')}${L('🐟 Frenesí de sardinas: producción ×3 · 30 s', '30 %')}${L('⚡ Corriente eléctrica: toques ×10 · 15 s', '15 %')}${L('🧪 Muestras: 2 por zona abierta', '7 %')}${L('💎 2 gemas', '3 %')}
+<p class="mut note">🧲 Corrientes guía duplica estos premios y cada 10 🐙 Pulpos suman +5 % al Tesoro y a las muestras (máx. +50 %).</p>
+<div class="sec">${IC.dive} Rareza en inmersiones</div><div class="dl"><span class="mut">Rareza</span><b class="mut">Normal · ✨ Biolum. (zonas 4-6)</b></div>${Object.keys(RARITY).map(k => L(`<span style="color:${RC(k)}">●</span> ${RARITY[k].name}`, `${fmtN(RARITY[k].w)} % · ${fmtN(W[k])} %`)).join('')}
+<p class="mut note">🎯 Si 9 tiradas seguidas no dan Rara o mejor, la siguiente es Rara o mejor. Contador actual: <b id="oddsPity"></b></p>
+<p class="mut note">🌍 En los océanos Pacífico, Índico, Ártico y Antártico, la mitad de las Raras, Épicas y Legendarias son especies exclusivas de ese océano.</p>
+<p class="mut note">🆕 La primera inmersión en cada zona cambia su primera tirada por una especie Común o Poco común que aún no tengas.</p>
+<div class="sec">📅 Tirada del día 7</div>${L(`<span style="color:${RC('R')}">●</span> Rara`, '66,7 %')}${L(`<span style="color:${RC('E')}">●</span> Épica`, '26,7 %')}${L(`<span style="color:${RC('L')}">●</span> Legendaria`, '6,7 %')}
+<div class="card gl"><b>🎲 El azar solo da recursos del juego. Nada aleatorio se compra con dinero.</b></div>`;
+}
+const updOdds = () => { const e = $('oddsPity'); if (e) setT(e, `${Math.min(9, S.pity)}/9`); };
+
+
+// ===== AUTOMATIZACIÓN =====
+const autoBuyBtn = el('button', 'tgl hidden', emo('🦾 Auto')), autoUpBtn = el('button', 'tgl hidden', '⚙️ Auto');
+autoBuyBtn.type = autoUpBtn.type = 'button';
+$('genTools').appendChild(autoBuyBtn);
+$('upTools').appendChild(autoUpBtn);
+autoBuyBtn.onclick = () => { S.autoBuy = !S.autoBuy; updTools(); toast(emo(S.autoBuy ? '🦾 Autocompra de criaturas activada' : '🦾 Autocompra de criaturas en pausa')); save(); };
+autoUpBtn.onclick = () => { S.autoUp = !S.autoUp; updTools(); toast(S.autoUp ? '⚙️ Autocompra de mejoras activada' : '⚙️ Autocompra de mejoras en pausa'); save(); };
+function updTools() {
+  autoBuyBtn.classList.toggle('hidden', !S.res.e7);
+  autoBuyBtn.classList.toggle('on', S.autoBuy);
+  autoUpBtn.classList.toggle('hidden', !perk('autoUp'));
+  autoUpBtn.classList.toggle('on', S.autoUp);
+}
+const drone = el('div', 'hidden', '<i>🤖</i>');
+drone.id = 'drone';
+oy.appendChild(drone);
+function autoUpTick() {
+  if (!perk('autoUp') || !S.autoUp) return;
+  const it = [];
+  for (const u of TAPU) if (!S.tu[u.id] && u.zone <= curZone) it.push({c: upCost(u), f: () => { S.tu[u.id] = 1; }, ev: {kind: 't', id: u.id}});
+  for (const u of GLOBU) if (!S.gu[u.id] && u.zone <= curZone) it.push({c: upCost(u), f: () => { S.gu[u.id] = 1; }, ev: {kind: 'g', id: u.id}});
+  for (let i = 0; i < GEN.length; i++) if (!S.hab[i] && S.b[i] >= HAB.req) it.push({c: habCost(i), f: () => { S.hab[i] = 1; }, ev: {kind: 'h', i}});
+  it.sort((a, b) => a.c - b.c);
+  let n = 0;
+  for (const x of it) {
+    if (!(S.pearls >= x.c)) break;
+    S.pearls -= x.c; x.f(); n++;
+    runH('onBuy', Object.assign({qty: 1, milestone: false}, x.ev));
+  }
+  if (n) invalidateCaches();
+}
+function autoBuyTick() {
+  if (!S.res.e7 || !S.autoBuy) return;
+  const ms = milestones();
+  for (let k = 0; k < 25; k++) {
+    let best = -1, br = Infinity;
+    for (let i = 0; i < GEN.length; i++) {
+      if (GEN[i].zone > curZone) continue;
+      const v = S.b[i] ? creatureProd(i, ms) / S.b[i] : GEN[i].prod, r = unitCost(i) / v;
+      if (r < br) { br = r; best = i; }
+    }
+    if (best < 0) break;
+    const c = unitCost(best);
+    if (!(S.pearls >= c)) break;
+    const before = msMult(S.b[best], ms);
+    S.pearls -= c; S.b[best]++;
+    runH('onBuy', {kind: 'b', i: best, qty: 1, milestone: msMult(S.b[best], ms) > before});
+  }
+  S.maxOwned = Math.max(S.maxOwned, ownedSum());
+}
+
+// ===== ASPECTOS DE LA OSTRA =====
+const skinMnt = $('m-skins');
+skinMnt.innerHTML = '';
+const skinRows = SKINS.map(sk => Object.assign(mkRow(skinMnt, `<span class="sw ${sk.id}"></span>`, sk.name, '', '', () => pickSkin(sk)), {sk}));
+function applySkin() { for (const s of SKINS) if (s.id) oy.classList.toggle(s.id, S.skin === s.id); }
+function pickSkin(sk) {
+  if (S.skins[sk.id]) { S.skin = sk.id; applySkin(); toast(`🐚 Aspecto: ${sk.name}`); save(); updSkins(); return; }
+  if (sk.bruj) { toast(`🔒 Se desbloquea con ${sk.bruj} 🧭 brújulas`); return; }
+  if (S.gems < sk.gems) { toast(`💎 Te faltan ${sk.gems - S.gems} gemas`); return; }
+  modal({title: `🐚 ${sk.name}`, body: `<p>¿Comprar el aspecto <b>${sk.name}</b> por <b>${sk.gems} 💎</b>?</p><p class="mut note">Es solo estético: no cambia la producción.</p>`,
+    buttons: [{t: `💎 Comprar (${sk.gems})`, cls: 'g', fn: () => {
+      if (S.skins[sk.id] || S.gems < sk.gems) return;
+      S.gems -= sk.gems; S.skins[sk.id] = 1; S.skin = sk.id;
+      applySkin(); toast(`🐚 ¡Nuevo aspecto: ${sk.name}!`); Snd.buy(); save(); updSkins();
+    }}, {t: 'Cancelar'}]});
+}
+function updSkins() {
+  for (const o of skinRows) {
+    const sk = o.sk, own = !!S.skins[sk.id], cur = S.skin === sk.id;
+    setT(o.sub, sk.bruj ? (own ? 'Premio del Almirante · solo estético' : `Se desbloquea con ${sk.bruj} 🧭`) : sk.gems ? `${sk.gems} 💎 · solo estético` : 'La ostra de siempre');
+    setT(o.buy, cur ? '✔ Puesta' : own ? 'Usar' : sk.bruj ? `🔒 ${sk.bruj} 🧭` : `💎 ${sk.gems}`);
+    o.r.classList.toggle('off', !own && (!!sk.bruj || S.gems < sk.gems));
+    o.r.classList.toggle('sel', cur);
+  }
+}
+
+// ===== TIRADA DEL DÍA 7 =====
+Game.dailyRoll = () => {
+  ensureC();
+  const zc0 = C.zc.slice(), r = addSp(rollSpecies(S.zoneMax, true));
+  zoneDoneToasts(zc0);
+  dvSig = ctSig = '';
+  modal({title: '🎲 Tirada Rara+ del día 7', body: `<p class="mut">Una especie Rara o mejor de ${ZN(S.zoneMax).icon} ${ZN(S.zoneMax).name}:</p>${spRow(r)}${legLines([r])}`, buttons: [{t: '¡Genial!', cls: 'g'}]});
+};
+
+// ===== AUSENCIA =====
+let awayMu = 0, awaySince = 0;
+Hooks.onAway.push(t => {
+  awaySince = Date.now() - t * 1000;
+  awayMu = 0;
+  const bz = Math.floor(S.b[9] / 10);
+  if (bz > 0) {
+    const acc = (+S.flags.muAcc || 0) + bz * Math.min(t, OFFLINE_MAX) / 3600;
+    awayMu = Math.floor(acc);
+    S.mu += awayMu;
+    S.flags.muAcc = acc - awayMu;
+  }
+});
+Hooks.offlineLines.push(() => {
+  const now = Date.now(), out = [], back = S.bays.filter(b => b.end > awaySince && b.end <= now);
+  back.forEach(b => { b.nt = 1; });
+  if (awayMu) out.push(`${IC.mu} +${awayMu} muestras de tus Buzos`);
+  if (back.length) out.push(`${IC.dive} ${back.length} ${back.length === 1 ? 'inmersión' : 'inmersiones'} de vuelta`);
+  for (const n of labTick(now, true)) out.push(`🔬 Investigación terminada: ${n}`);
+  return out;
+});
+
+// ===== CINTA, PUNTOS Y BITÁCORA =====
+addGoal(10, () => {
+  if (!guideOn()) return null;
+  const g = GUIDE[S.guide];
+  return {icon: '👩‍🔬', text: g.t, p: g.c() ? 1 : g.p ? clamp(g.p(), 0, 1) : 0, right: rewardShort(g.r), go: () => guideGo(g)};
+});
+addGoal(20, () => {
+  const now = Date.now(), b = S.bays.find(x => now >= x.end);
+  if (b) return {icon: '✅', text: '¡Inmersión de vuelta! Toca para recoger', p: 1, go: () => { goSeg('exp', 'dives'); collectBay(b); }};
+  if (S.flags.resNew && benchFree() && S.zoneMax >= 3) return {icon: '✅', text: `Investigación terminada: ${resName(S.flags.resNew)}`, p: 1, go: () => goSeg('exp', 'lab')};
+  if (encReady()) return {icon: '✅', text: 'Encargo cumplido: cóbralo', p: 1, go: () => openSheet('enc')};
+  return null;
+});
+addGoal(40, () => {
+  if (!travRecommended()) return null;
+  return {icon: '⭐', text: `Travesía: +${fmt(brujPending())} 🧭`, p: 1, go: () => goReef('trav')};
+});
+addGoal(70, () => {
+  if (guideOn()) return null;
+  let best = null;
+  for (const e of S.enc.list) { if (encDone(e)) continue; const p = encProg(e); if (!best || p > best.p) best = {e, p}; }
+  return best && {icon: '📋', text: best.e.text, p: best.p, go: () => openSheet('enc')};
+});
+Hooks.tabDot.exp.push(() => {
+  const now = Date.now();
+  if (S.bays.some(b => now >= b.end)) return true;
+  if (S.zoneMax < 3 || !benchFree()) return false;
+  return !!S.flags.resNew || LAB_IDS.some(id => resState(id) === 'ok');
+});
+Hooks.tabDot.reef.push(travRecommended);
+const logBtn = $('logBtn');
+function updSheet(now) {
+  const s = SEGS.sheet.cur;
+  if (s === 'enc') updEnc(now); else if (s === 'ach') updAch(); else if (s === 'events') updEvents(); else updOdds();
+}
+
+// ===== GANCHOS =====
+Hooks.frame.push(dt => Fish.frame(dt));
+Hooks.onBuy.push(e => {
+  if (e.milestone) flagInc('msN');
+  if (e.kind === 'h') flagInc('habN');
+  if (e.kind !== 'b') return;
+  for (const x of S.enc.list) if (x.key === 'buyTop' && x.i === e.i) x.c = (x.c || 0) + e.qty;
+  if (e.i === 11) grantRelic();
+});
+Hooks.tick1s.push(now => {
+  labTick(now);
+  for (const b of S.bays) if (!b.nt && now >= b.end) {
+    b.nt = 1;
+    toast(b.kind === 'chart' ? '🗺️ ¡Carta náutica lista! Recógela en Explorar' : `${IC.dive} ¡Inmersión de vuelta! Recógela en Explorar`);
+    Snd.done();
+  }
+  grantRelic();
+  achTick();
+  encTick();
+  rankCheck();
+  if (S.brTot >= 100 && !S.skins['oy-oro']) { S.skins['oy-oro'] = 1; toast('🐚 ¡Ostra Dorada del Almirante desbloqueada!'); }
+  if (S.res.e5) { tapCore(now, true); Sea.burst(2, now < S.mareaEnd); }
+  autoUpTick();
+  autoBuyTick();
+});
+Hooks.tick5hz.push(now => {
+  guideTick(now);
+  updTools();
+  drone.classList.toggle('hidden', !S.res.e5);
+  logBtn.classList.toggle('new', encReady());
+  if (sheetOpen) updSheet(now);
+  if (curTab === 'exp') updExplore(now);
+  else if (curTab === 'reef') updTrav();
+  else if (curTab === 'shop') updSkins();
+});
+Hooks.tabOpen.push((tab, seg) => {
+  const now = Date.now();
+  if (tab === 'sheet') return updSheet(now);
+  if (tab === 'exp') { if (seg === 'lab') S.flags.resNew = ''; updExplore(now); }
+  else if (tab === 'reef') updTrav();
+  else if (tab === 'shop') updSkins();
+});
+Hooks.init.push(() => {
+  const kinds = {dive: 1, chart: 1, tut: 1}, num = (o, ks) => ks.forEach(k => { o[k] = +o[k]; });
+  S.bays.forEach(b => num(b, ['z', 'rolls', 'mu', 't', 'start', 'end', 'chart', 'id']));
+  S.bays = S.bays.filter(b => kinds[b.kind] && b.z >= 1 && b.z <= 6 && b.rolls >= 0 && b.rolls < 50 && b.mu >= 0 && b.t > 0 && (b.kind !== 'chart' || CHARTS[b.chart - 1]));
+  for (const b of S.bays) if (!(b.id > 0) || S.bays.filter(x => x.id === b.id).length > 1) b.id = newBayId();
+  for (const k in S.sp) { const n = Math.floor(+S.sp[k]); if (SPECIES_BY_ID[k] && n > 0 && isFinite(n)) S.sp[k] = n; else delete S.sp[k]; }
+  for (const k in S.res) if (RES_BY_ID[k] && S.res[k]) S.res[k] = 1; else delete S.res[k];
+  for (const o of [S.charts, S.relics, S.visited, S.zoneDove]) for (const k in o) if (o[k]) o[k] = 1; else delete o[k];
+  S.benches = S.benches.filter((b, i, a) => (b.id === 'field' || RES_BY_ID[b.id]) && a.findIndex(x => x.id === b.id) === i).slice(0, benchCount());
+  const keys = {};
+  S.enc.list = S.enc.list.filter(e => {
+    num(e, ['target', 'base', 'start', 'c', 'i']);
+    if (!ENC[e.key] || keys[e.key] || typeof e.text !== 'string' || !(e.target > 0) || !isFinite(e.target) || !isFinite(e.base || 0)) return false;
+    e.base = e.base || 0; e.c = e.c || 0; e.i = clamp(Math.floor(e.i || 0), 0, GEN.length - 1);
+    keys[e.key] = 1;
+    return true;
+  }).slice(0, 3);
+  if (S.flags.resNew && !(S.flags.resNew === 'field' || RES_BY_ID[S.flags.resNew])) S.flags.resNew = '';
+  S.guide = clamp(Math.floor(S.guide), 0, GUIDE.length);
+  S.achN = ACH.reduce((a, x) => a + clamp(Math.floor(+S.ach[x.k] || 0), 0, 9), 0);
+  S.rank = Math.min(S.rank, 50, Math.floor(S.enc.done / 10));
+  if (!S.skins[S.skin]) S.skin = '';
+  if (S.guide >= 10) S.flags.firstDailyShown = 1;
+  buildCatalog();
+  buildLab();
+  buildTrav();
+  buildAch();
+  buildOdds();
+  mDives.innerHTML = mEnc.innerHTML = mEv.innerHTML = '';
+  logBtn.classList.remove('hidden');
+  applySkin();
+  updTools();
+  Fish.init();
+  encFill();
+  invalidateCaches();
+});
+
+
+// ===== ARRANQUE =====
 load();
+if (S.flags.offG > 0) { earn(S.flags.offG); S.flags.offG = 0; }
 Ads.noAds = S.noAds;
 Ads.banner();
-buildUpgrades();
-if (S.total > 0) offline(Math.max(0, (Date.now() - S.last) / 1000));
-if (dailyInfo().can) showDaily();
-lastT = Date.now();
-refresh();
-requestAnimationFrame(frame);
+invalidateCaches();
+buildSeg('exp');
+buildSeg('reef');
+buildSeg('sheet');
+updBuySeg();
+updMute();
+if (S.taps > 0) { hintGone = true; $('hint').classList.add('hidden'); }
+checkZone(true);
+Hooks.goalProviders.sort((a, b) => a.order - b.order);
+runH('init');
+Sea.resize();
+gaugeH = depthEl.clientHeight || 120;
+if (S.total > 0) handleAway(Math.max(0, (Date.now() - S.last) / 1000));
+afterAway();
+tick5(Date.now());
+startLoop();
+save();
 </script>
 </body>
 </html>
