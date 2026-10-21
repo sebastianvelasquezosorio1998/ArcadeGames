@@ -71,6 +71,9 @@ namespace HyperArcade
         public List<ItemCount> watchedToday = new List<ItemCount>();
         public List<AdTimestamp> lastWatched = new List<AdTimestamp>();
         public int totalWatched;
+        /// <summary>Niveles ganados desde el último video entre niveles (intersticial).</summary>
+        public int levelsSinceInterstitial;
+        public int totalInterstitials;
     }
 
     [Serializable]

@@ -37,6 +37,53 @@ namespace HyperArcade
             MobileAds.Initialize(_ => onInitialized?.Invoke(true));
         }
 
+        // ------------------------------------------------ Intersticial
+
+        private InterstitialAd _interstitial;
+        private bool _interstitialLoading;
+        private Action _onInterstitialClosed;
+
+        public override bool IsInterstitialReady => _interstitial != null && _interstitial.CanShowAd();
+
+        public override void LoadInterstitial()
+        {
+            if (_interstitialLoading || IsInterstitialReady) return;
+            _interstitialLoading = true;
+            if (_interstitial != null) { _interstitial.Destroy(); _interstitial = null; }
+
+            InterstitialAd.Load(Config.AdMobInterstitialId, new AdRequest(), (InterstitialAd ad, LoadAdError error) =>
+            {
+                _interstitialLoading = false;
+                if (error != null || ad == null)
+                {
+                    Debug.LogWarning("[AdMob] Carga de intersticial falló: " + error);
+                    ScheduleInterstitialRetry();
+                    return;
+                }
+                ResetInterstitialRetry();
+                _interstitial = ad;
+                _interstitial.OnAdFullScreenContentClosed += FinishInterstitial;
+                _interstitial.OnAdFullScreenContentFailed += _ => FinishInterstitial();
+            });
+        }
+
+        public override void ShowInterstitial(Action onClosed)
+        {
+            if (!IsInterstitialReady) { onClosed?.Invoke(); return; }
+            _onInterstitialClosed = onClosed;
+            _interstitial.Show();
+        }
+
+        private void FinishInterstitial()
+        {
+            var callback = _onInterstitialClosed;
+            _onInterstitialClosed = null;
+            callback?.Invoke();
+            LoadInterstitial();
+        }
+
+        // ------------------------------------------------ Recompensado
+
         public override void LoadRewarded()
         {
             if (_loading || IsRewardedReady) return;

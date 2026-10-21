@@ -11,6 +11,7 @@ namespace HyperArcade
     public class MockAdsProvider : AdsProviderBase
     {
         private bool _ready;
+        private bool _interstitialReady;
 
         public override string Name => "Mock";
         public override bool IsRewardedReady => _ready;
@@ -22,6 +23,25 @@ namespace HyperArcade
         }
 
         public override void LoadRewarded() => _ready = true;
+
+        public override bool IsInterstitialReady => _interstitialReady;
+        public override void LoadInterstitial() => _interstitialReady = true;
+
+        public override void ShowInterstitial(Action onClosed)
+        {
+            if (!_interstitialReady) { onClosed?.Invoke(); return; }
+            _interstitialReady = false;
+            Host.StartCoroutine(SimulateInterstitial(onClosed));
+        }
+
+        private IEnumerator SimulateInterstitial(Action onClosed)
+        {
+            float duration = Config != null ? Config.mockAdDurationSeconds + 1f : 2.5f;
+            Toast.Show("[Video publicitario de prueba]", duration);
+            yield return new WaitForSecondsRealtime(duration);
+            onClosed?.Invoke();
+            LoadInterstitial();
+        }
 
         public override void ShowRewarded(Action<AdShowResult> onFinished)
         {

@@ -31,16 +31,17 @@ namespace HyperArcade
         private void Awake()
         {
             if (doubleCoinsButton != null) doubleCoinsButton.onRewarded.AddListener(OnDoubleRewarded);
-            nextButton.onClick.AddListener(GoNext);
-            retryButton.onClick.AddListener(GameSession.Restart);
+            nextButton.onClick.AddListener(() => Leave(GoNext));
+            retryButton.onClick.AddListener(() => Leave(GameSession.Restart));
             menuButton.onClick.AddListener(() =>
-                GameSession.GoToMenu(_result.endless ? ScreenIds.MainMenu : ScreenIds.LevelMap));
+                Leave(() => GameSession.GoToMenu(_result.endless ? ScreenIds.MainMenu : ScreenIds.LevelMap)));
         }
 
         public void Show(MatchResult result)
         {
             _result = result;
             _doubled = false;
+            SetButtonsInteractable(true);
             _shownCoins = 0;
             Show();
             StartCoroutine(Present());
@@ -103,6 +104,24 @@ namespace HyperArcade
             Wallet.Add(CurrencyType.Coins, _result.coinsEarned, "ad_double_coins");
             doubleCoinsButton.gameObject.SetActive(false);
             StartCoroutine(CountCoins(_result.coinsEarned * 2));
+        }
+
+        /// <summary>
+        /// Cada N niveles ganados se proyecta un video publicitario (intersticial) antes de continuar.
+        /// Los videos recompensados (x2, revivir, monedas, diamantes) siguen siendo opcionales.
+        /// </summary>
+        private void Leave(System.Action action)
+        {
+            SetButtonsInteractable(false);
+            if (AdsManager.Instance != null) AdsManager.Instance.ShowInterstitialIfDue(action);
+            else action();
+        }
+
+        private void SetButtonsInteractable(bool value)
+        {
+            nextButton.interactable = value;
+            retryButton.interactable = value;
+            menuButton.interactable = value;
         }
 
         private void GoNext()

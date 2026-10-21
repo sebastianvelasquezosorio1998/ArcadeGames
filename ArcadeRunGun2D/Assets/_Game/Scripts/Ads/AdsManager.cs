@@ -44,7 +44,11 @@ namespace HyperArcade
             Debug.Log("[Ads] Proveedor: " + _provider.Name);
             _provider.Initialize(config, this, ok => RunOnMainThread(() =>
             {
-                if (ok) _provider.LoadRewarded();
+                if (ok)
+                {
+                    _provider.LoadRewarded();
+                    _provider.LoadInterstitial();
+                }
                 else Debug.LogWarning("[Ads] La inicialización del SDK falló.");
             }));
         }
@@ -132,6 +136,60 @@ namespace HyperArcade
             }));
         }
 
+        // ------------------------------------------------- Intersticial cada N niveles
+
+        /// <summary>Llamar al ganar un nivel: suma al contador para el video entre niveles.</summary>
+        public void NotifyLevelCompleted()
+        {
+            if (SaveSystem.Data == null) return;
+            SaveSystem.Data.ads.levelsSinceInterstitial++;
+            SaveSystem.Save();
+        }
+
+        /// <summary>¿Toca mostrar el video entre niveles? (cada EconomyConfig.interstitialEveryLevels victorias)</summary>
+        public bool IsInterstitialDue
+        {
+            get
+            {
+                var economy = Economy;
+                if (economy == null || economy.interstitialEveryLevels <= 0 || SaveSystem.Data == null) return false;
+                return SaveSystem.Data.ads.levelsSinceInterstitial >= economy.interstitialEveryLevels;
+            }
+        }
+
+        /// <summary>
+        /// Muestra el video entre niveles si corresponde y después ejecuta onDone.
+        /// Si no hay anuncio cargado no bloquea: continúa de inmediato y lo intenta en la próxima transición.
+        /// </summary>
+        public void ShowInterstitialIfDue(Action onDone)
+        {
+            if (!IsInterstitialDue || _showing || _provider == null || !_provider.IsInterstitialReady)
+            {
+                onDone?.Invoke();
+                return;
+            }
+
+            _showing = true;
+            _timeScaleBefore = Time.timeScale;
+            Time.timeScale = 0f;
+            AudioListener.pause = true;
+
+            _provider.ShowInterstitial(() => RunOnMainThread(() =>
+            {
+                _showing = false;
+                Time.timeScale = _timeScaleBefore;
+                AudioListener.pause = false;
+                SaveSystem.Data.ads.levelsSinceInterstitial = 0;
+                SaveSystem.Data.ads.totalInterstitials++;
+                SaveSystem.Save();
+                InterstitialFinished?.Invoke();
+                onDone?.Invoke();
+            }));
+        }
+
+        /// <summary>Para analítica.</summary>
+        public static event Action InterstitialFinished;
+
         // ------------------------------------------------- Límites y cooldowns
 
         /// <summary>Las recompensas de moneda comparten contador entre menú y tienda.</summary>
@@ -210,5 +268,8 @@ namespace HyperArcade
         public void Initialize(AdsConfig config, MonoBehaviour host, Action<bool> onInitialized) => onInitialized?.Invoke(false);
         public void LoadRewarded() { }
         public void ShowRewarded(Action<AdShowResult> onFinished) => onFinished?.Invoke(AdShowResult.NotReady);
+        public bool IsInterstitialReady => false;
+        public void LoadInterstitial() { }
+        public void ShowInterstitial(Action onClosed) => onClosed?.Invoke();
     }
 }

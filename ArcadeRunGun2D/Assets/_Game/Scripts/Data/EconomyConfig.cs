@@ -20,6 +20,10 @@ namespace HyperArcade
         [Tooltip("Segundos de espera entre anuncios del mismo tipo en el menú.")]
         public float menuAdCooldownSeconds = 60f;
 
+        [Header("Video entre niveles (intersticial, sin recompensa)")]
+        [Tooltip("Mostrar un video a pantalla completa cada N niveles ganados (0 = desactivado).")]
+        public int interstitialEveryLevels = 2;
+
         [Header("Revivir")]
         [Tooltip("Revivir con anuncio: una vez por partida.")]
         public int maxRevivesPerMatch = 1;

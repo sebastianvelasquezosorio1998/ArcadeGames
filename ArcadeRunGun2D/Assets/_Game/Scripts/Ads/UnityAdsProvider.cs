@@ -14,6 +14,11 @@ namespace HyperArcade
         private Action<AdShowResult> _onShowFinished;
         private bool _loaded;
         private bool _loading;
+        private bool _interstitialLoaded;
+        private bool _interstitialLoading;
+        private Action _onInterstitialClosed;
+
+        private bool IsInterstitialId(string placementId) => placementId == Config.UnityInterstitialId;
 
         public override string Name => "UnityAds";
         public override bool IsRewardedReady => _loaded;
@@ -31,6 +36,31 @@ namespace HyperArcade
             if (_loading || _loaded) return;
             _loading = true;
             Advertisement.Load(Config.UnityRewardedId, this);
+        }
+
+        public override bool IsInterstitialReady => _interstitialLoaded;
+
+        public override void LoadInterstitial()
+        {
+            if (_interstitialLoading || _interstitialLoaded) return;
+            _interstitialLoading = true;
+            Advertisement.Load(Config.UnityInterstitialId, this);
+        }
+
+        public override void ShowInterstitial(Action onClosed)
+        {
+            if (!_interstitialLoaded) { onClosed?.Invoke(); return; }
+            _interstitialLoaded = false;
+            _onInterstitialClosed = onClosed;
+            Advertisement.Show(Config.UnityInterstitialId, this);
+        }
+
+        private void FinishInterstitial()
+        {
+            var callback = _onInterstitialClosed;
+            _onInterstitialClosed = null;
+            callback?.Invoke();
+            LoadInterstitial();
         }
 
         public override void ShowRewarded(Action<AdShowResult> onFinished)
@@ -53,6 +83,13 @@ namespace HyperArcade
         // --- Carga ---
         public void OnUnityAdsAdLoaded(string placementId)
         {
+            if (IsInterstitialId(placementId))
+            {
+                _interstitialLoading = false;
+                _interstitialLoaded = true;
+                ResetInterstitialRetry();
+                return;
+            }
             _loading = false;
             _loaded = true;
             ResetRetry();
@@ -60,7 +97,14 @@ namespace HyperArcade
 
         public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
         {
-            Debug.LogWarning($"[UnityAds] Carga falló: {error} {message}");
+            Debug.LogWarning($"[UnityAds] Carga falló ({placementId}): {error} {message}");
+            if (IsInterstitialId(placementId))
+            {
+                _interstitialLoading = false;
+                _interstitialLoaded = false;
+                ScheduleInterstitialRetry();
+                return;
+            }
             _loading = false;
             _loaded = false;
             ScheduleRetry();
@@ -69,7 +113,8 @@ namespace HyperArcade
         // --- Visualización ---
         public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
         {
-            Debug.LogWarning($"[UnityAds] Show falló: {error} {message}");
+            Debug.LogWarning($"[UnityAds] Show falló ({placementId}): {error} {message}");
+            if (IsInterstitialId(placementId)) { FinishInterstitial(); return; }
             Finish(AdShowResult.Failed);
         }
 
@@ -78,6 +123,7 @@ namespace HyperArcade
 
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState state)
         {
+            if (IsInterstitialId(placementId)) { FinishInterstitial(); return; }
             Finish(state == UnityAdsShowCompletionState.COMPLETED ? AdShowResult.Rewarded : AdShowResult.Skipped);
         }
 

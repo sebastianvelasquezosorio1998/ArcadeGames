@@ -18,6 +18,12 @@ namespace HyperArcade
         void Initialize(AdsConfig config, MonoBehaviour host, Action<bool> onInitialized);
         void LoadRewarded();
         void ShowRewarded(Action<AdShowResult> onFinished);
+
+        // Intersticial: video a pantalla completa SIN recompensa (entre niveles).
+        bool IsInterstitialReady { get; }
+        void LoadInterstitial();
+        /// <param name="onClosed">Se llama siempre al terminar (visto, cerrado o fallido).</param>
+        void ShowInterstitial(Action onClosed);
     }
 
     /// <summary>Utilidad común: reintento de carga con espera exponencial (5s, 10s, 20s... máx. 60s).</summary>
@@ -26,11 +32,15 @@ namespace HyperArcade
         protected AdsConfig Config;
         protected MonoBehaviour Host;
         private int _retryAttempt;
+        private int _interstitialRetryAttempt;
 
         public abstract string Name { get; }
         public abstract bool IsRewardedReady { get; }
         public abstract void LoadRewarded();
         public abstract void ShowRewarded(Action<AdShowResult> onFinished);
+        public abstract bool IsInterstitialReady { get; }
+        public abstract void LoadInterstitial();
+        public abstract void ShowInterstitial(Action onClosed);
 
         public virtual void Initialize(AdsConfig config, MonoBehaviour host, Action<bool> onInitialized)
         {
@@ -39,6 +49,20 @@ namespace HyperArcade
         }
 
         protected void ResetRetry() => _retryAttempt = 0;
+        protected void ResetInterstitialRetry() => _interstitialRetryAttempt = 0;
+
+        protected void ScheduleInterstitialRetry()
+        {
+            if (Host == null) return;
+            float delay = Mathf.Min(60f, 5f * Mathf.Pow(2f, _interstitialRetryAttempt++));
+            Host.StartCoroutine(RetryInterstitialAfter(delay));
+        }
+
+        private System.Collections.IEnumerator RetryInterstitialAfter(float seconds)
+        {
+            yield return new WaitForSecondsRealtime(seconds);
+            LoadInterstitial();
+        }
 
         protected void ScheduleRetry()
         {

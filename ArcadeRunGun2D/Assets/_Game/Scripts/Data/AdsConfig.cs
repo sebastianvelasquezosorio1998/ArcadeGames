@@ -22,10 +22,14 @@ namespace HyperArcade
         public string unityGameIdIOS = "0000000";
         public string unityRewardedAndroid = "Rewarded_Android";
         public string unityRewardedIOS = "Rewarded_iOS";
+        public string unityInterstitialAndroid = "Interstitial_Android";
+        public string unityInterstitialIOS = "Interstitial_iOS";
 
         [Header("AdMob (requiere símbolo HA_ADMOB). El App ID va en Assets > Google Mobile Ads > Settings")]
         public string admobRewardedAndroid = "ca-app-pub-3940256099942544/5224354917"; // ID de prueba de Google
         public string admobRewardedIOS = "ca-app-pub-3940256099942544/1712485313";     // ID de prueba de Google
+        public string admobInterstitialAndroid = "ca-app-pub-3940256099942544/1033173712"; // ID de prueba de Google
+        public string admobInterstitialIOS = "ca-app-pub-3940256099942544/4411468910";     // ID de prueba de Google
         [Tooltip("Marcar si la app está dirigida a menores (COPPA / Families).")]
         public bool childDirected;
 
@@ -38,6 +42,12 @@ namespace HyperArcade
 
         public string UnityRewardedId =>
             Application.platform == RuntimePlatform.IPhonePlayer ? unityRewardedIOS : unityRewardedAndroid;
+
+        public string UnityInterstitialId =>
+            Application.platform == RuntimePlatform.IPhonePlayer ? unityInterstitialIOS : unityInterstitialAndroid;
+
+        public string AdMobInterstitialId =>
+            Application.platform == RuntimePlatform.IPhonePlayer ? admobInterstitialIOS : admobInterstitialAndroid;
 
         public string AdMobRewardedId =>
             Application.platform == RuntimePlatform.IPhonePlayer ? admobRewardedIOS : admobRewardedAndroid;

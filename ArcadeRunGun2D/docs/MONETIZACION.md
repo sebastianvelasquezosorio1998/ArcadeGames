@@ -21,6 +21,19 @@ RewardedAdButton / RevivePopup / ResultPopup
 - Precarga automática y reintentos con espera exponencial (5 s → 60 s).
 - Analítica: suscríbete a `AdsManager.AdFinished (placement, resultado)` para enviar eventos a Firebase/GameAnalytics.
 
+## Video entre niveles (intersticial)
+
+Además de los anuncios recompensados, cada **2 niveles ganados** se proyecta un video a pantalla completa **sin recompensa**:
+
+- Se cuenta cada victoria en Modo Niveles (el contador se guarda en `SaveData.ads.levelsSinceInterstitial`).
+- El video aparece al **salir de la pantalla de victoria** (Siguiente, Reintentar o Menú), nunca en mitad de una partida.
+- Si el anuncio aún no está cargado, el juego **no espera**: continúa y lo intenta en la siguiente transición.
+- Frecuencia configurable en `EconomyConfig.interstitialEveryLevels` (2 por defecto; 0 = desactivado).
+- IDs: `AdsConfig.admobInterstitialAndroid/IOS` (vienen los de prueba de Google) o `unityInterstitialAndroid/IOS` (`Interstitial_Android` / `Interstitial_iOS`).
+- En el editor se simula con el mensaje "[Video publicitario de prueba]".
+
+Los videos recompensados siguen funcionando igual y a elección del jugador: revivir, x2 monedas, +10 diamantes y +100 monedas.
+
 ## Botones de recompensa incluidos
 
 | Botón | Componente | Configuración |

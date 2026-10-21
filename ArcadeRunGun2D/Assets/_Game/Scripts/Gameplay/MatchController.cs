@@ -321,6 +321,7 @@ namespace HyperArcade
                 {
                     result.stars = Level.CalculateStars(Player.Normalized, Elapsed);
                     result.newRecord = PlayerProgress.RecordLevelResult(Level.id, result.stars, result.coinsEarned);
+                    if (AdsManager.Instance != null) AdsManager.Instance.NotifyLevelCompleted();
                 }
             }
 
