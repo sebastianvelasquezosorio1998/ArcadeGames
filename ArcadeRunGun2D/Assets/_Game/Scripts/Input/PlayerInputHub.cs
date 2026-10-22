@@ -33,15 +33,15 @@ namespace HyperArcade
         private void Awake()
         {
             Instance = this;
-            Translucent(joystick);
-            Translucent(jumpButton);
-            Translucent(attackButton);
-            Translucent(specialButton);
-            foreach (var powerUp in GetComponentsInChildren<PowerUpButtonUI>(true)) Translucent(powerUp);
+            MakeTranslucent(joystick);
+            MakeTranslucent(jumpButton);
+            MakeTranslucent(attackButton);
+            MakeTranslucent(specialButton);
+            foreach (var powerUp in GetComponentsInChildren<PowerUpButtonUI>(true)) MakeTranslucent(powerUp);
         }
 
         /// <summary>Un CanvasGroup baja la opacidad de todo el control (no afecta a los toques).</summary>
-        private static void Translucent(Component control)
+        public static void MakeTranslucent(Component control)
         {
             if (control == null) return;
             var group = control.GetComponent<CanvasGroup>();

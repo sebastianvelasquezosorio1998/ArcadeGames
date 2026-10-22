@@ -571,6 +571,7 @@ namespace HyperArcade.EditorTools
             var pauseImg = Icon(hudRt, "PauseButton", UiSlot.PauseButton, TopRight, new Vector2(-30, -30), new Vector2(110, 110));
             pauseImg.raycastTarget = true;
             var pause = pauseImg.gameObject.AddComponent<Button>();
+            Translucent(pauseImg);
             pause.targetGraphic = pauseImg;
 
             // Jefe

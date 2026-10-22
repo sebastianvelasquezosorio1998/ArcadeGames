@@ -46,7 +46,11 @@ namespace HyperArcade
         public void Setup(MatchController match)
         {
             _match = match;
-            if (pauseButton != null) pauseButton.onClick.AddListener(match.Pause);
+            if (pauseButton != null)
+            {
+                pauseButton.onClick.AddListener(match.Pause);
+                PlayerInputHub.MakeTranslucent(pauseButton);
+            }
             if (bossBarRoot != null) bossBarRoot.SetActive(false);
             if (scoreText != null) scoreText.gameObject.SetActive(match.IsEndless);
             if (missionProgressRoot != null) missionProgressRoot.SetActive(!match.IsEndless);

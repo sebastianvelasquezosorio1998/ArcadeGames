@@ -18,6 +18,11 @@ namespace HyperArcade
             if (Instance != null) return;
 
             Application.targetFrameRate = 60;
+#if UNITY_EDITOR
+            Debug.Log($"[HyperArcade] Código v{BuildInfo.CodeVersion} · Proyecto: {Application.dataPath}");
+#else
+            Debug.Log($"[HyperArcade] Código v{BuildInfo.CodeVersion}");
+#endif
             SaveSystem.Load();
 
             var go = new GameObject("[Systems]");

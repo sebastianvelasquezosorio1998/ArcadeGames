@@ -28,6 +28,12 @@ Plantilla de videojuego móvil 2D de acción arcade (Run & Gun / Action RPG lige
 
 Los anuncios en el editor son simulados (`MockAdsProvider`): duran 1,5 s y siempre recompensan.
 
+### Mantener el proyecto actualizado desde GitHub
+
+- **Tools → HyperArcade → Actualizar desde GitHub**: descarga los últimos cambios de la rama `ArcadeGame_Rama` en la carpeta que Unity tiene abierta (usa Git o el Git incluido en GitHub Desktop).
+- **Tools → HyperArcade → Versión y carpeta del proyecto**: muestra la versión del código, la carpeta abierta, la rama y el commit. Al pulsar Play la consola también muestra `[HyperArcade] Código vX.Y.Z`.
+- Unity debe abrir la carpeta `ArcadeRunGun2D` **del mismo clon** que actualiza GitHub Desktop; si no, los cambios no aparecen.
+
 ---
 
 ## 2. Flujo de pantallas
